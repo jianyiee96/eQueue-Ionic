@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
+import { Customer } from './customer';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,6 +30,16 @@ export class CustomerService {
       );
   }
 
+  registerCustomer(newCustomer: Customer): Observable<any> {
+    let registerCustomerReq = {
+      "customer": newCustomer
+    };
+
+    return this.httpClient.put<any>(this.baseUrl, registerCustomerReq, httpOptions).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
 
 
   private handleError(error: HttpErrorResponse) {
