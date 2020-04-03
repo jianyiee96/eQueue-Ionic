@@ -1,21 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
+
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>Point of Sale System (Ionic v1.0)</ion-title>
+	</ion-toolbar>
+
 </ion-header>
 
+
+
 <ion-content>
-	<ion-toolbar>
-		<ion-button expand="full" (click)="customerLogout()">
-			<ion-icon slot="start" name="exit"></ion-icon>
-			Logout
-		</ion-button>
-  </ion-toolbar>
-  
-  <ion-toolbar>
-		<ion-button expand="full" (click)="navigateTabs()">
-			<ion-icon name="exit"></ion-icon>
-			Tabs
-		</ion-button>
-	</ion-toolbar>
+	<ion-card-header>
+		<ion-card-title>Welcome to eQueue - Home Page</ion-card-title>
+	</ion-card-header>
+
+
+	<ion-button (click)="customerLogout()">
+		<ion-icon slot="start" name="exit"></ion-icon>
+		Logout
+	</ion-button>
+
+
+	<ion-button (click)="navigateTabs()">
+		<ion-icon name="exit"></ion-icon>
+		Tabs
+	</ion-button>
 </ion-content>

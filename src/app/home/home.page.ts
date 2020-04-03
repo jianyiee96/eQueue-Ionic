@@ -27,7 +27,6 @@ export class HomePage implements OnInit {
   }
 
   navigateTabs(): void {
-    console.log("In here");
     this.router.navigate(["/welcome"]);
   }
 
