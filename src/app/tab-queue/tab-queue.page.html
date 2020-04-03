@@ -5,10 +5,79 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
-  
-	<ion-card-header>
-		<ion-card-title>My Queues</ion-card-title>
-	</ion-card-header>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="crescent" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="displayOption == 1">
+    <ion-card-header>
+      <ion-card-subtitle>You can join a queue :)</ion-card-subtitle>
+      <ion-card-title>Join Queue</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-text color="primary">
+        <h2>You have not join a queue, neither do you have an allocated table.</h2>
+        <br>
+        <h2>Click on the button below to Join a queue</h2>
+      </ion-text>
+    </ion-card-content>
+
+    <ion-button expand="full" (click)="joinQueue()">
+      <ion-icon slot="start" name="exit"></ion-icon>
+      Join Queue Now
+    </ion-button>
+  </ion-card>
+
+
+  <ion-card *ngIf="displayOption == 2">
+    <ion-card-header>
+      <ion-card-subtitle>Waiting for your turn</ion-card-subtitle>
+      <ion-card-title>Soon to be your turn :)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text color="primary">
+        <h2>You have joined a queue, be patient and wait for your turn.</h2>
+        <br>
+        <h2>Here are your queue details: </h2>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="displayOption == 3">
+    <ion-card-header>
+      <ion-card-subtitle>Hurry up!</ion-card-subtitle>
+      <ion-card-title>Its your turn!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-text color="primary">
+        <h2>We have a table for you! Hurry up before it expires.</h2>
+        <br>
+        <h2>Here are your table details: </h2>
+        <h2>Your allocation will expire in: </h2>
+        <ion-button expand="full" (click)="checkIn()">
+          <ion-icon slot="start" name="exit"></ion-icon>
+          Check-in now!
+        </ion-button>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="displayOption == 4">
+    <ion-card-header>
+      <ion-card-subtitle>Enjoy your meal</ion-card-subtitle>
+      <ion-card-title>You can access the order functions now</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text color="primary">
+        <h2>Remember to submit your orders through eQueue.</h2>
+        
+        <h2>You will be able to join queue once again after your current dining experience. </h2>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
