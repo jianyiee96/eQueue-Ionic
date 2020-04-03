@@ -32,40 +32,9 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
     canActivate: [AuthenticationGuard]
-  },  {
-    path: 'tab-order',
-    loadChildren: () => import('./tab-order/tab-order.module').then( m => m.TabOrderPageModule)
-  },
-  {
-    path: 'tab-menu',
-    loadChildren: () => import('./tab-menu/tab-menu.module').then( m => m.TabMenuPageModule)
-  },
-  {
-    path: 'tab-profile',
-    loadChildren: () => import('./tab-profile/tab-profile.module').then( m => m.TabProfilePageModule)
-  },
-  {
-    path: 'tab-cart',
-    loadChildren: () => import('./tab-cart/tab-cart.module').then( m => m.TabCartPageModule)
   }
 
-
-
-
 ];
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     redirectTo: 'login',
-//     pathMatch: 'full'
-//   },  
-//   { path: 'login', loadChildren: './auth/login.module#LoginPageModule', canActivate: [AuthenticationGuard]  },
-//   { path: 'register', loadChildren: './auth/register.module#RegisterPageModule', canActivate: [AuthenticationGuard]  },
-//   { path: 'welcome', loadChildren: './tabs/tab.module#TabsPageModule', canActivate: [AuthenticationGuard] },
-//   { path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthenticationGuard] },
-//  ];
-
 
 
 @NgModule({
