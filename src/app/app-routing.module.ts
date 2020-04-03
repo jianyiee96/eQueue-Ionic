@@ -27,22 +27,14 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
+    canActivate: [AuthenticationGuard]
   }
 
 ];
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     redirectTo: 'login',
-//     pathMatch: 'full'
-//   },  
-//   { path: 'login', loadChildren: './auth/login.module#LoginPageModule', canActivate: [AuthenticationGuard]  },
-//   { path: 'register', loadChildren: './auth/register.module#RegisterPageModule', canActivate: [AuthenticationGuard]  },
-//   { path: 'welcome', loadChildren: './tabs/tab.module#TabsPageModule', canActivate: [AuthenticationGuard] },
-//   { path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthenticationGuard] },
-//  ];
-
 
 
 @NgModule({

@@ -10,8 +10,6 @@ export class TabsPage {
 
   constructor(private router: Router) { }
 
-  navigateHome() {
-    this.router.navigate(["home"]);
-  }
+  
 
 }

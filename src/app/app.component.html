@@ -1,3 +1,28 @@
 <ion-app>
+
+
+  <ion-toolbar  *ngIf="sessionService.getIsLogin()">
+    <ion-buttons slot="primary">
+      
+      <ion-button (click)="navigateHome()">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+      
+      <ion-button (click)="navigateNotification()">
+        <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="navigateTab()">
+        <ion-icon slot="icon-only" name="layers-outline"></ion-icon>
+      </ion-button>
+    
+    </ion-buttons>
+
+    <ion-title>eQueue</ion-title>
+
+   </ion-toolbar>
+
   <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
 </ion-app>
