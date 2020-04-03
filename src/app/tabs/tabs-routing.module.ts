@@ -8,65 +8,65 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'tab-menu',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import('../tab-menu/tab-menu.module').then(m => m.TabMenuPageModule)
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'tab-queue',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../tab-queue/tab-queue.module').then(m => m.TabQueuePageModule)
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'tab-order',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../tab-order/tab-order.module').then(m => m.TabOrderPageModule)
           }
         ]
       },
       {
-        path: 'tab4',
+        path: 'tab-cart',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab4/tab4.module').then(m => m.Tab4PageModule)
+              import('../tab-cart/tab-cart.module').then(m => m.TabCartPageModule)
           }
         ]
       },
       {
-        path: 'tab5',
+        path: 'tab-profile',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab5/tab5.module').then(m => m.Tab5PageModule)
+              import('../tab-profile/tab-profile.module').then(m => m.TabProfilePageModule)
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/tab-menu',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/tab-menu',
     pathMatch: 'full'
   }
 ];

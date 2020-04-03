@@ -27,7 +27,30 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
+    canActivate: [AuthenticationGuard]
+  },  {
+    path: 'tab-order',
+    loadChildren: () => import('./tab-order/tab-order.module').then( m => m.TabOrderPageModule)
+  },
+  {
+    path: 'tab-menu',
+    loadChildren: () => import('./tab-menu/tab-menu.module').then( m => m.TabMenuPageModule)
+  },
+  {
+    path: 'tab-profile',
+    loadChildren: () => import('./tab-profile/tab-profile.module').then( m => m.TabProfilePageModule)
+  },
+  {
+    path: 'tab-cart',
+    loadChildren: () => import('./tab-cart/tab-cart.module').then( m => m.TabCartPageModule)
   }
+
+
+
 
 ];
 

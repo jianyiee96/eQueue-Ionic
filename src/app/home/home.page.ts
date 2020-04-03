@@ -26,8 +26,4 @@ export class HomePage implements OnInit {
     this.router.navigate(["/login"]);
   }
 
-  navigateTabs(): void {
-    this.router.navigate(["/welcome"]);
-  }
-
 }

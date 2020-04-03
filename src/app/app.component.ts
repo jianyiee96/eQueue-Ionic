@@ -36,8 +36,12 @@ export class AppComponent {
     this.router.navigate(["home"]);
   }
 
-  navigateTabs() {
+  navigateTab() {
     this.router.navigate(["welcome"]);
+  }
+
+  navigateNotification() {
+    this.router.navigate(["notification"]);
   }
 
 }
