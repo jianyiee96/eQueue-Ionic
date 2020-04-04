@@ -26,7 +26,7 @@
     </ion-card-content>
 
 
-      <ion-input placeholder="Number of pax (1-12)" type="number" [(ngModel)]="paxCount"></ion-input>
+      <ion-input placeholder="Number of pax (1-8)" type="number" [(ngModel)]="paxCount"></ion-input>
     
 
     <ion-button expand="full" (click)="joinQueue()">
@@ -44,11 +44,17 @@
     <ion-card-content>
       <ion-text color="primary">
         <h2>You have joined a queue, be patient and wait for your turn.</h2>
-        <br>
+      </ion-text>
+
+      <ion-text color="secondary">
         <h2>Here are your queue details: </h2>
+        <h2> Join time: {{joinTime}}</h2>
+        <h2> Position: {{queuePosition}}</h2>
+        <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
     </ion-card-content>
   </ion-card>
+
 
   <ion-card *ngIf="displayOption == 3">
     <ion-card-header>

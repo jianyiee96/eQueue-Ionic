@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 import { SessionService } from '../session.service';
 import { QueueService } from '../queue.service';
@@ -24,10 +25,15 @@ export class TabQueuePage implements OnInit {
   paxCount: number;
   code: string;
 
+  joinTime: Date;
+  queuePosition: number;
+  queueWaitingTime: number;
+
   constructor(
     public sessionService: SessionService,
     public queueService: QueueService,
-    public diningTableService: DiningTableService) {
+    public diningTableService: DiningTableService,
+    public toastController: ToastController) {
 
     this.displayOption = 0;
     this.refreshTimeout = 1000;
@@ -50,6 +56,7 @@ export class TabQueuePage implements OnInit {
     this.queueService.getMyQueue().subscribe(
       response => {
         this.queue = response.queue;
+        this.queuePosition = response.position;
 
         this.diningTableService.getMyTable().subscribe(
           response => {
@@ -87,17 +94,19 @@ export class TabQueuePage implements OnInit {
 
   joinQueue() {
 
-    if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 12) {
+    if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 8) {
       console.log("Invalid pax count");
+      this.toast("Invalid Pax Count");
       return;
     }
 
     this.queueService.joinQueue(this.paxCount).subscribe(
       response => {
+        this.toast("Join Queue Sucess!");
         this.processSituation();
       },
       error => {
-
+        this.toast("Join Queue Failed!");
         this.processSituation();
       }
     );
@@ -109,6 +118,8 @@ export class TabQueuePage implements OnInit {
 
       if (this.code == null || this.code == "") {
         console.log("empty code");
+        this.toast("Empty Code");
+
       }
 
       this.diningTableService.checkIn(this.code).subscribe(
@@ -116,8 +127,11 @@ export class TabQueuePage implements OnInit {
 
           if(response.result) {
             console.log("Check in success!");
+            this.toast("Check in success!");
           } else {
             console.log("Check in failed: Wrong code");
+            this.toast("Check in failed: Wrong code");
+            
           }
           this.processSituation();
         },
@@ -135,5 +149,13 @@ export class TabQueuePage implements OnInit {
     }, this.refreshTimeout);
   }
 
+  async toast(toastMessage: string) {
+    const toast = await this.toastController.create({
+      message: toastMessage,
+      duration: 2000,
+      position: 'middle',
+    });
+    toast.present();
+  }
 
 }
