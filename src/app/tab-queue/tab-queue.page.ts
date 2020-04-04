@@ -22,6 +22,7 @@ export class TabQueuePage implements OnInit {
   displayOption: number;
   refreshTimeout: number;
   paxCount: number;
+  code: string;
 
   constructor(
     public sessionService: SessionService,
@@ -37,6 +38,9 @@ export class TabQueuePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.paxCount = null;
+    this.code = "";
+
     this.processSituation();
   }
 
@@ -100,6 +104,29 @@ export class TabQueuePage implements OnInit {
 
 
   }
+
+    checkIn() {
+
+      if (this.code == null || this.code == "") {
+        console.log("empty code");
+      }
+
+      this.diningTableService.checkIn(this.code).subscribe(
+        response => {
+
+          if(response.result) {
+            console.log("Check in success!");
+          } else {
+            console.log("Check in failed: Wrong code");
+          }
+          this.processSituation();
+        },
+        error => {
+          this.processSituation();
+        }
+      );
+
+    }
 
   doRefresh(event) {
     this.processSituation();

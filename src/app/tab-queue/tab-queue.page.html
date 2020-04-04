@@ -62,12 +62,16 @@
         <br>
         <h2>Here are your table details: </h2>
         <h2>Your allocation will expire in: </h2>
-        <ion-button expand="full" (click)="checkIn()">
-          <ion-icon slot="start" name="exit"></ion-icon>
-          Check-in now!
-        </ion-button>
       </ion-text>
     </ion-card-content>
+
+
+    <ion-input placeholder="Enter Table Code" [(ngModel)]="code"></ion-input>
+
+    <ion-button expand="full" (click)="checkIn()">
+      <ion-icon slot="start" name="exit"></ion-icon>
+      Check-in now!
+    </ion-button>
   </ion-card>
 
   <ion-card *ngIf="displayOption == 4">

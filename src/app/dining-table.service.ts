@@ -29,6 +29,15 @@ export class DiningTableService {
       );
   }
 
+  checkIn(code: string): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/checkIn?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&code=" + code).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+
+
 
 
   private handleError(error: HttpErrorResponse) {
