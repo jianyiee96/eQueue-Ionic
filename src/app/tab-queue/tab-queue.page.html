@@ -25,6 +25,10 @@
       </ion-text>
     </ion-card-content>
 
+
+      <ion-input placeholder="Number of pax (1-12)" type="number" [(ngModel)]="paxCount"></ion-input>
+    
+
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
       Join Queue Now
@@ -74,7 +78,7 @@
     <ion-card-content>
       <ion-text color="primary">
         <h2>Remember to submit your orders through eQueue.</h2>
-        
+
         <h2>You will be able to join queue once again after your current dining experience. </h2>
       </ion-text>
     </ion-card-content>

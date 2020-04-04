@@ -20,14 +20,16 @@ export class TabQueuePage implements OnInit {
   diningTable: DiningTable;
 
   displayOption: number;
-  testDisplay: String;
+  refreshTimeout: number;
+  paxCount: number;
 
   constructor(
     public sessionService: SessionService,
     public queueService: QueueService,
     public diningTableService: DiningTableService) {
+
     this.displayOption = 0;
-    this.testDisplay = "";
+    this.refreshTimeout = 1000;
 
   }
 
@@ -51,19 +53,15 @@ export class TabQueuePage implements OnInit {
 
 
             if (this.diningTable == null && this.queue == null) {
-              this.testDisplay = "Dining Table(NO) Queue(NO), Waiting to join queue.";
               this.displayOption = 1;
-            } 
+            }
             else if (this.diningTable == null && this.queue != null) {
-              this.testDisplay = "Dining Table(NO) Queue(YES), Waiting to get allocated a table.";
               this.displayOption = 2;
             }
             else if (this.diningTable != null && this.queue != null) {
-              this.testDisplay = "Dining Table(YES) Queue(YES), Waiting to get seated.";
               this.displayOption = 3;
             }
             else if (this.diningTable != null && this.queue == null) {
-              this.testDisplay = "Dining Table(YES) Queue(NO), Enjoy your meal.";
               this.displayOption = 4;
             }
 
@@ -83,52 +81,31 @@ export class TabQueuePage implements OnInit {
 
   }
 
-  doRefresh(event) {
-    this.currentCustomer = this.sessionService.getCurrentCustomer();
+  joinQueue() {
 
-    this.queueService.getMyQueue().subscribe(
+    if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 12) {
+      console.log("Invalid pax count");
+      return;
+    }
+
+    this.queueService.joinQueue(this.paxCount).subscribe(
       response => {
-        this.queue = response.queue;
-
-        this.diningTableService.getMyTable().subscribe(
-          response => {
-            this.diningTable = response.diningTable;
-
-
-            if (this.diningTable == null && this.queue == null) {
-              this.testDisplay = "Dining Table(NO) Queue(NO), Waiting to join queue.";
-              this.displayOption = 1;
-            } 
-            else if (this.diningTable == null && this.queue != null) {
-              this.testDisplay = "Dining Table(NO) Queue(YES), Waiting to get allocated a table.";
-              this.displayOption = 2;
-            }
-            else if (this.diningTable != null && this.queue != null) {
-              this.testDisplay = "Dining Table(YES) Queue(YES), Waiting to get seated.";
-              this.displayOption = 3;
-            }
-            else if (this.diningTable != null && this.queue == null) {
-              this.testDisplay = "Dining Table(YES) Queue(NO), Enjoy your meal.";
-              this.displayOption = 4;
-            }
-
-            setTimeout(() => {
-              console.log("DOnE");
-              event.target.complete();
-            }, 500);
-
-          },
-          error => {
-            console.log('********** tab-queue:ionViewDidEnter error: ' + error);
-          }
-        );
-
-
+        this.processSituation();
       },
       error => {
-        console.log('********** tab-queue:ionViewDidEnter error: ' + error);
+
+        this.processSituation();
       }
     );
+
+
+  }
+
+  doRefresh(event) {
+    this.processSituation();
+    setTimeout(() => {
+      event.target.complete();
+    }, this.refreshTimeout);
   }
 
 

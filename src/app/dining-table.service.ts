@@ -23,7 +23,6 @@ export class DiningTableService {
   }
 
   getMyTable(): Observable<any> {
-
     return this.httpClient.get<any>(this.baseUrl + "/retrieveDiningTableByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
       (
         catchError(this.handleError)
