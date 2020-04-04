@@ -48,10 +48,12 @@
 
       <ion-text color="secondary">
         <h2>Here are your queue details: </h2>
-        <h2> Join time: {{joinTime}}</h2>
+        <h2> Join time: {{parseDate(queueStartTime) | date:'HH:mm:ss'}}</h2>
         <h2> Position: {{queuePosition}}</h2>
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
+      
+      
     </ion-card-content>
   </ion-card>
 

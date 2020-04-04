@@ -25,7 +25,7 @@ export class TabQueuePage implements OnInit {
   paxCount: number;
   code: string;
 
-  joinTime: Date;
+  queueStartTime: Date;
   queuePosition: number;
   queueWaitingTime: number;
 
@@ -46,6 +46,7 @@ export class TabQueuePage implements OnInit {
   ionViewDidEnter() {
     this.paxCount = null;
     this.code = "";
+    this.queueStartTime = new Date();
 
     this.processSituation();
   }
@@ -56,6 +57,10 @@ export class TabQueuePage implements OnInit {
     this.queueService.getMyQueue().subscribe(
       response => {
         this.queue = response.queue;
+
+        if (this.queue != null) {
+          this.queueStartTime = this.queue.startDateTime;
+        }
         this.queuePosition = response.position;
 
         this.diningTableService.getMyTable().subscribe(
@@ -114,33 +119,33 @@ export class TabQueuePage implements OnInit {
 
   }
 
-    checkIn() {
+  checkIn() {
 
-      if (this.code == null || this.code == "") {
-        console.log("empty code");
-        this.toast("Empty Code");
-
-      }
-
-      this.diningTableService.checkIn(this.code).subscribe(
-        response => {
-
-          if(response.result) {
-            console.log("Check in success!");
-            this.toast("Check in success!");
-          } else {
-            console.log("Check in failed: Wrong code");
-            this.toast("Check in failed: Wrong code");
-            
-          }
-          this.processSituation();
-        },
-        error => {
-          this.processSituation();
-        }
-      );
+    if (this.code == null || this.code == "") {
+      console.log("empty code");
+      this.toast("Empty Code");
 
     }
+
+    this.diningTableService.checkIn(this.code).subscribe(
+      response => {
+
+        if (response.result) {
+          console.log("Check in success!");
+          this.toast("Check in success!");
+        } else {
+          console.log("Check in failed: Wrong code");
+          this.toast("Check in failed: Wrong code");
+
+        }
+        this.processSituation();
+      },
+      error => {
+        this.processSituation();
+      }
+    );
+
+  }
 
   doRefresh(event) {
     this.processSituation();
@@ -156,6 +161,10 @@ export class TabQueuePage implements OnInit {
       position: 'middle',
     });
     toast.present();
+  }
+
+  parseDate(d: Date) {
+    return d.toString().replace('[UTC]', '');
   }
 
 }
