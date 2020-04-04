@@ -4,10 +4,13 @@ import { ToastController } from '@ionic/angular';
 import { SessionService } from '../session.service';
 import { QueueService } from '../queue.service';
 import { DiningTableService } from '../dining-table.service';
+import { StoreService } from '../store.service';
 
 import { Customer } from '../customer';
 import { Queue } from '../queue'
 import { DiningTable } from '../dining-table'
+import { Store } from '../store';
+import { queue } from 'rxjs/internal/scheduler/queue';
 
 @Component({
   selector: 'app-tab-queue',
@@ -16,6 +19,7 @@ import { DiningTable } from '../dining-table'
 })
 export class TabQueuePage implements OnInit {
 
+  store: Store;
   currentCustomer: Customer;
   queue: Queue;
   diningTable: DiningTable;
@@ -33,6 +37,7 @@ export class TabQueuePage implements OnInit {
     public sessionService: SessionService,
     public queueService: QueueService,
     public diningTableService: DiningTableService,
+    public storeService: StoreService,
     public toastController: ToastController) {
 
     this.displayOption = 0;
@@ -41,12 +46,16 @@ export class TabQueuePage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.store = this.sessionService.getStore();
+
   }
 
   ionViewDidEnter() {
     this.paxCount = null;
     this.code = "";
     this.queueStartTime = new Date();
+    this.queueWaitingTime = 0;
 
     this.processSituation();
   }
@@ -73,6 +82,7 @@ export class TabQueuePage implements OnInit {
             }
             else if (this.diningTable == null && this.queue != null) {
               this.displayOption = 2;
+              this.queueWaitingTime = this.queuePosition * this.store.estimatedQueueUnitWaitingMinutes;
             }
             else if (this.diningTable != null && this.queue != null) {
               this.displayOption = 3;
