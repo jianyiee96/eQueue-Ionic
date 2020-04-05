@@ -44,16 +44,49 @@ export class NotificationPage implements OnInit {
       header: notification.title,
       subHeader: this.datepipe.transform(new Date(this.parseDate(notification.notificationDate)), 'dd-MM-yyyy hh:mm'),
       message: notification.message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'delete',
+          handler: (blah) => {
+            this.deleteNotification(notification);
+          }
+        }, {
+          text: 'Close',
+          handler: () => {
+
+            this.closeNotification(notification);
+
+            
+          }
+        }
+      ]
     });
 
     await alert.present();
+
+    
+  }
+
+  closeNotification(notification: Notification) {
     this.notificationService.readNotification(notification.notificationId).subscribe(
       response => {
         if (response.change) {
 
           this.reloadList();
 
+        } else {
+        }
+      }, error => {
+      }
+    );
+  }
+
+  deleteNotification(notification: Notification) {
+    this.notificationService.deleteNotification(notification.notificationId).subscribe(
+      response => {
+        if (response.change) {
+          this.reloadList();
         } else {
         }
       }, error => {
@@ -72,8 +105,10 @@ export class NotificationPage implements OnInit {
 
   }
 
-  delete(notification: Notification) {
-    console.log("Delete: " + notification.notificationId);
+  async delete(notification: Notification) {
+
+    
+
   }
 
   parseDate(d: Date) {

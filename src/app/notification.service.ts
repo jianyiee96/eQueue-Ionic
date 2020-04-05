@@ -37,6 +37,13 @@ export class NotificationService {
       );
   }
 
+  deleteNotification(notificationId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/deleteNotification?notificationId=" + notificationId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
