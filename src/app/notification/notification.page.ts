@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
+import { NotificationService } from '../notification.service';
+
+import { Notification } from '../notification';
+import { SessionService } from '../session.service';
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -9,9 +14,19 @@ import { Router } from '@angular/router';
 })
 export class NotificationPage implements OnInit {
 
-  constructor(private router: Router) { }
+  notifications: Notification[];
+
+  constructor(private router: Router,
+    public notificationService: NotificationService,
+    public sessionService: SessionService) {
+
+  }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
+    this.notifications = this.sessionService.getNotifications();
   }
 
 }

@@ -10,7 +10,6 @@ import { Customer } from '../customer';
 import { Queue } from '../queue'
 import { DiningTable } from '../dining-table'
 import { Store } from '../store';
-import { queue } from 'rxjs/internal/scheduler/queue';
 
 @Component({
   selector: 'app-tab-queue',
@@ -49,11 +48,11 @@ export class TabQueuePage implements OnInit {
 
   ngOnInit() {
 
-    this.store = this.sessionService.getStore();
-
   }
 
   ionViewDidEnter() {
+    
+    this.store = this.sessionService.getStore();
     this.queue = new Queue();
     this.queue.numberOfPax = 0;
     this.queue.startDateTime = new Date();

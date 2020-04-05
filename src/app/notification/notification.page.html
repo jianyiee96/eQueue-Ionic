@@ -8,9 +8,37 @@
 
 
 <ion-content>
-	<ion-card-header>
-		<ion-card-title>Notification</ion-card-title>
-	</ion-card-header>
+
+	<ion-card>
+
+		<ion-card-header>
+			<ion-card-title>Notification</ion-card-title>
+		</ion-card-header>
+
+
+		<ion-card-content>
+
+
+			<ion-list>
+				<ion-item expand="full" *ngFor="let notification of notifications">
+					<ion-icon slot="start" name="arrow-forward"></ion-icon>
+						{{notification.title}} {{notification.isRead?'':'[UNREAD]'}}
+				</ion-item>
+			</ion-list>
+
+
+
+		</ion-card-content>
+
+
+	</ion-card>
+
+
+
+
+
+
+
 
 
 </ion-content>
