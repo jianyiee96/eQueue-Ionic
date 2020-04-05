@@ -21,19 +21,20 @@ export class TabQueuePage implements OnInit {
 
   store: Store;
   currentCustomer: Customer;
+
   queue: Queue;
   diningTable: DiningTable;
 
   displayOption: number;
   refreshTimeout: number;
+
   paxCount: number;
   code: string;
-
   queueStartTime: Date;
-  queuePosition: number;
-  queueWaitingTime: number;
   expiryDateTime: Date;
-
+  queueWaitingTime: number;
+  queuePosition: number;
+  
   constructor(
     public sessionService: SessionService,
     public queueService: QueueService,
@@ -53,14 +54,22 @@ export class TabQueuePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.queue = new Queue();
+    this.queue.numberOfPax = 0;
+    this.queue.startDateTime = new Date();
+    this.queue.allocatedDateTime = new Date();
+    this.queue.queueId = 0;
+
     this.diningTable = new DiningTable();
     this.diningTable.seatingCapacity = 0;
-    this.paxCount = null;
+    this.diningTable.diningTableId = 0;
+    
+    this.paxCount = 0;
     this.code = "";
     this.queueStartTime = new Date();
     this.expiryDateTime = new Date();
-    
     this.queueWaitingTime = 0;
+    this.queuePosition = 0;
 
     this.processSituation();
   }
@@ -87,6 +96,7 @@ export class TabQueuePage implements OnInit {
             }
             else if (this.diningTable == null && this.queue != null) {
               this.displayOption = 2;
+
               this.queueWaitingTime = this.queuePosition * this.store.estimatedQueueUnitWaitingMinutes;
             }
             else if (this.diningTable != null && this.queue != null) {
@@ -94,10 +104,8 @@ export class TabQueuePage implements OnInit {
 
               let allocatedDateString = this.parseDate(this.queue.allocatedDateTime);
               this.expiryDateTime = new Date(allocatedDateString);
-
               this.expiryDateTime.setMinutes(this.expiryDateTime.getMinutes() + this.store.allocationGraceWaitingMinutes);
               
-              //this.expiryDateTime.setMinutes(allocatedDateTime.getMinutes() + 5);
             }
             else if (this.diningTable != null && this.queue == null) {
               this.displayOption = 4;
@@ -162,21 +170,16 @@ export class TabQueuePage implements OnInit {
   checkIn() {
 
     if (this.code == null || this.code == "") {
-      console.log("empty code");
       this.toast("Empty Code");
-
     }
 
     this.diningTableService.checkIn(this.code).subscribe(
       response => {
 
         if (response.result) {
-          console.log("Check in success!");
           this.toast("Check in success!");
         } else {
-          console.log("Check in failed: Wrong code");
           this.toast("Check in failed: Wrong code");
-
         }
         this.processSituation();
       },
@@ -185,6 +188,11 @@ export class TabQueuePage implements OnInit {
       }
     );
 
+  }
+
+  checkInQr() {
+    
+    this.toast("Function in unavailable atm.");
   }
 
   doRefresh(event) {

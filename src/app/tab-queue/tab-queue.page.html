@@ -75,7 +75,7 @@
         <h2> Allocated time: {{parseDate(queue.allocatedDateTime) | date:'HH:mm' }}</h2>
         <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
       </ion-text>
-      <ion-text color="red">
+      <ion-text color="danger">
         
 
         <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
@@ -83,13 +83,37 @@
     </ion-card-content>
 
 
-    <ion-input placeholder="Enter Table Code" [(ngModel)]="code"></ion-input>
+    <ion-item-divider>
+      <label>
+        Method 1:  
+      </label>
+    </ion-item-divider>
+
+    <ion-input placeholder="Table Code" [(ngModel)]="code"></ion-input>
 
     <ion-button expand="full" (click)="checkIn()">
       <ion-icon slot="start" name="exit"></ion-icon>
-      Check-in now!
+      Check-in with Table Code
     </ion-button>
+
+    <ion-item-divider>
+      <label>
+        Method 2:
+      </label>
+    </ion-item-divider>
+    
+    
+
+    <ion-button expand="full" (click)="checkInQr()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Scan QR-Code
+    </ion-button>
+
+
   </ion-card>
+  
+
+
 
   <ion-card *ngIf="displayOption == 4">
     <ion-card-header>
