@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { DatePipe } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -27,10 +28,12 @@ import { AppComponent } from './app.component';
     
   ],
   providers: [
+    DatePipe,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
