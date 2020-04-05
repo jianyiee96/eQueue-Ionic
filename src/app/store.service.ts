@@ -9,36 +9,26 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class DiningTableService {
+export class StoreService {
 
   baseUrl: string;
+  myId: number;
 
   constructor(private httpClient: HttpClient,
     private sessionService: SessionService) {
-
-    this.baseUrl = this.sessionService.getRootPath() + 'DiningTable';
+    this.baseUrl = this.sessionService.getRootPath() + 'Store';
   }
 
-  getMyTable(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveDiningTableByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
+  retrieveStoreInformation(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveStoreInformation").pipe
       (
         catchError(this.handleError)
       );
   }
-
-  checkIn(code: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/checkIn?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&code=" + code).pipe
-      (
-        catchError(this.handleError)
-      );
-  }
-
-
-
-
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
@@ -54,4 +44,5 @@ export class DiningTableService {
 
     return throwError(errorMessage);
   }
+
 }

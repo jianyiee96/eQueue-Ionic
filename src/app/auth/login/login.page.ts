@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 
 import { SessionService } from '../../session.service';
 import { CustomerService } from '../../customer.service';
+import { StoreService } from '../../store.service';
+import { Store } from '../../store';
 import { Customer } from '../../customer';
 
 @Component({
@@ -21,13 +23,34 @@ export class LoginPage implements OnInit {
 
   constructor(private router: Router,
     public sessionService: SessionService,
-    private customerService: CustomerService) {
+    private customerService: CustomerService,
+    private storeService: StoreService) {
 
     this.submitted = false;
 
   }
 
   ngOnInit() {
+
+    this.storeService.retrieveStoreInformation().subscribe(
+      response => {
+
+        let store: Store = response.store;
+
+        if (store != null) {
+          this.sessionService.setStore(store);
+        }
+        else {
+          console.log("Unable to retrieve store [null]");
+        }
+      },
+      error => {
+        console.log("Unable to retrieve store [" + error + "]");
+      }
+    );
+
+
+
   }
 
   clear() {
@@ -55,8 +78,8 @@ export class LoginPage implements OnInit {
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
             this.loginError = false;
-            this.router.navigate(['/home']); 
-           
+            this.router.navigate(['/home']);
+
           }
           else {
             this.loginError = true;

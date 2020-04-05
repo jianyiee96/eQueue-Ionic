@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import { Customer } from './customer';
+import { Store } from './store';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,14 @@ export class SessionService {
 
   setPassword(password: string): void {
     sessionStorage.password = password;
+  }
+
+  setStore(store: Store): void {
+    sessionStorage.store = JSON.stringify(store);
+  }
+
+  getStore(): Store {
+    return JSON.parse(sessionStorage.store);
   }
 
 }

@@ -25,6 +25,10 @@
       </ion-text>
     </ion-card-content>
 
+
+      <ion-input placeholder="Number of pax (1-8)" type="number" [(ngModel)]="paxCount"></ion-input>
+    
+
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
       Join Queue Now
@@ -40,11 +44,20 @@
     <ion-card-content>
       <ion-text color="primary">
         <h2>You have joined a queue, be patient and wait for your turn.</h2>
-        <br>
-        <h2>Here are your queue details: </h2>
       </ion-text>
+
+      <ion-text color="secondary">
+        <h2>Here are your queue details: </h2>
+        <h2> Pax: {{queue.numberOfPax}}</h2>
+        <h2> Join time: {{parseDate(queueStartTime) | date:'HH:mm:ss'}}</h2>
+        <h2> Position: {{queuePosition}}</h2>
+        <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
+      </ion-text>
+      
+      
     </ion-card-content>
   </ion-card>
+
 
   <ion-card *ngIf="displayOption == 3">
     <ion-card-header>
@@ -57,14 +70,50 @@
         <h2>We have a table for you! Hurry up before it expires.</h2>
         <br>
         <h2>Here are your table details: </h2>
-        <h2>Your allocation will expire in: </h2>
-        <ion-button expand="full" (click)="checkIn()">
-          <ion-icon slot="start" name="exit"></ion-icon>
-          Check-in now!
-        </ion-button>
+        <h2> Table number: {{diningTable.diningTableId}}</h2>
+        <h2> Table capacity: {{diningTable.seatingCapacity}}</h2>
+        <h2> Allocated time: {{parseDate(queue.allocatedDateTime) | date:'HH:mm' }}</h2>
+        <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
+      </ion-text>
+      <ion-text color="danger">
+        
+
+        <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
       </ion-text>
     </ion-card-content>
+
+
+    <ion-item-divider>
+      <label>
+        Method 1:  
+      </label>
+    </ion-item-divider>
+
+    <ion-input placeholder="Table Code" [(ngModel)]="code"></ion-input>
+
+    <ion-button expand="full" (click)="checkIn()">
+      <ion-icon slot="start" name="exit"></ion-icon>
+      Check-in with Table Code
+    </ion-button>
+
+    <ion-item-divider>
+      <label>
+        Method 2:
+      </label>
+    </ion-item-divider>
+    
+    
+
+    <ion-button expand="full" (click)="checkInQr()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Scan QR-Code
+    </ion-button>
+
+
   </ion-card>
+  
+
+
 
   <ion-card *ngIf="displayOption == 4">
     <ion-card-header>
@@ -74,7 +123,7 @@
     <ion-card-content>
       <ion-text color="primary">
         <h2>Remember to submit your orders through eQueue.</h2>
-        
+
         <h2>You will be able to join queue once again after your current dining experience. </h2>
       </ion-text>
     </ion-card-content>

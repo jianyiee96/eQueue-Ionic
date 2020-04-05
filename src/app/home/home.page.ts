@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
+import { Store } from '../store';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,17 @@ import { CustomerService } from '../customer.service';
 })
 export class HomePage implements OnInit {
 
+  store: Store;
+
   constructor(private router: Router,
     public sessionService: SessionService,
     private customerService: CustomerService) { }
 
   ngOnInit() {
+
+    this.store = this.sessionService.getStore();
+    console.log("Here store: " + this.store.storeName);
+
   }
 
   customerLogout(): void {
