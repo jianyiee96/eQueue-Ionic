@@ -6,7 +6,7 @@ import { NotificationService } from '../notification.service';
 
 import { Notification } from '../notification';
 import { SessionService } from '../session.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NumericValueAccessor } from '@ionic/angular';
 
 import { DatePipe } from '@angular/common'
 
@@ -18,12 +18,15 @@ import { DatePipe } from '@angular/common'
 export class NotificationPage implements OnInit {
 
   notifications: Notification[];
+  refreshTimeout: number;
 
   constructor(private router: Router,
     public notificationService: NotificationService,
     public sessionService: SessionService,
     public alertController: AlertController,
     public datepipe: DatePipe) {
+
+      this.refreshTimeout = 1000;
 
   }
 
@@ -37,7 +40,7 @@ export class NotificationPage implements OnInit {
   async read(notification: Notification) {
 
     const alert = await this.alertController.create({
-      
+
       header: notification.title,
       subHeader: this.datepipe.transform(new Date(this.parseDate(notification.notificationDate)), 'dd-MM-yyyy hh:mm'),
       message: notification.message,
@@ -49,20 +52,24 @@ export class NotificationPage implements OnInit {
       response => {
         if (response.change) {
 
-          this.notificationService.retrieveCustomerNotifications().subscribe(
-            response => {
-              this.notifications = response.notifications;
-            }, error => {
-            }
-          );
+          this.reloadList();
 
         } else {
         }
       }, error => {
       }
-
-
     );
+  }
+
+  reloadList() {
+
+    this.notificationService.retrieveCustomerNotifications().subscribe(
+      response => {
+        this.notifications = response.notifications;
+      }, error => {
+      }
+    );
+
   }
 
   delete(notification: Notification) {
@@ -71,6 +78,13 @@ export class NotificationPage implements OnInit {
 
   parseDate(d: Date) {
     return d.toString().replace('[UTC]', '');
+  }
+
+  doRefresh(event) {
+    this.reloadList();
+    setTimeout(() => {
+      event.target.complete();
+    }, this.refreshTimeout);
   }
 
 }
