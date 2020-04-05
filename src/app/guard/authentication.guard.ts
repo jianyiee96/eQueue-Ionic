@@ -21,8 +21,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
 
     try {
 
-      console.log("AuthenticateGuard: " + next.url[0]);
-
       if (next.url[0].path == "register" || next.url[0].path == "login") {
 
         if (this.sessionService.getIsLogin()) {
@@ -38,8 +36,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
         } else {
           this.router.navigate(['/login']);
         }
-
-
       }
 
     } catch (error) {

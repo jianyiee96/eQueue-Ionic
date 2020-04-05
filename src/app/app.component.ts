@@ -7,6 +7,10 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { SessionService } from './session.service';
+import { NotificationService } from './notification.service';
+import { interval, Subscription } from 'rxjs';
+
+import { Notification } from './notification';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +18,59 @@ import { SessionService } from './session.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  subscription: Subscription;
+  pollInterval: number;
+  unreadNotification: boolean;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    public sessionService: SessionService
+    public sessionService: SessionService,
+    public notificationSerive: NotificationService
   ) {
     this.initializeApp();
+  }
+
+
+  ngOnInit() {
+
+    this.pollInterval = 1000;
+    this.unreadNotification = false;
+
+    interval(this.pollInterval).subscribe(x => this.updateNotifications());
+
+  }
+
+  updateNotifications() {
+
+    if (this.sessionService.getIsLogin()) {
+      this.notificationSerive.retrieveCustomerNotifications().subscribe(
+        response => {
+          let notifications: Notification[] = response.notifications;
+          
+          let allRead: boolean = true;
+          notifications.forEach( x => {
+            if(!x.isRead){
+              allRead = false;
+            }
+          });
+
+          if(allRead){
+            this.unreadNotification = false;
+          } else {
+            this.unreadNotification = true;
+          }
+          
+          this.sessionService.setNotifications(notifications);
+
+        }, error => { }
+      );
+
+    }
+
   }
 
   initializeApp() {

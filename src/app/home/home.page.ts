@@ -21,10 +21,7 @@ export class HomePage implements OnInit {
     private customerService: CustomerService) { }
 
   ngOnInit() {
-
     this.store = this.sessionService.getStore();
-    console.log("Here store: " + this.store.storeName);
-
   }
 
   customerLogout(): void {

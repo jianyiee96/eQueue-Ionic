@@ -1,16 +1,21 @@
 <ion-app>
 
 
-  <ion-toolbar  *ngIf="sessionService.getIsLogin()">
+  <ion-toolbar *ngIf="sessionService.getIsLogin()">
     <ion-buttons slot="primary">
       
       <ion-button (click)="navigateHome()">
         <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
       
-      <ion-button (click)="navigateNotification()">
+      <ion-button *ngIf="!unreadNotification" (click)="navigateNotification()">
         <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
       </ion-button>
+
+      <ion-button *ngIf="unreadNotification" (click)="navigateNotification()">
+        <ion-icon slot="icon-only" name="mail-unread-outline"></ion-icon>
+      </ion-button>
+
 
       <ion-button (click)="navigateTab()">
         <ion-icon slot="icon-only" name="layers-outline"></ion-icon>

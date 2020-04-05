@@ -10,7 +10,6 @@ import { Customer } from '../customer';
 import { Queue } from '../queue'
 import { DiningTable } from '../dining-table'
 import { Store } from '../store';
-import { queue } from 'rxjs/internal/scheduler/queue';
 
 @Component({
   selector: 'app-tab-queue',
@@ -31,6 +30,7 @@ export class TabQueuePage implements OnInit {
   paxCount: number;
   code: string;
   queueStartTime: Date;
+  queueAllocatedDateTime: Date;
   expiryDateTime: Date;
   queueWaitingTime: number;
   queuePosition: number;
@@ -49,11 +49,11 @@ export class TabQueuePage implements OnInit {
 
   ngOnInit() {
 
-    this.store = this.sessionService.getStore();
-
   }
 
   ionViewDidEnter() {
+    
+    this.store = this.sessionService.getStore();
     this.queue = new Queue();
     this.queue.numberOfPax = 0;
     this.queue.startDateTime = new Date();
@@ -67,6 +67,7 @@ export class TabQueuePage implements OnInit {
     this.paxCount = 0;
     this.code = "";
     this.queueStartTime = new Date();
+    this.queueAllocatedDateTime = new Date();
     this.expiryDateTime = new Date();
     this.queueWaitingTime = 0;
     this.queuePosition = 0;
@@ -83,7 +84,12 @@ export class TabQueuePage implements OnInit {
 
         if (this.queue != null) {
           this.queueStartTime = this.queue.startDateTime;
+          this.queueAllocatedDateTime = this.queue.allocatedDateTime;
+        } else {
+          this.queueStartTime = new Date();
+          this.queueAllocatedDateTime = new Date();
         }
+
         this.queuePosition = response.position;
 
         this.diningTableService.getMyTable().subscribe(
@@ -102,7 +108,7 @@ export class TabQueuePage implements OnInit {
             else if (this.diningTable != null && this.queue != null) {
               this.displayOption = 3;
 
-              let allocatedDateString = this.parseDate(this.queue.allocatedDateTime);
+              let allocatedDateString = this.parseDate(this.queueAllocatedDateTime);
               this.expiryDateTime = new Date(allocatedDateString);
               this.expiryDateTime.setMinutes(this.expiryDateTime.getMinutes() + this.store.allocationGraceWaitingMinutes);
               

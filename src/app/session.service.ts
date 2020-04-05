@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 
 import { Customer } from './customer';
 import { Store } from './store';
+import { Notification } from './notification';
 
 @Injectable({
   providedIn: 'root'
@@ -39,11 +40,27 @@ export class SessionService {
   }
 
   getCurrentCustomer(): Customer {
-    return JSON.parse(sessionStorage.currentCustomer);
+    if (sessionStorage.currentCustomer != null) {
+      return JSON.parse(sessionStorage.currentCustomer);
+    } else {
+      return null;
+    }
   }
 
   setCurrentCustomer(currentCustomer: Customer): void {
     sessionStorage.currentCustomer = JSON.stringify(currentCustomer);
+  }
+
+  getNotifications(): Notification[] {
+    if (sessionStorage.notifications != null) {
+      return JSON.parse(sessionStorage.notifications);
+    } else {
+      return new Notification[0];
+    }
+  }
+
+  setNotifications(notifications: Notification[]): void {
+    sessionStorage.notifications = JSON.stringify(notifications);
   }
 
   setEmail(email: string): void {

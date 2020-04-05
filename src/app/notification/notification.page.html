@@ -7,10 +7,56 @@
 
 
 
-<ion-content>
-	<ion-card-header>
-		<ion-card-title>Notification</ion-card-title>
-	</ion-card-header>
+<ion-content [fullscreen]="true">
+
+
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content refreshingSpinner="crescent" refreshingText="Refreshing...">
+		</ion-refresher-content>
+	  </ion-refresher>
+
+	<ion-card>
+
+		<ion-card-header>
+			<ion-card-title>Notification</ion-card-title>
+		</ion-card-header>
+
+
+		<ion-card-content>
+
+			<ion-list>
+
+				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
+
+					<ion-label *ngIf="!notification.isRead" color="success">
+						<h2>{{notification.title}}</h2>
+						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+						<p>{{notification.message}}</p>
+					</ion-label>
+
+					<ion-label *ngIf="notification.isRead" color="primary">
+						<h2>{{notification.title}}</h2>
+						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+						<p>{{notification.message}}</p>
+					</ion-label>
+
+					<ion-icon slot="end" name="arrow-forward" (click)="read(notification)"></ion-icon>
+
+				</ion-item>
+
+			</ion-list>
+
+		</ion-card-content>
+
+
+	</ion-card>
+
+
+
+
+
+
+
 
 
 </ion-content>
