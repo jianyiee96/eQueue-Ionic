@@ -32,6 +32,7 @@ export class TabQueuePage implements OnInit {
   queueStartTime: Date;
   queuePosition: number;
   queueWaitingTime: number;
+  expiryDateTime: Date;
 
   constructor(
     public sessionService: SessionService,
@@ -52,9 +53,13 @@ export class TabQueuePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.diningTable = new DiningTable();
+    this.diningTable.seatingCapacity = 0;
     this.paxCount = null;
     this.code = "";
     this.queueStartTime = new Date();
+    this.expiryDateTime = new Date();
+    
     this.queueWaitingTime = 0;
 
     this.processSituation();
@@ -86,6 +91,13 @@ export class TabQueuePage implements OnInit {
             }
             else if (this.diningTable != null && this.queue != null) {
               this.displayOption = 3;
+
+              let allocatedDateString = this.parseDate(this.queue.allocatedDateTime);
+              this.expiryDateTime = new Date(allocatedDateString);
+
+              this.expiryDateTime.setMinutes(this.expiryDateTime.getMinutes() + this.store.allocationGraceWaitingMinutes);
+              
+              //this.expiryDateTime.setMinutes(allocatedDateTime.getMinutes() + 5);
             }
             else if (this.diningTable != null && this.queue == null) {
               this.displayOption = 4;
@@ -103,6 +115,24 @@ export class TabQueuePage implements OnInit {
         console.log('********** tab-queue:ionViewDidEnter error: ' + error);
       }
     );
+
+    this.storeService.retrieveStoreInformation().subscribe(
+      response => {
+
+        let store: Store = response.store;
+
+        if (store != null) {
+          this.sessionService.setStore(store);
+        }
+        else {
+          console.log("Unable to retrieve store [null]");
+        }
+      },
+      error => {
+        console.log("Unable to retrieve store [" + error + "]");
+      }
+    );
+
 
 
   }

@@ -48,6 +48,7 @@
 
       <ion-text color="secondary">
         <h2>Here are your queue details: </h2>
+        <h2> Pax: {{queue.numberOfPax}}</h2>
         <h2> Join time: {{parseDate(queueStartTime) | date:'HH:mm:ss'}}</h2>
         <h2> Position: {{queuePosition}}</h2>
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
@@ -69,7 +70,15 @@
         <h2>We have a table for you! Hurry up before it expires.</h2>
         <br>
         <h2>Here are your table details: </h2>
-        <h2>Your allocation will expire in: </h2>
+        <h2> Table number: {{diningTable.diningTableId}}</h2>
+        <h2> Table capacity: {{diningTable.seatingCapacity}}</h2>
+        <h2> Allocated time: {{parseDate(queue.allocatedDateTime) | date:'HH:mm' }}</h2>
+        <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
+      </ion-text>
+      <ion-text color="red">
+        
+
+        <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
       </ion-text>
     </ion-card-content>
 
