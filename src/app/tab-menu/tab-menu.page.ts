@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session.service';
+
+
 
 @Component({
   selector: 'app-tab-menu',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabMenuPage implements OnInit {
 
-  constructor() { }
+  topCategories: String[];
+  subCategories: String[];
+  menuItems: String[];
+
+  constructor(public sessionService: SessionService) { }
 
   ngOnInit() {
+
+
+  }
+
+  ionViewDidEnter() {
+
+    this.topCategories = ["Food", "Drinks", "Desserts","Recom","Ohhh"];
+
+  }
+
+  processMenu(){
+
   }
 
 }

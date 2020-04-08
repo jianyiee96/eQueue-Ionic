@@ -18,7 +18,17 @@ export class SessionService {
       return "http://192.168.137.1:8080/eQueue-rws/Resources/";
     }
     else {
-      return "http://localhost:8080/eQueue-rws/Resources/";
+      return "/api/";
+    }
+  }
+
+  getImageResourcePath(): string {
+
+    if (this.platform.is('hybrid')) {
+      return "http://192.168.137.1:8080/eQueue-war/resources/images/food/";
+    }
+    else {
+      return "http://localhost:8080/eQueue-war/resources/images/food/";
     }
   }
 

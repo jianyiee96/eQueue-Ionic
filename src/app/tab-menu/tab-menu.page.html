@@ -5,10 +5,22 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
-  
-	<ion-card-header>
-		<ion-card-title>Food Menu</ion-card-title>
-	</ion-card-header>
+
+
+
+
+
+  <ion-card>
+
+    <ion-segment scrollable value="heart">
+
+      <ion-segment-button *ngFor="let segment of segments">
+
+        <ion-label>{{segment}}</ion-label>
+      </ion-segment-button>
+
+    </ion-segment>
+
+  </ion-card>
 
 </ion-content>
