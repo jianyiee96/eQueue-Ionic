@@ -41,10 +41,12 @@
           <img src="{{resourcePath+item.imagePath}}">
         </ion-thumbnail>
         <ion-label>
-          <h2>{{item.menuItemName}}</h2>
-          <h3>{{getCurrency(item.menuItemPrice)}}</h3>
-          <p>{{item.menuItemCode}}</p>
-
+          <h2><b>{{item.menuItemName}}</b></h2>
+          <h2>{{getCurrency(item.menuItemPrice)}}</h2>
+          <!-- <p>{{item.menuItemCode}}</p> -->
+          <p>
+            <ion-icon name="timer-outline" class="ion-label-clock"></ion-icon>{{item.waitingTimeMinutes}}&nbsp;minutes
+          </p>
 
         </ion-label>
 
