@@ -1,4 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session.service';
+import { MenuItem } from '../menu-item';
+import { MenuCategory } from '../menu-category';
+import { MenuCategoryService } from '../menu-category.service';
+import { MenuItemService } from '../menu-item.service';
+
+import { ModalController } from '@ionic/angular';
+
+import { CurrencyPipe } from '@angular/common';
+
+import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
+import { Cart } from '../cart';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-tab-cart',
@@ -7,9 +20,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabCartPage implements OnInit {
 
-  constructor() { }
+
+  cart: Cart;
+
+  resourcePath: string;
+
+  constructor(public sessionService: SessionService,
+    public menuItemService: MenuItemService,
+    public modalController: ModalController,
+    public cartService: CartService,
+    private currencyPipe: CurrencyPipe) {
+
+
+  }
 
   ngOnInit() {
+
+    this.cart = this.sessionService.getShoppingCart();
+    this.resourcePath = this.sessionService.getImageResourcePath();
+
+  }
+
+  ionViewDidEnter() {
+    this.cart = this.sessionService.getShoppingCart();
+  }
+
+  async itemOptions(item: MenuItem) {
+    const modal = await this.modalController.create({
+      component: ModalItemOptionPage,
+      animated: true,
+      backdropDismiss: false,
+      componentProps: {
+        input: item
+      }
+    });
+
+    modal.onDidDismiss().then(
+      (data) => {
+        this.cart = this.sessionService.getShoppingCart();
+      }
+    );
+    return await modal.present();
+
+  }
+
+  submitOrder() {
+
+    this.cartService.saveCart().subscribe(
+      response => {
+        console.log("Response received");
+      }, error => {
+        console.log("Error received: " + error);
+      }
+    );
+
+  }
+
+  getCurrency(amount: number): string {
+    return this.currencyPipe.transform(amount);
   }
 
 }

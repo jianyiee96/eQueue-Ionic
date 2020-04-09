@@ -1,0 +1,58 @@
+<ion-toolbar>
+  <ion-title>{{currentItem.menuItemName}}</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="dismissModal()">Close</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+
+        <ion-row class="price">
+          SGD{{getCurrency(currentItem.menuItemPrice)}}
+        </ion-row>
+
+        <ion-row class="description">
+          {{currentItem.menuItemDescription}}
+        </ion-row>
+
+        <ion-row class="controls">
+
+          <ion-col ion-align-items-end>
+            <ion-icon name="remove-circle-outline" (click)="reduceItemQuantity()"></ion-icon>
+          </ion-col>
+          <ion-col class="number"><ion-input [(ngModel)]="currentQuantity" disabled></ion-input></ion-col>
+          <ion-col ion-align-items-end>
+            <ion-icon name="add-circle-outline" (click)="addItemQuantity()"></ion-icon>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-col>
+
+      <ion-col>
+        <img src="{{resourcePath+currentItem.imagePath}}">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label position="stacked">Comments:</ion-label>
+        <ion-textarea [(ngModel)]="currentComments" rows="3" cols="300" maxlength="128" placeholder="E.g No onions, please..."></ion-textarea>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="saveAndDismiss()">Add to cart</ion-button>
+</ion-footer>

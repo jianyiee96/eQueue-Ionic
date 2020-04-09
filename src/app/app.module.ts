@@ -12,21 +12,26 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DatePipe, CurrencyPipe } from '@angular/common'
+import { DatePipe, CurrencyPipe } from '@angular/common';
+import { ModalItemOptionPage } from './modal-item-option/modal-item-option.page';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ModalItemOptionPage
   ],
-  entryComponents: [    
+  entryComponents: [ 
+    ModalItemOptionPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-    
+    HttpClientModule,
+  ],
+  exports: [
+    ModalItemOptionPage
   ],
   providers: [
     CurrencyPipe,
@@ -39,3 +44,4 @@ import { DatePipe, CurrencyPipe } from '@angular/common'
   
 })
 export class AppModule { }
+

@@ -11,6 +11,9 @@ import { NotificationService } from './notification.service';
 import { interval, Subscription } from 'rxjs';
 
 import { Notification } from './notification';
+import { OrderLineItem } from './order-line-item';
+
+
 
 @Component({
   selector: 'app-root',
@@ -29,7 +32,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router,
     public sessionService: SessionService,
-    public notificationSerive: NotificationService
+    public notificationService: NotificationService
   ) {
     this.initializeApp();
   }
@@ -40,30 +43,41 @@ export class AppComponent {
     this.pollInterval = 1000;
     this.unreadNotification = false;
 
-    interval(this.pollInterval).subscribe(x => this.updateNotifications());
+    interval(this.pollInterval).subscribe(x => {
+      this.updateNotifications();
+      this.persistCart();
+    });
 
+  }
+
+  persistCart() {
+    if (this.sessionService.getIsLogin()) {
+
+
+
+    }
   }
 
   updateNotifications() {
 
     if (this.sessionService.getIsLogin()) {
-      this.notificationSerive.retrieveCustomerNotifications().subscribe(
+      this.notificationService.retrieveCustomerNotifications().subscribe(
         response => {
           let notifications: Notification[] = response.notifications;
-          
+
           let allRead: boolean = true;
-          notifications.forEach( x => {
-            if(!x.isRead){
+          notifications.forEach(x => {
+            if (!x.isRead) {
               allRead = false;
             }
           });
 
-          if(allRead){
+          if (allRead) {
             this.unreadNotification = false;
           } else {
             this.unreadNotification = true;
           }
-          
+
           this.sessionService.setNotifications(notifications);
 
         }, error => { }
