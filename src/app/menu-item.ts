@@ -9,9 +9,9 @@ export class MenuItem {
     menuItemName: string;
     menuItemPrice: number;
     waitingTimeMinutes: number;
-    categoryId: number;
+    menuItemDescription: string;
 
-    constructor(availability?: MenuItemAvailabilityEnum, imagePath?: string, menuItemCode?: string, menuItemId?: number, menuItemName?: string, menuItemPrice?: number, waitingTimeMinutes?: number) {
+    constructor(availability?: MenuItemAvailabilityEnum, imagePath?: string, menuItemCode?: string, menuItemId?: number, menuItemName?: string, menuItemPrice?: number, waitingTimeMinutes?: number, menuItemDescription?: string) {
         this.availability = availability;
         this.imagePath = imagePath;
         this.menuItemCode = menuItemCode;
@@ -19,7 +19,7 @@ export class MenuItem {
         this.menuItemId = menuItemId;
         this.menuItemPrice = menuItemPrice;
         this.waitingTimeMinutes = waitingTimeMinutes;
-    
+        this.menuItemDescription = menuItemDescription;
     }
 
 

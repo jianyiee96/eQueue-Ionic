@@ -22,6 +22,9 @@
 
     </ion-segment>
 
+
+
+
     <ion-list *ngFor="let category of subCategories">
 
 
@@ -49,7 +52,7 @@
           </p>
 
         </ion-label>
-
+        <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="itemOptions(item)"></ion-icon>
       </ion-item>
 
 

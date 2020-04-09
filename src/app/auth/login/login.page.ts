@@ -7,6 +7,7 @@ import { CustomerService } from '../../customer.service';
 import { StoreService } from '../../store.service';
 import { Store } from '../../store';
 import { Customer } from '../../customer';
+import { Cart } from '../../cart';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+
 
     this.storeService.retrieveStoreInformation().subscribe(
       response => {
@@ -77,6 +79,7 @@ export class LoginPage implements OnInit {
           if (customer != null) {
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
+            this.sessionService.setShoppingCart(response.customer.shoppingCart);
             this.loginError = false;
             this.router.navigate(['/home']);
 

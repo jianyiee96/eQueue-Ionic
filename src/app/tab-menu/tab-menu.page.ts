@@ -5,7 +5,12 @@ import { MenuCategory } from '../menu-category';
 import { MenuCategoryService } from '../menu-category.service';
 import { MenuItemService } from '../menu-item.service';
 
+import { ModalController } from '@ionic/angular';
+
 import { CurrencyPipe } from '@angular/common';
+
+import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
+
 
 @Component({
   selector: 'app-tab-menu',
@@ -24,6 +29,7 @@ export class TabMenuPage implements OnInit {
   constructor(public sessionService: SessionService,
     public menuCategoryService: MenuCategoryService,
     public menuItemService: MenuItemService,
+    public modalController: ModalController,
     private currencyPipe: CurrencyPipe) { }
 
   ngOnInit() {
@@ -71,6 +77,18 @@ export class TabMenuPage implements OnInit {
     )
 
 
+  }
+
+  async itemOptions(item: MenuItem) {
+    const modal = await this.modalController.create({
+      component: ModalItemOptionPage,
+      animated: true,
+      backdropDismiss: false,
+      componentProps: {
+        input: item
+      }
+    });
+    return await modal.present();
   }
 
 
