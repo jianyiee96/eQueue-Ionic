@@ -75,7 +75,7 @@ export class ModalItemOptionPage {
     
     //new item into cart
     if (!this.exist && this.currentQuantity > 0) {
-      this.cart.orderLineItems.push(new OrderLineItem(null, this.currentItem, this.currentComments, this.currentQuantity, OrderLineItemStatusEnum.IN_CART, false));
+      this.cart.orderLineItems.push(new OrderLineItem(null, this.currentItem, this.currentComments, this.currentQuantity, null, false));
       this.cart.totalAmount += (this.currentQuantity * this.currentItem.menuItemPrice);
     }
 

@@ -11,6 +11,7 @@ import { CurrencyPipe } from '@angular/common';
 
 import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
 import { Cart } from '../cart';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-tab-cart',
@@ -27,6 +28,7 @@ export class TabCartPage implements OnInit {
   constructor(public sessionService: SessionService,
     public menuItemService: MenuItemService,
     public modalController: ModalController,
+    public cartService: CartService,
     private currencyPipe: CurrencyPipe) {
 
 
@@ -59,6 +61,18 @@ export class TabCartPage implements OnInit {
       }
     );
     return await modal.present();
+
+  }
+
+  submitOrder() {
+
+    this.cartService.saveCart().subscribe(
+      response => {
+        console.log("Response received");
+      }, error => {
+        console.log("Error received: " + error);
+      }
+    );
 
   }
 
