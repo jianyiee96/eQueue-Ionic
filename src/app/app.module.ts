@@ -12,7 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DatePipe } from '@angular/common'
+import { DatePipe, CurrencyPipe } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import { DatePipe } from '@angular/common'
     
   ],
   providers: [
+    CurrencyPipe,
     DatePipe,
     StatusBar,
     SplashScreen,

@@ -14,13 +14,48 @@
 
     <ion-segment scrollable value="heart">
 
-      <ion-segment-button *ngFor="let segment of segments">
+      <ion-segment-button *ngFor="let topCategory of topCategories" (click)="categorySelection(topCategory)">
 
-        <ion-label>{{segment}}</ion-label>
+        <ion-label>{{topCategory.categoryName}}</ion-label>
+
       </ion-segment-button>
 
     </ion-segment>
 
+    <ion-list *ngFor="let category of subCategories">
+
+
+      <ion-item-divider color="secondary">
+        <ion-label>
+          <h2>
+            <b>
+              {{category.categoryName}}
+            </b>
+          </h2>
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngFor="let item of category.menuItems">
+
+        <ion-thumbnail slot="start">
+          <img src="{{resourcePath+item.imagePath}}">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{item.menuItemName}}</h2>
+          <h3>{{getCurrency(item.menuItemPrice)}}</h3>
+          <p>{{item.menuItemCode}}</p>
+
+
+        </ion-label>
+
+      </ion-item>
+
+
+    </ion-list>
+
   </ion-card>
+
+
+
 
 </ion-content>
