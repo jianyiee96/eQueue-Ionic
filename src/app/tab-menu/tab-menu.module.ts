@@ -17,6 +17,8 @@ import { TabMenuPage } from './tab-menu.page';
     TabMenuPageRoutingModule,
     RouterModule.forChild([{ path: '', component: TabMenuPage }])
   ],
-  declarations: [TabMenuPage]
+  declarations: [
+    TabMenuPage
+  ]
 })
 export class TabMenuPageModule {}

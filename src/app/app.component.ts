@@ -7,6 +7,13 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { SessionService } from './session.service';
+import { NotificationService } from './notification.service';
+import { interval, Subscription } from 'rxjs';
+
+import { Notification } from './notification';
+import { OrderLineItem } from './order-line-item';
+
+
 
 @Component({
   selector: 'app-root',
@@ -14,14 +21,70 @@ import { SessionService } from './session.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  subscription: Subscription;
+  pollInterval: number;
+  unreadNotification: boolean;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    public sessionService: SessionService
+    public sessionService: SessionService,
+    public notificationService: NotificationService
   ) {
     this.initializeApp();
+  }
+
+
+  ngOnInit() {
+
+    this.pollInterval = 1000;
+    this.unreadNotification = false;
+
+    interval(this.pollInterval).subscribe(x => {
+      this.updateNotifications();
+      this.persistCart();
+    });
+
+  }
+
+  persistCart() {
+    if (this.sessionService.getIsLogin()) {
+
+
+
+    }
+  }
+
+  updateNotifications() {
+
+    if (this.sessionService.getIsLogin()) {
+      this.notificationService.retrieveCustomerNotifications().subscribe(
+        response => {
+          let notifications: Notification[] = response.notifications;
+
+          let allRead: boolean = true;
+          notifications.forEach(x => {
+            if (!x.isRead) {
+              allRead = false;
+            }
+          });
+
+          if (allRead) {
+            this.unreadNotification = false;
+          } else {
+            this.unreadNotification = true;
+          }
+
+          this.sessionService.setNotifications(notifications);
+
+        }, error => { }
+      );
+
+    }
+
   }
 
   initializeApp() {

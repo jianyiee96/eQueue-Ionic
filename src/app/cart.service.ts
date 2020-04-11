@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
+import { Cart } from './cart';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,33 +14,29 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class DiningTableService {
+export class CartService {
 
   baseUrl: string;
 
   constructor(private httpClient: HttpClient,
     private sessionService: SessionService) {
-
-    this.baseUrl = this.sessionService.getRootPath() + 'DiningTable';
+    this.baseUrl = this.sessionService.getRootPath() + 'ShoppingCart';
   }
 
-  getMyTable(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveDiningTableByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
+  saveCart(): Observable<any> {
+
+    let cart: Cart = this.sessionService.getShoppingCart();
+
+    let saveShoppingCartReq = {
+      "customerId": this.sessionService.getCurrentCustomer().customerId,
+      "shoppingCart": cart
+    };
+
+    return this.httpClient.put<any>(this.baseUrl, saveShoppingCartReq, httpOptions).pipe
       (
         catchError(this.handleError)
       );
   }
-
-  checkIn(code: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/checkIn?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&code=" + code).pipe
-      (
-        catchError(this.handleError)
-      );
-  }
-
-
-
-
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
@@ -54,4 +52,5 @@ export class DiningTableService {
 
     return throwError(errorMessage);
   }
+
 }

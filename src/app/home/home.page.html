@@ -12,6 +12,35 @@
 		<ion-card-title>Welcome to eQueue - Home Page</ion-card-title>
 	</ion-card-header>
 
+	<ion-card>
+		<ion-card-header>
+			<ion-card-subtitle>Welcome to our restaurant</ion-card-subtitle>
+			<ion-card-title>{{store.storeName}}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-text>
+				
+				<h2><b>Message of the day:</b></h2>
+			</ion-text>
+			<ion-text>
+				<h2>{{store.messageOfTheDay}}</h2>
+			</ion-text>
+			<br>
+			<ion-text>
+				<h2><b>Store details: </b></h2>
+			</ion-text>
+			<ion-text>
+
+				<h2><b>Email:</b> {{store.storeEmail}}</h2>
+
+				<h2><b>Contact:</b> {{store.storeContact}} </h2>
+
+				<h2><b>Address:</b> {{store.storeAddress}}</h2>
+			</ion-text>
+
+
+		</ion-card-content>
+	</ion-card>
 
 	<ion-button expand="full" (click)="customerLogout()">
 		<ion-icon slot="start" name="exit"></ion-icon>

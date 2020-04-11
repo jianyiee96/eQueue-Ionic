@@ -12,32 +12,37 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class DiningTableService {
+export class NotificationService {
 
   baseUrl: string;
 
   constructor(private httpClient: HttpClient,
     private sessionService: SessionService) {
 
-    this.baseUrl = this.sessionService.getRootPath() + 'DiningTable';
+    this.baseUrl = this.sessionService.getRootPath() + 'Notification';
   }
 
-  getMyTable(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveDiningTableByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
-      (
-        catchError(this.handleError)
-      );
-  }
-
-  checkIn(code: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/checkIn?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&code=" + code).pipe
+  retrieveCustomerNotifications(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveCustomerNotifications?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
       (
         catchError(this.handleError)
       );
   }
 
 
+  readNotification(notificationId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/readNotification?notificationId=" + notificationId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
 
+  deleteNotification(notificationId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/deleteNotification?notificationId=" + notificationId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
 
 
   private handleError(error: HttpErrorResponse) {
@@ -54,4 +59,5 @@ export class DiningTableService {
 
     return throwError(errorMessage);
   }
+
 }

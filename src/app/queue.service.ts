@@ -24,11 +24,18 @@ export class QueueService {
   }
 
   getMyQueue(): Observable<any> {
-
     return this.httpClient.get<any>(this.baseUrl + "/retrieveQueueByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
       (
         catchError(this.handleError)
       );
+  }
+
+  joinQueue(pax: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/joinQueue?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&pax=" + pax).pipe
+      (
+        catchError(this.handleError)
+      );
+
   }
 
 

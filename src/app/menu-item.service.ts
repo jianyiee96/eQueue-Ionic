@@ -9,35 +9,33 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class DiningTableService {
+export class MenuItemService {
 
   baseUrl: string;
 
   constructor(private httpClient: HttpClient,
     private sessionService: SessionService) {
 
-    this.baseUrl = this.sessionService.getRootPath() + 'DiningTable';
+    this.baseUrl = this.sessionService.getRootPath() + 'Menu';
   }
 
-  getMyTable(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveDiningTableByCustomerId?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
+  retrieveAllMenuItem(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllMenuItem").pipe
       (
         catchError(this.handleError)
       );
   }
 
-  checkIn(code: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/checkIn?customerId=" + this.sessionService.getCurrentCustomer().customerId + "&code=" + code).pipe
+  retrieveAllMenuItemByCategory(categoryId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllMenuItemByCategory?menuCategoryId=" + categoryId).pipe
       (
         catchError(this.handleError)
       );
   }
-
-
-
 
 
   private handleError(error: HttpErrorResponse) {
@@ -54,4 +52,5 @@ export class DiningTableService {
 
     return throwError(errorMessage);
   }
+
 }
