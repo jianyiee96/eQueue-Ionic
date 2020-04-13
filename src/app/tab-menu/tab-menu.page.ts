@@ -23,6 +23,7 @@ export class TabMenuPage implements OnInit {
   selectedTopCategory: MenuCategory;
   subCategories: MenuCategory[];
 
+  initialEntry: boolean;
 
   resourcePath: string;
 
@@ -30,10 +31,15 @@ export class TabMenuPage implements OnInit {
     public menuCategoryService: MenuCategoryService,
     public menuItemService: MenuItemService,
     public modalController: ModalController,
-    private currencyPipe: CurrencyPipe) { }
+    private currencyPipe: CurrencyPipe) {
+
+    this.initialEntry = true;
+    this.processMenu();
+  }
 
   ngOnInit() {
     this.resourcePath = this.sessionService.getImageResourcePath();
+
   }
 
 
@@ -47,11 +53,22 @@ export class TabMenuPage implements OnInit {
     this.menuCategoryService.retrieveTopCategories().subscribe(
       response => {
         this.topCategories = response.menuCategories;
+
+        if (this.initialEntry) {
+          this.initialEntry = false;
+          if (this.topCategories[0] != null) {
+            this.selectedTopCategory = this.topCategories[0];
+            this.categorySelection(this.topCategories[0]);
+          }
+        }
+
       }, error => {
         console.log("Error in retrieving top categories.");
       }
     )
   }
+
+
 
   categorySelection(selected: MenuCategory) {
 
@@ -96,4 +113,5 @@ export class TabMenuPage implements OnInit {
     return this.currencyPipe.transform(amount);
   }
 
+  
 }

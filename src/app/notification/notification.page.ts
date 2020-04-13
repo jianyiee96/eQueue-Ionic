@@ -105,11 +105,6 @@ export class NotificationPage implements OnInit {
 
   }
 
-  async delete(notification: Notification) {
-
-    
-
-  }
 
   parseDate(d: Date) {
     return d.toString().replace('[UTC]', '');
