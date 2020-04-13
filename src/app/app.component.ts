@@ -45,21 +45,14 @@ export class AppComponent {
 
     interval(this.pollInterval).subscribe(x => {
       this.updateNotifications();
-      this.persistCart();
     });
 
   }
 
-  persistCart() {
-    if (this.sessionService.getIsLogin()) {
-
-
-
-    }
-  }
+  
 
   updateNotifications() {
-
+    
     if (this.sessionService.getIsLogin()) {
       this.notificationService.retrieveCustomerNotifications().subscribe(
         response => {

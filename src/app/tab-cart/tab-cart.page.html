@@ -9,9 +9,25 @@
   <ion-card>
     <ion-card-content>
 
-      <h1>My Cart</h1>
+      <header class="custom-header">
+        My Cart
+        
+          <ion-badge class="badge" color="medium">{{cart.orderLineItems.length}}</ion-badge>
+          <ion-icon class="save-icon" name="save" (click)="saveCart()"></ion-icon>
+        
+      </header>
+      
+      
+      
+      
+      
+      <h1 *ngIf="(cart.orderLineItems == null || cart.orderLineItems[0] == null)">
+        <br>
+        Cart is empty! <br>Add items into cart from the menu tab.
+      </h1>
 
       <ion-list>
+
         <ion-item *ngFor="let orderLineItem of cart.orderLineItems">
 
           <ion-thumbnail slot="start">
@@ -19,8 +35,8 @@
           </ion-thumbnail>
           <ion-label>
             <h2><b>{{orderLineItem.menuItem.menuItemName}}</b></h2>
-            <h2><b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}}</b>
-             - Qty: {{orderLineItem.quantity}} </h2>
+            <h2><b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}} -&nbsp;</b>Qty:
+              {{orderLineItem.quantity}} </h2>
             <!-- <p>{{item.menuItemCode}}</p> -->
             <p>
               {{orderLineItem.remarks}}

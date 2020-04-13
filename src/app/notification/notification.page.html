@@ -19,9 +19,13 @@
 
 		<ion-card-content>
 
-			<h1>Notification</h1>
-
 			<ion-list>
+
+				<div class="custom-header">Notification
+
+					<ion-badge class="badge" color="medium">{{notifications.length}}</ion-badge>
+
+				</div>
 
 				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
 
