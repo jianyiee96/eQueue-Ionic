@@ -3,10 +3,17 @@ ion-footer {
 }
 
 
+.custom-header {
+    display: block;
+    font-size: 2em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
 .save-icon {
     float: right;
     vertical-align: middle;
-    padding-top: 0.5px;
+    margin-top: 0.25em;
     margin-right: 5px;
 }
-

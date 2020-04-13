@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
 })
 export class NotificationPage implements OnInit {
 
-  notifications: Notification[];
+  notifications: Notification[] = [];
   refreshTimeout: number;
 
   constructor(private router: Router,

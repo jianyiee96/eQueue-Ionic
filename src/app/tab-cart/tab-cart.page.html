@@ -9,11 +9,18 @@
   <ion-card>
     <ion-card-content>
 
-      <h1 class="cart-header">My Cart
-
-        <ion-icon class="save-icon" name="save" (click)="saveCart()"></ion-icon>
-      </h1>
-
+      <header class="custom-header">
+        My Cart
+        
+          <ion-badge class="badge" color="medium">{{cart.orderLineItems.length}}</ion-badge>
+          <ion-icon class="save-icon" name="save" (click)="saveCart()"></ion-icon>
+        
+      </header>
+      
+      
+      
+      
+      
       <h1 *ngIf="(cart.orderLineItems == null || cart.orderLineItems[0] == null)">
         <br>
         Cart is empty! <br>Add items into cart from the menu tab.
