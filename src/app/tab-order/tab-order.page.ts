@@ -12,6 +12,8 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class TabOrderPage implements OnInit {
 
+  refreshTimeout: number;
+
   customerOrders: CustomerOrder[] = [];
   customerActiveOrders: CustomerOrder[] = [];
   customerPastOrders: CustomerOrder[] = [];
@@ -20,13 +22,21 @@ export class TabOrderPage implements OnInit {
   constructor(public sessionService: SessionService,
     public currencyPipe: CurrencyPipe,
     public customerOrderService: CustomerOrderService,
-    public router: Router) { }
+    public router: Router) { 
+
+      this.refreshTimeout = 1000;
+
+    }
 
   ngOnInit() {
 
   }
 
   ionViewDidEnter() {
+    this.processPage();
+  }
+
+  processPage(){
 
     this.customerOrderService.retrieveCustomerOrders().subscribe(
       response => {
@@ -54,9 +64,9 @@ export class TabOrderPage implements OnInit {
       c.itemCount = this.itemCount[counter++];
 
       if (!c.isCompleted) {
-        this.customerActiveOrders.push(c);
+        this.customerActiveOrders.unshift(c);
       } else {
-        this.customerPastOrders.push(c);
+        this.customerPastOrders.unshift(c);
       }
 
     }
@@ -76,6 +86,13 @@ export class TabOrderPage implements OnInit {
       }
     };
     this.router.navigate(["order"],navigationExtras);
+  }
+
+  doRefresh(event) {
+    this.processPage();
+    setTimeout(() => {
+      event.target.complete();
+    }, this.refreshTimeout);
   }
 
   parseDate(d: Date) {

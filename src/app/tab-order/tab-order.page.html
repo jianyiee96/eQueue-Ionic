@@ -6,6 +6,10 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="crescent" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-card *ngIf="(customerActiveOrders.length != 0)">
     <ion-card-content>
@@ -20,7 +24,7 @@
         <ion-item expand="full" *ngFor="let order of customerActiveOrders" lines="full">
 
           <ion-label>
-            <h2>Order Id: {{order.orderId}}</h2>
+            <h2><b>Order Id: {{order.orderId}}</b></h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
@@ -48,7 +52,7 @@
         <ion-item expand="full" *ngFor="let order of customerPastOrders" lines="full">
 
           <ion-label>
-            <h2>Order Id: {{order.orderId}}</h2>
+            <h2><b>Order Id: {{order.orderId}}</b></h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>

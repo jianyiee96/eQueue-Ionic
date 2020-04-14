@@ -15,6 +15,18 @@
 
     <ion-card-content>
 
+      <div class="order-page-header">
+        Order Summary {{!order.isCompleted?"(ACTIVE)":""}} {{isCancelled()?"(CANCELLED)":""}}
+      </div>
+      <div class="order-page-information">
+        Order id: {{order.orderId}}<br>
+        Order Submission Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  HH:mm'}}<br>
+        Total Amount: {{getCurrency(order.totalAmount)}}<br>
+        Payment Status: {{order.isPaid?"Paid":"Unpaid"}}<br>
+        # of items: {{order.itemCount}}
+        
+      </div>
+
       <ion-list>
 
         <ion-item *ngFor="let orderLineItem of orderLineItems">
@@ -22,18 +34,22 @@
           <ion-thumbnail slot="start">
             <img src="{{resourcePath+orderLineItem.menuItem.imagePath}}">
           </ion-thumbnail>
-          <ion-label>
-            <h2><b>{{orderLineItem.menuItem.menuItemName}}</b></h2>
+          <ion-label class="order-page-label">
+            <h2><b>{{orderLineItem.menuItem.menuItemName}}</b>
+            </h2>
             <h2><b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}} -&nbsp;</b>Qty:
-              {{orderLineItem.quantity}} </h2>
-            <p>
-              {{orderLineItem.remarks}}<br>
-              {{orderLineItem.status}}<br>
-              {{orderLineItem.isEdited}}
-            </p>
+              
+              {{orderLineItem.quantity}}<br></h2>
+              
+
+              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 1)" color="secondary">Submitted item</ion-badge>
+              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 2)" color="primary">Preparing item</ion-badge>
+              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 3)" color="success">Served</ion-badge>
+              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 4)" color="medium">Cancelled</ion-badge>
+        
 
           </ion-label>
-          <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="itemOptions(orderLineItem.menuItem)">
+          <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="orderItemOptions(orderLineItem)">
           </ion-icon>
         </ion-item>
 

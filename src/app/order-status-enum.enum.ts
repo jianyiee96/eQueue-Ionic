@@ -1,5 +1,5 @@
 export enum OrderStatusEnum {
-    UNPAID,
-    PAID,
-    CANCELLED
+    UNPAID = "UNPAID",
+    PAID = "PAID",
+    CANCELLED = "CANCELLED"
 }

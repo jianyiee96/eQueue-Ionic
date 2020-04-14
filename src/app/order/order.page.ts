@@ -6,6 +6,10 @@ import { CustomerOrder } from '../customer-order';
 import { CustomerOrderService } from '../customer-order.service';
 import { OrderLineItem } from '../order-line-item';
 import { SessionService } from '../session.service';
+import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
+import { OrderStatusEnum } from '../order-status-enum.enum';
+import { ModalController } from '@ionic/angular';
+import { ModalOrderItemOptionPage } from '../modal-order-item-option/modal-order-item-option.page';
 
 @Component({
   selector: 'app-order',
@@ -24,6 +28,7 @@ export class OrderPage implements OnInit {
     public sessionService: SessionService,
     public router: Router,
     public currencyPipe: CurrencyPipe,
+    public modalController: ModalController,
     public customerOrderService: CustomerOrderService,
     public location: Location) {
 
@@ -41,10 +46,14 @@ export class OrderPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.processPage();
+
+  }
+
+  processPage() {
     if (this.order == null) {
       this.back();
     } else {
-
       this.customerOrderService.retrieveOrderLineItemsByOrderId(this.order.orderId).subscribe(
         response => {
           this.orderLineItems = response.orderLineItems;
@@ -52,9 +61,52 @@ export class OrderPage implements OnInit {
           this.back();
         }
       );
-
     }
+  }
 
+  async orderItemOptions(orderItem: OrderLineItem) {
+    const modal = await this.modalController.create({
+      component: ModalOrderItemOptionPage,
+      animated: true,
+      backdropDismiss: false,
+      componentProps: {
+        input: orderItem,
+        orderCompletion: this.order.isCompleted
+      }
+    });
+
+    modal.onDidDismiss().then(
+      (data) => {
+        this.processPage();
+      }
+    );
+    return await modal.present();
+
+  }
+
+
+  displayStatus(display: OrderLineItemStatusEnum): number {
+    if (display == OrderLineItemStatusEnum.ORDERED) {
+      //return "Order submitted";
+      return 1;
+    } else if (display == OrderLineItemStatusEnum.PREPARING) {
+      //return "Preparing";
+      return 2;
+    } else if (display == OrderLineItemStatusEnum.SERVED) {
+      //return "Served";
+      return 3;
+    } else if (display == OrderLineItemStatusEnum.CANCELLED) {
+      //return "Cancelled";
+      return 4;
+    }
+  }
+
+  isCancelled() {
+    return (this.order.status == OrderStatusEnum.CANCELLED);
+  }
+
+  parseDate(d: Date) {
+    return d.toString().replace('[UTC]', '');
   }
 
   getCurrency(amount: number): string {

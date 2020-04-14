@@ -1,0 +1,185 @@
+import { Component, Input } from '@angular/core';
+import { ModalController, NavParams, ToastController, AlertController } from '@ionic/angular';
+import { MenuItem } from '../menu-item';
+import { SessionService } from '../session.service';
+
+import { CurrencyPipe } from '@angular/common';
+import { Cart } from '../cart';
+import { OrderLineItem } from '../order-line-item';
+import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
+import { CustomerOrderService } from '../customer-order.service';
+
+@Component({
+  selector: 'app-modal-order-item-option',
+  templateUrl: './modal-order-item-option.page.html',
+  styleUrls: ['./modal-order-item-option.page.scss'],
+})
+export class ModalOrderItemOptionPage {
+
+  resourcePath: string;
+  currentOrderItem: OrderLineItem;
+
+  currentComments: string;
+  currentQuantity: number;
+
+  editable: boolean;
+
+  constructor(public modalController: ModalController,
+    navParams: NavParams,
+    public sessionService: SessionService,
+    public currencyPipe: CurrencyPipe,
+    public alertController: AlertController,
+    public toastController: ToastController,
+    public customerOrderService: CustomerOrderService) {
+
+    this.currentOrderItem = navParams.get('input');
+    let orderCompletion = navParams.get('orderCompletion');
+    console.log(this.currentOrderItem);
+
+    if (orderCompletion) {
+      this.editable = false;
+    } else {
+      if (this.currentOrderItem.status == OrderLineItemStatusEnum.ORDERED) {
+        this.editable = true;
+      } else {
+        this.editable = false;
+      }
+    }
+    this.resourcePath = this.sessionService.getImageResourcePath();
+    this.currentComments = this.currentOrderItem.remarks;
+    this.currentQuantity = this.currentOrderItem.quantity;
+
+  }
+
+  async cancelOrderItem() {
+
+    const alert = await this.alertController.create({
+
+      header: "Confirm cancellation",
+      message: "Are you sure you want to cancel this order item?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmCancellation();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  async updateOrderItem() {
+
+    if (this.currentQuantity == 0) {
+      this.cancelOrderItem();
+    }
+
+    let sameQuantity: boolean = false;
+    let sameRemark: boolean = false;
+
+    if (this.currentQuantity == this.currentOrderItem.quantity) {
+      sameQuantity = true;
+    }
+
+    if (this.currentComments == this.currentOrderItem.remarks) {
+      sameRemark = true;
+    }
+
+    if (sameQuantity && sameRemark) {
+      this.toast("Nothing to update.");
+    } else {
+
+      const alert = await this.alertController.create({
+
+        header: "Confirm changes",
+        message: "Are you sure you want to update this order item?",
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              if (!sameQuantity) {
+                this.updateQuantity();
+              }
+              if (!sameRemark) {
+                this.updateRemarks();
+              }
+            }
+          }, {
+            text: 'No'
+          }
+        ]
+      });
+      await alert.present();
+
+    }
+
+
+  }
+
+
+  confirmCancellation() {
+    this.customerOrderService
+    //cancel the order here
+  }
+
+  updateQuantity() {
+    //update quantity
+  }
+
+  updateRemarks() {
+    //update remarks
+  }
+
+
+  displayStatus(display: OrderLineItemStatusEnum): number {
+    if (display == OrderLineItemStatusEnum.ORDERED) {
+      //return "Order submitted";
+      return 1;
+    } else if (display == OrderLineItemStatusEnum.PREPARING) {
+      //return "Preparing";
+      return 2;
+    } else if (display == OrderLineItemStatusEnum.SERVED) {
+      //return "Served";
+      return 3;
+    } else if (display == OrderLineItemStatusEnum.CANCELLED) {
+      //return "Cancelled";
+      return 4;
+    }
+  }
+
+  addItemQuantity() {
+    if (this.currentQuantity < 99 && this.editable) {
+      this.currentQuantity++;
+    }
+  }
+
+  reduceItemQuantity() {
+    if (this.currentQuantity > 0 && this.editable) {
+      this.currentQuantity--;
+    }
+  }
+
+  getCurrency(amount: number): string {
+    return this.currencyPipe.transform(amount);
+  }
+
+  dismissModal() {
+    this.modalController.dismiss({
+      'dismissed': true
+    });
+  }
+
+  async toast(toastMessage: string) {
+    const toast = await this.toastController.create({
+      message: toastMessage,
+      duration: 1000,
+      position: 'middle',
+    });
+    toast.present();
+  }
+
+}
