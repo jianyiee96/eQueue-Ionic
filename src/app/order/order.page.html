@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Order</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="order != null">
+
+
+  <ion-button fill="clear" expand="full" (click)="back()">
+    <ion-icon slot="start" name="arrow-back"></ion-icon>Return to Order Overview
+  </ion-button>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item *ngFor="let orderLineItem of orderLineItems">
+
+          <ion-thumbnail slot="start">
+            <img src="{{resourcePath+orderLineItem.menuItem.imagePath}}">
+          </ion-thumbnail>
+          <ion-label>
+            <h2><b>{{orderLineItem.menuItem.menuItemName}}</b></h2>
+            <h2><b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}} -&nbsp;</b>Qty:
+              {{orderLineItem.quantity}} </h2>
+            <p>
+              {{orderLineItem.remarks}}<br>
+              {{orderLineItem.status}}<br>
+              {{orderLineItem.isEdited}}
+            </p>
+
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="itemOptions(orderLineItem.menuItem)">
+          </ion-icon>
+        </ion-item>
+
+      </ion-list>
+
+
+
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

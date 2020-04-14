@@ -22,10 +22,11 @@
           <ion-label>
             <h2>Order Id: {{order.orderId}}</h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
-            <p>Total amount: {{order.totalAmount}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+            <h3>Number of Items: {{order.itemCount}}</h3>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
           </ion-label>
 
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>
 
         </ion-item>
 
@@ -49,10 +50,11 @@
           <ion-label>
             <h2>Order Id: {{order.orderId}}</h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
-            <p>Total amount: {{order.totalAmount}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+            <h3>Number of Items: {{order.itemCount}}</h3>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
           </ion-label>
 
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>
 
         </ion-item>
 

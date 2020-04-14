@@ -29,6 +29,13 @@ export class CustomerOrderService {
         catchError(this.handleError)
       );
   }
+  
+  retrieveOrderLineItemsByOrderId(orderId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveOrderLineItemsByOrderId?orderId=" + orderId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
 
   submitCustomerOrder(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/submitCustomerOrder?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe

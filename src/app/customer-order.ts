@@ -8,6 +8,7 @@ export class CustomerOrder {
     orderDate: Date;
     status: OrderStatusEnum;
     totalAmount: number;
+    itemCount: number = 0;
 
     constructor(orderId: number, isAllServed: boolean, isCompleted: boolean, orderDate: Date, status: OrderStatusEnum, totalAmount: number){
 
