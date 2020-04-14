@@ -4,11 +4,64 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  
-  
-	<ion-card-header>
-		<ion-card-title>My Orders</ion-card-title>
-	</ion-card-header>
+<ion-content>
+
+
+  <ion-card *ngIf="(customerActiveOrders.length != 0)">
+    <ion-card-content>
+
+      <header class="custom-header">
+        Active Orders
+        <ion-badge class="badge" color="medium">{{customerActiveOrders.length}}</ion-badge>
+      </header>
+
+      <ion-list>
+
+        <ion-item expand="full" *ngFor="let order of customerActiveOrders" lines="full">
+
+          <ion-label>
+            <h2>Order Id: {{order.orderId}}</h2>
+            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <p>Total amount: {{order.totalAmount}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+          </ion-label>
+
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="(customerPastOrders.length != 0)">
+    <ion-card-content>
+
+      <header class="custom-header">
+        Past Orders
+        <ion-badge class="badge" color="medium">{{customerPastOrders.length}}</ion-badge>
+      </header>
+
+      <ion-list>
+
+        <ion-item expand="full" *ngFor="let order of customerPastOrders" lines="full">
+
+          <ion-label>
+            <h2>Order Id: {{order.orderId}}</h2>
+            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <p>Total amount: {{order.totalAmount}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+          </ion-label>
+
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+
+
 
 </ion-content>
