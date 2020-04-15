@@ -27,7 +27,7 @@
             <h2><b>Order Id: {{order.orderId}}</b></h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
-            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}<br></p>
           </ion-label>
 
           <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>
@@ -55,7 +55,7 @@
             <h2><b>Order Id: {{order.orderId}}</b></h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
-            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.isPaid?"Done":"Unpaid"}}</p>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}</p>
           </ion-label>
 
           <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>

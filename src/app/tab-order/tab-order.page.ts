@@ -4,6 +4,7 @@ import { CustomerOrder } from '../customer-order';
 import { CustomerOrderService } from '../customer-order.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
+import { OrderStatusEnum } from '../order-status-enum.enum';
 
 @Component({
   selector: 'app-tab-order',
@@ -52,6 +53,8 @@ export class TabOrderPage implements OnInit {
 
   }
 
+
+
   populateListByOrderStatus() {
 
     this.customerActiveOrders = [];
@@ -68,6 +71,12 @@ export class TabOrderPage implements OnInit {
       } else {
         this.customerPastOrders.unshift(c);
       }
+
+      // if (c.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
+      //   this.customerActiveOrders.unshift(c);
+      // } else {
+      //   this.customerPastOrders.unshift(c);
+      // }
 
     }
 
