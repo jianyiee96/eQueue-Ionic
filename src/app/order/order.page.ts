@@ -21,7 +21,7 @@ export class OrderPage implements OnInit {
   resourcePath: string;
 
   order: CustomerOrder;
-
+  
   orderLineItems: OrderLineItem[] = [];
 
   constructor(public activatedRoute: ActivatedRoute,
@@ -109,7 +109,6 @@ export class OrderPage implements OnInit {
     return await modal.present();
 
   }
-
 
   displayStatus(display: OrderLineItemStatusEnum): number {
     if (display == OrderLineItemStatusEnum.ORDERED) {

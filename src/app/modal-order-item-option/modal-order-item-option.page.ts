@@ -38,7 +38,7 @@ export class ModalOrderItemOptionPage {
     this.parentOrderId = navParams.get('parentOrderId');
     let orderCompletion = navParams.get('orderCompletion');
 
-    console.log(this.currentOrderItem);
+    //console.log(this.currentOrderItem);
 
     if (orderCompletion) {
       this.editable = false;
@@ -81,6 +81,7 @@ export class ModalOrderItemOptionPage {
 
     if (this.currentQuantity == 0) {
       this.cancelOrderItem();
+      return;
     }
 
     if (this.currentComments == this.currentOrderItem.remarks && this.currentQuantity == this.currentOrderItem.quantity) {
