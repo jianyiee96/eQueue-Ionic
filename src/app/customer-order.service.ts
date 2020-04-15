@@ -44,6 +44,28 @@ export class CustomerOrderService {
       );
   }
 
+  cancelOrderLineItem(orderLineItemId: number, customerOrderId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/cancelOrderLineItem?orderLineItemId="+orderLineItemId+"&customerOrderId="+customerOrderId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  updateOrderLineItem(orderLineItemId: number, newQuantity: number, newComment: string, customerOrderId: number): Observable<any> {
+
+    let updateOrderlineItemReq = {
+			"orderLineItemId": orderLineItemId,
+			"newQuantity": newQuantity,
+      "newComment": newComment,
+      "customerOrderId": customerOrderId
+		};
+
+    return this.httpClient.post<any>(this.baseUrl, updateOrderlineItemReq, httpOptions).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

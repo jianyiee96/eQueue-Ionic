@@ -64,19 +64,45 @@ export class OrderPage implements OnInit {
     }
   }
 
+  updateOrder(){
+
+    this.customerOrderService.retrieveCustomerOrders().subscribe(
+      response => {
+        let customerOrders: CustomerOrder[] = response.customerOrders;
+        let itemCount: number[] = response.itemCount;
+        
+        customerOrders.forEach((item, index) => {
+          if(item.orderId == this.order.orderId){
+            this.order = item;
+            this.order.itemCount = itemCount[index];
+          }
+        })
+        
+      
+
+      }, error => {
+        console.log("Unable to update: " + error );
+      }
+    );
+
+
+  }
+
   async orderItemOptions(orderItem: OrderLineItem) {
     const modal = await this.modalController.create({
       component: ModalOrderItemOptionPage,
       animated: true,
       backdropDismiss: false,
       componentProps: {
-        input: orderItem,
+        orderItem: orderItem,
+        parentOrderId: this.order.orderId,
         orderCompletion: this.order.isCompleted
       }
     });
 
     modal.onDidDismiss().then(
       (data) => {
+        this.updateOrder();
         this.processPage();
       }
     );

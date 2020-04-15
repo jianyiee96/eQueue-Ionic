@@ -8,6 +8,7 @@ import { Cart } from '../cart';
 import { OrderLineItem } from '../order-line-item';
 import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 import { CustomerOrderService } from '../customer-order.service';
+import { CustomerOrder } from '../customer-order';
 
 @Component({
   selector: 'app-modal-order-item-option',
@@ -18,6 +19,7 @@ export class ModalOrderItemOptionPage {
 
   resourcePath: string;
   currentOrderItem: OrderLineItem;
+  parentOrderId: number;
 
   currentComments: string;
   currentQuantity: number;
@@ -32,8 +34,10 @@ export class ModalOrderItemOptionPage {
     public toastController: ToastController,
     public customerOrderService: CustomerOrderService) {
 
-    this.currentOrderItem = navParams.get('input');
+    this.currentOrderItem = navParams.get('orderItem');
+    this.parentOrderId = navParams.get('parentOrderId');
     let orderCompletion = navParams.get('orderCompletion');
+
     console.log(this.currentOrderItem);
 
     if (orderCompletion) {
@@ -62,6 +66,7 @@ export class ModalOrderItemOptionPage {
           text: 'Yes',
           handler: () => {
             this.confirmCancellation();
+
           }
         }, {
           text: 'No'
@@ -78,18 +83,7 @@ export class ModalOrderItemOptionPage {
       this.cancelOrderItem();
     }
 
-    let sameQuantity: boolean = false;
-    let sameRemark: boolean = false;
-
-    if (this.currentQuantity == this.currentOrderItem.quantity) {
-      sameQuantity = true;
-    }
-
-    if (this.currentComments == this.currentOrderItem.remarks) {
-      sameRemark = true;
-    }
-
-    if (sameQuantity && sameRemark) {
+    if (this.currentComments == this.currentOrderItem.remarks && this.currentQuantity == this.currentOrderItem.quantity) {
       this.toast("Nothing to update.");
     } else {
 
@@ -101,12 +95,7 @@ export class ModalOrderItemOptionPage {
           {
             text: 'Yes',
             handler: () => {
-              if (!sameQuantity) {
-                this.updateQuantity();
-              }
-              if (!sameRemark) {
-                this.updateRemarks();
-              }
+              this.confirmUpdateOrderItem();
             }
           }, {
             text: 'No'
@@ -122,16 +111,25 @@ export class ModalOrderItemOptionPage {
 
 
   confirmCancellation() {
-    this.customerOrderService
-    //cancel the order here
+    this.customerOrderService.cancelOrderLineItem(this.currentOrderItem.orderLineItemId, this.parentOrderId).subscribe(
+      response => {
+        this.toast("Order Item Cancelled!");
+        this.dismissModal();
+      }, error => {
+        this.toast("Cancellation failed. Please refresh status.");
+      }
+    );
   }
 
-  updateQuantity() {
-    //update quantity
-  }
-
-  updateRemarks() {
-    //update remarks
+  confirmUpdateOrderItem() {
+    this.customerOrderService.updateOrderLineItem(this.currentOrderItem.orderLineItemId, this.currentQuantity, this.currentComments, this.parentOrderId).subscribe(
+      response => {
+        this.toast("Order Item updated!");
+        this.dismissModal();
+      }, error => {
+        this.toast("Update failed. Please refresh status.");
+      }
+    );
   }
 
 
