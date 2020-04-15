@@ -32,7 +32,14 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule),
+    canActivate: [AuthenticationGuard]
   }
+
+
 
 ];
 

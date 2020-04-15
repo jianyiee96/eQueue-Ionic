@@ -1,0 +1,78 @@
+<ion-toolbar>
+  <ion-title>Order Item Details</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="dismissModal()">Close</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <ion-row class="info">
+          {{currentOrderItem.menuItem.menuItemName}}
+        </ion-row>
+        <ion-row class="info">
+          SGD{{getCurrency(currentOrderItem.menuItem.menuItemPrice)}}
+        </ion-row>
+
+        <ion-row class="badge">
+          Status:&nbsp;
+          <ion-badge *ngIf="(displayStatus(currentOrderItem.status) == 1)" color="secondary">Submitted item</ion-badge>
+          <ion-badge *ngIf="(displayStatus(currentOrderItem.status) == 2)" color="primary">Preparing item</ion-badge>
+          <ion-badge *ngIf="(displayStatus(currentOrderItem.status) == 3)" color="success">Served</ion-badge>
+          <ion-badge *ngIf="(displayStatus(currentOrderItem.status) == 4)" color="medium">Cancelled</ion-badge>
+        </ion-row>
+
+        <ion-row class="controls">
+          <ion-col>
+            <b>Qty:</b>
+          </ion-col>
+          <ion-col ion-align-items-end>
+            <ion-icon name="remove-circle-outline" (click)="reduceItemQuantity()"></ion-icon>
+          </ion-col>
+          <ion-col class="number">
+            <ion-input [(ngModel)]="currentQuantity" disabled></ion-input>
+          </ion-col>
+          <ion-col ion-align-items-end>
+            <ion-icon name="add-circle-outline" (click)="addItemQuantity()"></ion-icon>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-col>
+
+      <ion-col size="4">
+        <img src="{{resourcePath+currentOrderItem.menuItem.imagePath}}">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label position="stacked">Comments:</ion-label>
+        <ion-textarea *ngIf="editable" [(ngModel)]="currentComments" rows="3" cols="300" maxlength="128" placeholder="E.g No onions, please..."></ion-textarea>
+          
+        
+        <ion-textarea  *ngIf="!editable" disabled="true" [(ngModel)]="currentComments" rows="3" cols="300" maxlength="128" placeholder="E.g No onions, please..."></ion-textarea>
+      </ion-item>
+    </ion-row>
+
+
+  </ion-grid>
+
+</ion-content>
+
+
+<ion-footer *ngIf="editable">
+  <ion-button color="danger" expand="block" (click)="cancelOrderItem()">Cancel Order Item</ion-button>
+  <ion-button expand="block" (click)="updateOrderItem()">Update Order Item</ion-button>
+  <ion-button color="secondary" expand="block" (click)="dismissModal()">Dismiss</ion-button>
+</ion-footer>
+
+<ion-footer *ngIf="!editable">
+  <ion-button disabled color="danger" expand="block">Cancel Order Item</ion-button>
+  <ion-button disabled expand="block">Update Order Item</ion-button>
+  <ion-button color="dark" expand="block" (click)="dismissModal()">Dismiss</ion-button>
+</ion-footer>

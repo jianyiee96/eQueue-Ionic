@@ -46,7 +46,7 @@
         <h2>You have joined a queue, be patient and wait for your turn.</h2>
       </ion-text>
 
-      <ion-text color="secondary">
+      <ion-text *ngIf="queue != null" color="secondary">
         <h2>Here are your queue details: </h2>
         <h2> Pax: {{queue.numberOfPax}}</h2>
         <h2> Join time: {{parseDate(queueStartTime) | date:'HH:mm:ss'}}</h2>

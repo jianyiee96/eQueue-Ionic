@@ -28,7 +28,7 @@
 				</div>
 
 				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
-
+ 
 					<ion-label *ngIf="!notification.isRead" color="success">
 						<h2>{{notification.title}}</h2>
 						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>

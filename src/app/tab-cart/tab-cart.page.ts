@@ -16,6 +16,9 @@ import { CartService } from '../cart.service';
 import { DiningTableService } from '../dining-table.service';
 import { DiningTable } from '../dining-table';
 import { TableStatusEnum } from '../table-status-enum.enum';
+import { CustomerOrderService } from '../customer-order.service';
+import { error } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-cart',
@@ -33,8 +36,10 @@ export class TabCartPage implements OnInit {
     public modalController: ModalController,
     public cartService: CartService,
     public diningTableService: DiningTableService,
+    public customerOrderService: CustomerOrderService,
     public toastController: ToastController,
     public alertController: AlertController,
+    public router: Router,
     private currencyPipe: CurrencyPipe) {
 
 
@@ -49,9 +54,6 @@ export class TabCartPage implements OnInit {
 
 
   ionViewDidEnter() {
-
-
-
     this.cart = this.sessionService.getShoppingCart();
   }
 
@@ -76,6 +78,11 @@ export class TabCartPage implements OnInit {
 
   submitOrder() {
 
+    if (this.cart.orderLineItems.length == 0) {
+      this.toast("Cart Is Empty!");
+      return;
+    }
+
     this.diningTableService.getMyTable().subscribe(
       response => {
         let currTable: DiningTable = response.diningTable;
@@ -83,11 +90,9 @@ export class TabCartPage implements OnInit {
           if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
             this.orderConfirmation();
           } else {
-
             this.orderDisallowed();
           }
         } else {
-
           this.orderDisallowed();
         }
 
@@ -98,11 +103,10 @@ export class TabCartPage implements OnInit {
 
   }
 
-  saveCart() {
+  saveCart(hideToast: boolean) {
     this.cartService.saveCart().subscribe(
       response => {
-        console.log("Response received");
-        this.toast("Saved Cart!");
+        this.toast("Saved Cart in System!");
       }, error => {
         console.log("Error received: " + error);
       }
@@ -146,6 +150,27 @@ export class TabCartPage implements OnInit {
   }
 
   confirmationYes() {
+
+    this.cartService.saveCart().subscribe(
+      response => {
+
+        this.customerOrderService.submitCustomerOrder().subscribe(
+          response => {
+            this.cart.totalAmount = 0;
+            this.cart.orderLineItems = [];
+            this.sessionService.setShoppingCart(this.cart);
+            this.toast("Order submitted successfully!");
+
+            this.router.navigate(["/tabs/tab-order"]);
+          }, error => {
+            this.toast("Failed to submit order.");
+          }
+        );
+
+      }, error => {
+        console.log("Error received: " + error);
+      }
+    );
 
   }
 

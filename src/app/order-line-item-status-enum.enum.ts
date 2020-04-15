@@ -1,7 +1,7 @@
 export enum OrderLineItemStatusEnum {
-    IN_CART,
-    ORDERED,
-    PREPARING,
-    SERVED,
-    CANCELLED
+    IN_CART = "IN_CART",
+    ORDERED = "ORDERED",
+    PREPARING = "PREPARING",
+    SERVED = "SERVED",
+    CANCELLED = "CANCELLED"
 }
