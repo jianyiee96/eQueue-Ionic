@@ -4,11 +4,70 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  
-  
-	<ion-card-header>
-		<ion-card-title>My Orders</ion-card-title>
-	</ion-card-header>
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="crescent" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="(customerActiveOrders.length != 0)">
+    <ion-card-content>
+
+      <header class="custom-header">
+        Active Orders
+        <ion-badge class="badge" color="medium">{{customerActiveOrders.length}}</ion-badge>
+      </header>
+
+      <ion-list>
+
+        <ion-item expand="full" *ngFor="let order of customerActiveOrders" lines="full">
+
+          <ion-label>
+            <h2><b>Order Id: {{order.orderId}}</b></h2>
+            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <h3>Number of Items: {{order.itemCount}}</h3>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}<br></p>
+          </ion-label>
+
+          <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>
+
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="(customerPastOrders.length != 0)">
+    <ion-card-content>
+
+      <header class="custom-header">
+        Past Orders
+        <ion-badge class="badge" color="medium">{{customerPastOrders.length}}</ion-badge>
+      </header>
+
+      <ion-list>
+
+        <ion-item expand="full" *ngFor="let order of customerPastOrders" lines="full">
+
+          <ion-label>
+            <h2><b>Order Id: {{order.orderId}}</b></h2>
+            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <h3>Number of Items: {{order.itemCount}}</h3>
+            <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}</p>
+          </ion-label>
+
+          <ion-icon slot="end" name="arrow-forward" (click)="displayOrder(order)"></ion-icon>
+
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+
+
 
 </ion-content>

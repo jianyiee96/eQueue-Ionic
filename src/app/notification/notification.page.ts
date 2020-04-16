@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
 })
 export class NotificationPage implements OnInit {
 
-  notifications: Notification[];
+  notifications: Notification[] = [];
   refreshTimeout: number;
 
   constructor(private router: Router,
@@ -105,11 +105,6 @@ export class NotificationPage implements OnInit {
 
   }
 
-  async delete(notification: Notification) {
-
-    
-
-  }
 
   parseDate(d: Date) {
     return d.toString().replace('[UTC]', '');

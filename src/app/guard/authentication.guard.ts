@@ -21,17 +21,16 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
 
     try {
 
-      if (next.url[0].path == "register" || next.url[0].path == "login") {
+      if (next.url[0].path == "register" || next.url[0].path == "login") { 
 
-        if (this.sessionService.getIsLogin()) {
-          this.router.navigate(['/home']);
-        } else {
+        if (this.sessionService.getIsLogin()) { 
+          this.router.navigate(['/home']); 
+        } else { 
           return true;
         }
 
       } else {
-
-        if (this.sessionService.getIsLogin()) {
+        if (this.sessionService.getIsLogin()) { 
           return true;
         } else {
           this.router.navigate(['/login']);
@@ -39,7 +38,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
       }
 
     } catch (error) {
-      if (this.sessionService.getIsLogin()) {
+      if (this.sessionService.getIsLogin()) { 
         return true;
       } else {
         this.router.navigate(['/login']);

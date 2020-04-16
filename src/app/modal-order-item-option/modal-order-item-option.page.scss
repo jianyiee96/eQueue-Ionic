@@ -1,0 +1,50 @@
+.info {
+    height: 25%;
+    font-size: larger;
+    padding-left: 10px;
+}
+
+.badge {
+    font-size: medium;
+    padding-left: 10px;
+}
+
+.description {
+    height: 50%;
+    color: gray;
+    --ion-grid-padding: 20px;
+    font-size: 14px;
+    //text-align: justify;
+    
+    padding-left: 10px;
+}
+
+.controls {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-left: 10px;
+}
+
+.number {
+    font-weight: bold;
+    text-align: center;
+}
+
+.comments {
+    padding: 52px;
+    border: 1px double #3156A4;
+
+}
+
+.image {
+    height: 70%;
+    width: 70%;
+
+}
+
+ion-icon {
+    font-size: 24px;
+    --ionicon-stroke-width: 48px;
+}

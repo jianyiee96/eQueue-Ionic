@@ -42,7 +42,14 @@ const routes: Routes = [
     path: 'create-credit-card',
     loadChildren: () => import('./create-credit-card/create-credit-card.module').then(m => m.CreateCreditCardPageModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule),
+    canActivate: [AuthenticationGuard]
   }
+
+
 
 ];
 

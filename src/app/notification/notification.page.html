@@ -19,12 +19,16 @@
 
 		<ion-card-content>
 
-			<h1>Notification</h1>
-
 			<ion-list>
 
-				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
+				<div class="custom-header">Notification
 
+					<ion-badge class="badge" color="medium">{{notifications.length}}</ion-badge>
+
+				</div>
+
+				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
+ 
 					<ion-label *ngIf="!notification.isRead" color="success">
 						<h2>{{notification.title}}</h2>
 						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>

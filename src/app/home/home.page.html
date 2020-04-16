@@ -12,7 +12,7 @@
 		<ion-card-title>Welcome to eQueue - Home Page</ion-card-title>
 	</ion-card-header>
 
-	<ion-card>
+	<ion-card *ngIf="store != null">
 		<ion-card-header>
 			<ion-card-subtitle>Welcome to our restaurant</ion-card-subtitle>
 			<ion-card-title>{{store.storeName}}</ion-card-title>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { MenuItem } from '../menu-item';
 import { SessionService } from '../session.service';
 
@@ -26,7 +26,7 @@ export class ModalItemOptionPage {
   exist: boolean;
   cart: Cart;
 
-  constructor(public modalController: ModalController, navParams: NavParams, public sessionService: SessionService, public currencyPipe: CurrencyPipe) {
+  constructor(public modalController: ModalController, navParams: NavParams, public sessionService: SessionService, public currencyPipe: CurrencyPipe, public toastController: ToastController) {
     this.currentItem = navParams.get('input');
 
     this.resourcePath = this.sessionService.getImageResourcePath();
@@ -72,11 +72,13 @@ export class ModalItemOptionPage {
   }
 
   saveAndDismiss() {
-    
+
     //new item into cart
     if (!this.exist && this.currentQuantity > 0) {
       this.cart.orderLineItems.push(new OrderLineItem(null, this.currentItem, this.currentComments, this.currentQuantity, null, false));
       this.cart.totalAmount += (this.currentQuantity * this.currentItem.menuItemPrice);
+
+      this.toast("Added Item Into Cart!");
     }
 
     //adjusting item value in cart
@@ -89,6 +91,9 @@ export class ModalItemOptionPage {
           break;
         }
       }
+
+      this.toast("Updated Item!");
+
     }
 
     //removing item from cart
@@ -111,11 +116,21 @@ export class ModalItemOptionPage {
         this.cart.orderLineItems = newCartItems;
 
       }
+
+      this.toast("Removed Item From Cart!");
+
     }
 
     this.sessionService.setShoppingCart(this.cart);
 
+
     this.dismissModal();
+
+  }
+
+  removeAndDismiss() {
+    this.currentQuantity = 0;
+    this.saveAndDismiss();
 
   }
 
@@ -126,7 +141,14 @@ export class ModalItemOptionPage {
     });
   }
 
- 
+  async toast(toastMessage: string) {
+    const toast = await this.toastController.create({
+      message: toastMessage,
+      duration: 1000,
+      position: 'middle',
+    });
+    toast.present();
+  }
 
   getCurrency(amount: number): string {
     return this.currencyPipe.transform(amount);

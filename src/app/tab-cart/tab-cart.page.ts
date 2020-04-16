@@ -5,13 +5,20 @@ import { MenuCategory } from '../menu-category';
 import { MenuCategoryService } from '../menu-category.service';
 import { MenuItemService } from '../menu-item.service';
 
-import { ModalController } from '@ionic/angular';
+
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 
 import { CurrencyPipe } from '@angular/common';
 
 import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
 import { Cart } from '../cart';
 import { CartService } from '../cart.service';
+import { DiningTableService } from '../dining-table.service';
+import { DiningTable } from '../dining-table';
+import { TableStatusEnum } from '../table-status-enum.enum';
+import { CustomerOrderService } from '../customer-order.service';
+import { error } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-cart',
@@ -19,7 +26,6 @@ import { CartService } from '../cart.service';
   styleUrls: ['./tab-cart.page.scss'],
 })
 export class TabCartPage implements OnInit {
-
 
   cart: Cart;
 
@@ -29,17 +35,23 @@ export class TabCartPage implements OnInit {
     public menuItemService: MenuItemService,
     public modalController: ModalController,
     public cartService: CartService,
+    public diningTableService: DiningTableService,
+    public customerOrderService: CustomerOrderService,
+    public toastController: ToastController,
+    public alertController: AlertController,
+    public router: Router,
     private currencyPipe: CurrencyPipe) {
 
 
   }
 
+
   ngOnInit() {
 
     this.cart = this.sessionService.getShoppingCart();
     this.resourcePath = this.sessionService.getImageResourcePath();
-
   }
+
 
   ionViewDidEnter() {
     this.cart = this.sessionService.getShoppingCart();
@@ -66,14 +78,109 @@ export class TabCartPage implements OnInit {
 
   submitOrder() {
 
+    if (this.cart.orderLineItems.length == 0) {
+      this.toast("Cart Is Empty!");
+      return;
+    }
+
+    this.diningTableService.getMyTable().subscribe(
+      response => {
+        let currTable: DiningTable = response.diningTable;
+        if (currTable != null) {
+          if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
+            this.orderConfirmation();
+          } else {
+            this.orderDisallowed();
+          }
+        } else {
+          this.orderDisallowed();
+        }
+
+      }, error => {
+        console.log("Error in retrieving table. " + error);
+      });
+
+
+  }
+
+  saveCart(hideToast: boolean) {
     this.cartService.saveCart().subscribe(
       response => {
-        console.log("Response received");
+        this.toast("Saved Cart in System!");
+      }, error => {
+        console.log("Error received: " + error);
+      }
+    );
+  }
+
+  async orderConfirmation() {
+
+    const alert = await this.alertController.create({
+
+      header: "Order Confirmation",
+      message: "Would you like to to confirm and submit your order?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmationYes();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async orderDisallowed() {
+    console.log("Order disallowed");
+    const alert = await this.alertController.create({
+
+      header: "Unable to order",
+      message: "You can only order once you have checked-in to an allocated table.",
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+
+    });
+    await alert.present();
+  }
+
+  confirmationYes() {
+
+    this.cartService.saveCart().subscribe(
+      response => {
+
+        this.customerOrderService.submitCustomerOrder().subscribe(
+          response => {
+            this.cart.totalAmount = 0;
+            this.cart.orderLineItems = [];
+            this.sessionService.setShoppingCart(this.cart);
+            this.toast("Order submitted successfully!");
+
+            this.router.navigate(["/tabs/tab-order"]);
+          }, error => {
+            this.toast("Failed to submit order.");
+          }
+        );
+
       }, error => {
         console.log("Error received: " + error);
       }
     );
 
+  }
+
+  async toast(toastMessage: string) {
+    const toast = await this.toastController.create({
+      message: toastMessage,
+      duration: 1000,
+      position: 'middle',
+    });
+    toast.present();
   }
 
   getCurrency(amount: number): string {

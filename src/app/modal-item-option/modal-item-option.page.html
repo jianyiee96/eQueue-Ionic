@@ -22,7 +22,11 @@
         </ion-row>
 
         <ion-row class="controls">
-
+          <ion-col>
+            <b>
+              Qty: 
+            </b>
+          </ion-col>
           <ion-col ion-align-items-end>
             <ion-icon name="remove-circle-outline" (click)="reduceItemQuantity()"></ion-icon>
           </ion-col>
@@ -54,5 +58,6 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" (click)="saveAndDismiss()">Add to cart</ion-button>
+  <ion-button color="danger" expand="block" (click)="removeAndDismiss()">Remove from cart</ion-button>
+  <ion-button expand="block" (click)="saveAndDismiss()">Save to cart</ion-button>
 </ion-footer>

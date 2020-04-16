@@ -14,14 +14,17 @@ import { AppComponent } from './app.component';
 
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { ModalItemOptionPage } from './modal-item-option/modal-item-option.page';
+import { ModalOrderItemOptionPage } from './modal-order-item-option/modal-order-item-option.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModalItemOptionPage
+    ModalItemOptionPage,
+    ModalOrderItemOptionPage
   ],
   entryComponents: [ 
-    ModalItemOptionPage
+    ModalItemOptionPage,
+    ModalOrderItemOptionPage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { ModalItemOptionPage } from './modal-item-option/modal-item-option.page'
     HttpClientModule,
   ],
   exports: [
-    ModalItemOptionPage
+    ModalItemOptionPage,
+    ModalOrderItemOptionPage
   ],
   providers: [
     CurrencyPipe,
