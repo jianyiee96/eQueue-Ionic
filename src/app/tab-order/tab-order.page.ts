@@ -23,21 +23,19 @@ export class TabOrderPage implements OnInit {
   constructor(public sessionService: SessionService,
     public currencyPipe: CurrencyPipe,
     public customerOrderService: CustomerOrderService,
-    public router: Router) { 
+    public router: Router) {
 
-      this.refreshTimeout = 1000;
-
-    }
+    this.refreshTimeout = 1000;
+  }
 
   ngOnInit() {
-
   }
 
   ionViewDidEnter() {
     this.processPage();
   }
 
-  processPage(){
+  processPage() {
 
     this.customerOrderService.retrieveCustomerOrders().subscribe(
       response => {
@@ -53,48 +51,50 @@ export class TabOrderPage implements OnInit {
 
   }
 
-
-
   populateListByOrderStatus() {
 
     this.customerActiveOrders = [];
     this.customerPastOrders = [];
-    
+
     let counter: number = 0;
 
     for (let c of this.customerOrders) {
-
       c.itemCount = this.itemCount[counter++];
 
-      if (!c.isCompleted) {
-        this.customerActiveOrders.unshift(c);
-      } else {
-        this.customerPastOrders.unshift(c);
-      }
-
-      // if (c.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
+      // if (!c.isCompleted) {
       //   this.customerActiveOrders.unshift(c);
       // } else {
       //   this.customerPastOrders.unshift(c);
       // }
 
+      if (c.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
+        this.customerActiveOrders.unshift(c);
+      } else {
+        this.customerPastOrders.unshift(c);
+      }
     }
-
   }
 
   getCurrency(amount: number): string {
     return this.currencyPipe.transform(amount);
   }
 
+  displayPaymentTransaction(customerActiveOrders: CustomerOrder[]): void {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        customerActiveOrders: customerActiveOrders
+      }
+    };
+    this.router.navigate(["payment-transaction"], navigationExtras);
+  }
+
   displayOrder(order: CustomerOrder) {
-
-
     let navigationExtras: NavigationExtras = {
       state: {
         order: order
       }
     };
-    this.router.navigate(["order"],navigationExtras);
+    this.router.navigate(["order"], navigationExtras);
   }
 
   doRefresh(event) {

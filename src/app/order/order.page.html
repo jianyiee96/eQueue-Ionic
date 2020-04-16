@@ -6,7 +6,6 @@
 
 <ion-content *ngIf="order != null">
 
-
   <ion-button fill="clear" expand="full" (click)="back()">
     <ion-icon slot="start" name="arrow-back"></ion-icon>Return to Order Overview
   </ion-button>
@@ -24,7 +23,6 @@
         Total Amount: {{getCurrency(order.totalAmount)}}<br>
         Payment Status: {{order.isPaid?"Paid":"Unpaid"}}<br>
         # of items: {{order.itemCount}}
-        
       </div>
 
       <ion-list>
@@ -35,18 +33,18 @@
             <img src="{{resourcePath+orderLineItem.menuItem.imagePath}}">
           </ion-thumbnail>
           <ion-label class="order-page-label">
-            <h2><b>{{orderLineItem.menuItem.menuItemName}}</b>
+            <h2>
+              <b>{{orderLineItem.menuItem.menuItemName}}</b>
             </h2>
-            <h2><b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}} -&nbsp;</b>Qty:
-              
-              {{orderLineItem.quantity}}<br></h2>
-              
+            <h2>
+              <b>{{getCurrency(orderLineItem.menuItem.menuItemPrice*orderLineItem.quantity)}} - </b>
+              Qty: {{orderLineItem.quantity}}<br />
+            </h2>
 
-              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 1)" color="secondary">Submitted item</ion-badge>
-              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 2)" color="primary">Preparing item</ion-badge>
-              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 3)" color="success">Served</ion-badge>
-              <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 4)" color="medium">Cancelled</ion-badge>
-        
+            <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 1)" color="secondary">Submitted item</ion-badge>
+            <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 2)" color="primary">Preparing item</ion-badge>
+            <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 3)" color="success">Served</ion-badge>
+            <ion-badge *ngIf="(displayStatus(orderLineItem.status) == 4)" color="medium">Cancelled</ion-badge>
 
           </ion-label>
           <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="orderItemOptions(orderLineItem)">
@@ -54,9 +52,7 @@
         </ion-item>
 
       </ion-list>
-
-
-
+      
     </ion-card-content>
 
   </ion-card>

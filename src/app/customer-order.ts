@@ -1,4 +1,5 @@
 import { OrderStatusEnum } from './order-status-enum.enum';
+import { OrderLineItem } from './order-line-item';
 
 export class CustomerOrder {
 
@@ -9,6 +10,8 @@ export class CustomerOrder {
     status: OrderStatusEnum;
     totalAmount: number;
     itemCount: number = 0;
+
+    orderLineItems: OrderLineItem[] = new Array();
 
     constructor(orderId: number, isAllServed: boolean, isCompleted: boolean, orderDate: Date, status: OrderStatusEnum, totalAmount: number){
 

@@ -15,8 +15,17 @@
     <ion-card-content>
 
       <header class="custom-header">
-        Active Orders
-        <ion-badge class="badge" color="medium">{{customerActiveOrders.length}}</ion-badge>
+        <div class="ion-text-left" class="ion-float-left">
+          Active Orders
+          <ion-badge class="badge" color="medium">{{customerActiveOrders.length}}</ion-badge>
+        </div>
+
+        <div class="ion-text-right">
+          <button style="background-color: white;" (click)="displayPaymentTransaction(customerActiveOrders)">
+            <ion-icon style="font-size: 32px;" name="wallet-outline"></ion-icon>
+          </button>  
+        </div>
+
       </header>
 
       <ion-list>
@@ -24,7 +33,7 @@
         <ion-item expand="full" *ngFor="let order of customerActiveOrders" lines="full">
 
           <ion-label>
-            <h2><b>Order Id: {{order.orderId}}</b></h2>
+            <h2><b>Order ID: {{order.orderId}}</b></h2>
             <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}<br></p>
@@ -66,8 +75,5 @@
 
     </ion-card-content>
   </ion-card>
-
-
-
 
 </ion-content>

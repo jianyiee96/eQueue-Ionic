@@ -1,0 +1,42 @@
+pre {
+    font-size: 16px;
+    margin: 3px 0px 3px 6px
+}
+
+p {
+    font-size: small;
+    font-family: cursive;
+}
+
+.order-ion-card-content {
+    padding-top: 0px;
+    padding-bottom: 8px;
+}
+
+.order-title {
+    font-size: large;
+    background-color: lightgrey;
+    border-radius: 3px;
+}
+
+.paragraph-bold {
+    font-weight: 550;
+}
+
+#order-header-title {
+    font-size: x-large;
+    font-weight: bold;
+    color: darkslategrey;
+}
+
+#order-title-paragraph {
+    margin-left: 6px;
+    font-weight: 550;
+    font-size: medium;
+    font-family: cursive;
+}
+
+#total-amount {
+    display: inline;
+    font-size: 18px;
+}

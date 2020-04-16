@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>PaymentTransaction</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title id="order-header-title">Payment Confirmation</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="order-ion-card-content" *ngFor="let order of customerActiveOrders; let i = index;">
+      <ion-card-title class="order-title">
+        <p id="order-title-paragraph" style="padding-top: 3px;">Order ID - {{order.orderId}}</p>
+        <p id="order-title-paragraph" style="padding-bottom: 3px;">Order Date - {{parseDate(order.orderDate) | date:'dd-MMM-yyyy HH:mm'}}</p>
+      </ion-card-title>
+
+      <ion-list>
+        <ion-item lines="full">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="5.5">
+                <p class="paragraph-bold">Item Name</p>
+              </ion-col>
+              <ion-col size="1.5">
+                <p class="paragraph-bold" style="text-align: center;">Qty</p>
+              </ion-col>
+              <ion-col size="2.5">
+                <p class="paragraph-bold" style="text-align: center;">U.P.</p>
+              </ion-col>
+              <ion-col size="2.5">
+                <p class="paragraph-bold" style="text-align: center;">T.P.</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-item slot="start" *ngFor="let item of order.orderLineItems;" lines="full">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="5.5">
+                <p>{{item.menuItem.menuItemName}}</p>
+              </ion-col>
+              <ion-col size="1.5">
+                <p style="text-align: center;">{{item.quantity}}</p>
+              </ion-col>
+              <ion-col size="2.5">
+                <p style="text-align: center;">${{item.menuItem.menuItemPrice | number:'1.2-2'}}</p>
+              </ion-col>
+              <ion-col size="2.5">
+                <p style="text-align: center;">${{item.menuItem.menuItemPrice * item.quantity | number:'1.2-2'}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-item lines="full">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="9.5">
+                <p class="paragraph-bold" style="text-align: right;">Subtotal</p>
+              </ion-col>
+              <ion-col size="2.5">
+                <p style="text-align: center;">${{order.totalAmount | number:'1.2-2'}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content style="text-align: center;">
+      <p id="total-amount">Total Amount - </p>
+      <p id="total-amount" style="color: coral;">${{totalAmount | number:'1.2-2'}} </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button (click)="back()" expand="block" fill="clear" size="default" color="dark" strong="true">
+    <ion-icon name="checkmark-outline"></ion-icon>Confirm
+  </ion-button>
+
+  <ion-button (click)="back()" expand="block" fill="clear" size="default" color="dark" strong="true">
+    <ion-icon name="arrow-back-outline"></ion-icon>Cancel
+  </ion-button>
+
+</ion-content>

@@ -5,17 +5,17 @@ import { AuthenticationGuard } from './guard/authentication.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule),
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule),
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule),
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
@@ -25,21 +25,24 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'notification',
-    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
+    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'order',
-    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule),
+    loadChildren: () => import('./order/order.module').then(m => m.OrderPageModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'payment-transaction',
+    loadChildren: () => import('./payment-transaction/payment-transaction.module').then(m => m.PaymentTransactionPageModule),
     canActivate: [AuthenticationGuard]
   }
-
-
 
 ];
 
@@ -50,4 +53,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

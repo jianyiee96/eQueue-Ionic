@@ -21,7 +21,7 @@ export class OrderPage implements OnInit {
   resourcePath: string;
 
   order: CustomerOrder;
-  
+
   orderLineItems: OrderLineItem[] = [];
 
   constructor(public activatedRoute: ActivatedRoute,
@@ -47,7 +47,6 @@ export class OrderPage implements OnInit {
 
   ionViewDidEnter() {
     this.processPage();
-
   }
 
   processPage() {
@@ -64,24 +63,21 @@ export class OrderPage implements OnInit {
     }
   }
 
-  updateOrder(){
+  updateOrder() {
 
     this.customerOrderService.retrieveCustomerOrders().subscribe(
       response => {
         let customerOrders: CustomerOrder[] = response.customerOrders;
         let itemCount: number[] = response.itemCount;
-        
+
         customerOrders.forEach((item, index) => {
-          if(item.orderId == this.order.orderId){
+          if (item.orderId == this.order.orderId) {
             this.order = item;
             this.order.itemCount = itemCount[index];
           }
         })
-        
-      
-
       }, error => {
-        console.log("Unable to update: " + error );
+        console.log("Unable to update: " + error);
       }
     );
 
