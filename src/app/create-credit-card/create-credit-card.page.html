@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>CreateCreditCard</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-card-header>
+    <ion-card-title>Create Credit Card</ion-card-title>
+  </ion-card-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <div *ngIf="resultSuccess == true" style="color: blue;">
+        {{message}}
+      </div>
+
+      <div *ngIf="resultError == true" style="color: red;">
+        {{message}}
+      </div>
+
+      <form #createCreditCardForm="ngForm" (ngSubmit)="create(createCreditCardForm)">
+
+        <ion-list>
+
+          <ion-item>
+            <ion-label>Name on Card</ion-label>
+            <ion-input type="text" name="creditCardName" [(ngModel)]="newCreditCard.creditCardName" required="true"
+              #creditCardName="ngModel" maxlength="26"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Card Number</ion-label>
+            <ion-input type="text" name="creditCardNumber" [(ngModel)]="newCreditCard.creditCardNumber" required="true"
+              #creditCardNumber="ngModel" maxlength="19" (ngModelChange)="mychange($event)"
+              (keypress)="numberOnlyValidation($event)"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Expiry Date</ion-label>
+            <ion-datetime name="expiryDate" displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" max="2100"
+              min="{{currentPeriod}}" [(ngModel)]="expDate" required="true" #creditCardNumber="ngModel"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>CVV</ion-label>
+            <ion-input type="text" name="cvv" [(ngModel)]="newCreditCard.cvv" required="true" #cvv="ngModel"
+              maxlength="3" (keypress)="numberOnlyValidation($event)"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button (click)="clear()">
+              Clear
+            </ion-button>
+            <ion-button type="submit" ion-button block>
+              Create
+            </ion-button>
+          </ion-item>
+
+        </ion-list>
+
+      </form>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <p>
+    <ion-button (click)="back()" expand="block" color="light">
+      Back
+    </ion-button>
+  </p>
+</ion-footer>

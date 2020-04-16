@@ -5,17 +5,17 @@ import { AuthenticationGuard } from './guard/authentication.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule),
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule),
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule),
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
@@ -25,12 +25,22 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'notification',
-    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule),
+    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'view-credit-card',
+    loadChildren: () => import('./view-credit-card/view-credit-card.module').then(m => m.ViewCreditCardPageModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-credit-card',
+    loadChildren: () => import('./create-credit-card/create-credit-card.module').then(m => m.CreateCreditCardPageModule),
     canActivate: [AuthenticationGuard]
   }
 
@@ -43,4 +53,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

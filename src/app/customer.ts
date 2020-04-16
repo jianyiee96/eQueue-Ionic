@@ -4,8 +4,8 @@ export class Customer {
     firstName: String;
     lastName: String;
     email: String;
-    initialPassword: String;
     password: String;
+    confirmPassword: String;
 
     constructor(customerId?: number, firstName?: String, lastName?: String, email?: String, password?: String, salt?: String) {
 
