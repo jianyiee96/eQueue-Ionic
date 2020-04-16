@@ -54,7 +54,7 @@
               maxlength="3" (keypress)="numberOnlyValidation($event)"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item style="float: right;" lines="none">
             <ion-button (click)="clear()">
               Clear
             </ion-button>
@@ -75,7 +75,7 @@
 
 <ion-footer>
   <p>
-    <ion-button (click)="back()" expand="block" color="light">
+    <ion-button id="backButton" (click)="back()" expand="block" color="light">
       Back
     </ion-button>
   </p>

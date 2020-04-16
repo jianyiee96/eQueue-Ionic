@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
-import { Customer } from '../customer';
-import { CreditCard } from '../credit-card';
-import { CustomerService } from '../customer.service'
-import { SessionService } from '../session.service';
-import { CreditCardService } from '../credit-card.service'
+import { Customer } from '../../../customer';
+import { CreditCard } from '../../../credit-card';
+import { CustomerService } from '../../../customer.service'
+import { SessionService } from '../../../session.service';
+import { CreditCardService } from '../../../credit-card.service'
 import { Router } from '@angular/router';
 
 
@@ -57,7 +57,7 @@ export class ViewCreditCardPage implements OnInit {
           }
           this.maskedCCNum = this.maskedCCNum.substring(0, 4) + this.maskedCCNum.substring(6, 7) + "xxxxxx" + this.maskedCCNum.substring(15, 19);
         } else {
-          console.log("Customer does not have credit card associated with his account!")
+          // console.log("Customer does not have credit card associated with his account!")
           this.haveCreditCard = false;
         }
       },

@@ -35,17 +35,17 @@ const routes: Routes = [
   },
   {
     path: 'view-credit-card',
-    loadChildren: () => import('./view-credit-card/view-credit-card.module').then(m => m.ViewCreditCardPageModule),
+    loadChildren: () => import('./tab-profile/credit-card/view-credit-card/view-credit-card.module').then(m => m.ViewCreditCardPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'create-credit-card',
-    loadChildren: () => import('./create-credit-card/create-credit-card.module').then(m => m.CreateCreditCardPageModule),
+    loadChildren: () => import('./tab-profile/credit-card/create-credit-card/create-credit-card.module').then(m => m.CreateCreditCardPageModule),
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'order',
-    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule),
+    loadChildren: () => import('./order/order.module').then(m => m.OrderPageModule),
     canActivate: [AuthenticationGuard]
   }
 

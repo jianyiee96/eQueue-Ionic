@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { CreditCard } from '../credit-card';
-import { CreditCardService } from '../credit-card.service';
+import { CreditCard } from '../../../credit-card';
+import { CreditCardService } from '../../../credit-card.service';
 import { Router } from '@angular/router';
-import { SessionService } from '../session.service';
-import { Customer } from '../customer';
+import { SessionService } from '../../../session.service';
+import { Customer } from '../../../customer';
 
 @Component({
   selector: 'app-create-credit-card',
