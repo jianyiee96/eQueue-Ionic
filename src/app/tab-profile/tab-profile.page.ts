@@ -26,6 +26,10 @@ export class TabProfilePage implements OnInit {
   ) {
   }
 
+  ionViewDidEnter() {
+    this.ngOnInit();
+  }
+
   ngOnInit() {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
   }

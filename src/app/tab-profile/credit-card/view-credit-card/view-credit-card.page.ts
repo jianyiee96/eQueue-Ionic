@@ -35,11 +35,11 @@ export class ViewCreditCardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.currentCustomer = this.sessionService.getCurrentCustomer();
   }
 
   ionViewDidEnter() {
     this.getCreditCard();
+    this.currentCustomer = this.sessionService.getCurrentCustomer();
   }
 
   getCreditCard() {
@@ -107,7 +107,7 @@ export class ViewCreditCardPage implements OnInit {
   }
 
   back() {
-    this.router.navigate([""]);
+    this.router.navigate(["tabs/tab-profile"]);
   }
 
 }

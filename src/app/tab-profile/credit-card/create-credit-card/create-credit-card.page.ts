@@ -32,15 +32,19 @@ export class CreateCreditCardPage implements OnInit {
     private router: Router
   ) {
     this.submitted = false;
-    this.newCreditCard = new CreditCard();
-
-    this.resultSuccess = false;
-    this.resultError = false;
+    this.ionViewDidEnter();
   }
 
   ngOnInit() {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
     this.getCreditCard();
+  }
+
+  ionViewDidEnter() {
+    this.newCreditCard = new CreditCard();
+
+    this.resultSuccess = false;
+    this.resultError = false;
   }
 
   getCreditCard() {
