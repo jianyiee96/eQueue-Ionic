@@ -41,8 +41,8 @@ export class CreateCreditCardPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.ngOnInit();
     this.newCreditCard = new CreditCard();
-
     this.resultSuccess = false;
     this.resultError = false;
   }
