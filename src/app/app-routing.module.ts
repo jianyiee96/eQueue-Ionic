@@ -34,6 +34,16 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: 'view-credit-card',
+    loadChildren: () => import('./tab-profile/credit-card/view-credit-card/view-credit-card.module').then(m => m.ViewCreditCardPageModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-credit-card',
+    loadChildren: () => import('./tab-profile/credit-card/create-credit-card/create-credit-card.module').then(m => m.CreateCreditCardPageModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
     path: 'order',
     loadChildren: () => import('./order/order.module').then(m => m.OrderPageModule),
     canActivate: [AuthenticationGuard]
@@ -43,7 +53,6 @@ const routes: Routes = [
     loadChildren: () => import('./payment-transaction/payment-transaction.module').then(m => m.PaymentTransactionPageModule),
     canActivate: [AuthenticationGuard]
   }
-
 ];
 
 

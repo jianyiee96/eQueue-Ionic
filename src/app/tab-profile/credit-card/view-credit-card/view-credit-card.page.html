@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ViewCreditCard</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card-header>
+    <ion-card-title>Credit Card</ion-card-title>
+  </ion-card-header>
+
+
+
+  <ion-card *ngIf="haveCreditCard == true">
+    <img *ngIf="isVisa == true" src="../../assets/images/visa.jpg" />
+    <img *ngIf="isVisa == false" src="../../assets/images/mastercard.jpg" />
+    <ion-card-header>
+      <div class="ccDetails">{{maskedCCNum}}</div>
+      <br>
+      <br>
+      <br>
+      <div class="ccDetails">Expiry Date</div>
+      <br>
+      <br>
+      <div class="ccDetails">{{creditCard.expiryMonth}}/{{creditCard.expiryYear}}</div>
+      <br>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="haveCreditCard == false" (click)="createCreditCardView()">
+    <ion-card-content>
+      No Credit Card Added
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <p *ngIf="haveCreditCard == true">
+    <ion-button id="deleteButton" (click)="deleteCreditCard()" expand="block" color="light">
+      <div style="color: red;">Delete</div>
+    </ion-button>
+  </p>
+  <p>
+    <ion-button (click)="back()" expand="block" color="light">Back</ion-button>
+  </p>
+</ion-footer>
