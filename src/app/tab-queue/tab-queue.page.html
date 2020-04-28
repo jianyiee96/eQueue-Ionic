@@ -26,8 +26,8 @@
     </ion-card-content>
 
 
-      <ion-input placeholder="Number of pax (1-8)" type="number" [(ngModel)]="paxCount"></ion-input>
-    
+    <ion-input placeholder="Number of pax (1-8)" type="number" [(ngModel)]="paxCount"></ion-input>
+
 
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
@@ -53,9 +53,11 @@
         <h2> Position: {{queuePosition}}</h2>
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
-      
-      
+
+
     </ion-card-content>
+
+    <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
 
 
@@ -76,7 +78,7 @@
         <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
       </ion-text>
       <ion-text color="danger">
-        
+
 
         <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
       </ion-text>
@@ -85,7 +87,7 @@
 
     <ion-item-divider>
       <label>
-        Method 1:  
+        Method 1:
       </label>
     </ion-item-divider>
 
@@ -101,8 +103,8 @@
         Method 2:
       </label>
     </ion-item-divider>
-    
-    
+
+
 
     <ion-button expand="full" (click)="checkInQr()">
       <ion-icon slot="start" name="camera"></ion-icon>
@@ -110,8 +112,9 @@
     </ion-button>
 
 
+    <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
-  
+
 
 
 

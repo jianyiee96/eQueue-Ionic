@@ -205,6 +205,26 @@ export class TabQueuePage implements OnInit {
     this.toast("Function in unavailable atm.");
   }
 
+  leaveQueue(){
+
+    this.queueService.leaveQueue().subscribe(
+      response => {
+
+        if(response.result) {
+          this.toast("Successfully left queue.");
+        } else {
+          this.toast("Queue does not exist.")
+        }
+        this.processSituation();
+        
+      }, error => {
+        console.log("Error" + error);
+        this.toast(error);
+      }
+    );
+
+  }
+
   doRefresh(event) {
     this.processSituation();
     setTimeout(() => {
