@@ -40,7 +40,7 @@ export class TabMenuPage implements OnInit {
 
   ngOnInit() {
     this.resourcePath = this.sessionService.getImageResourcePath();
-
+    
   }
 
 
@@ -101,7 +101,6 @@ export class TabMenuPage implements OnInit {
               //menuCategory.menuItems = response.menuItems;
               menuCategory.menuItems = [];
               for (let item of response.menuItems) {
-
                 if (!this.isUnavailable(item)) {
                   menuCategory.menuItems.push(item);
                 }

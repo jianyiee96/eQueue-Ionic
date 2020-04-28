@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { MenuItem } from '../menu-item';
-import { MenuCategory } from '../menu-category';
-import { MenuCategoryService } from '../menu-category.service';
 import { MenuItemService } from '../menu-item.service';
 
 
@@ -55,6 +53,7 @@ export class TabCartPage implements OnInit {
 
   ionViewDidEnter() {
     this.cart = this.sessionService.getShoppingCart();
+
   }
 
   async itemOptions(item: MenuItem) {
@@ -104,18 +103,46 @@ export class TabCartPage implements OnInit {
   }
 
   saveCart(hideToast: boolean) {
-    this.cartService.saveCart().subscribe(
+
+    this.menuItemService.retrieveAllMenuItem().subscribe(
       response => {
 
-        if (!hideToast) {
-          this.toast("Saved Cart in System!");
+        let invalidItems: string = "";
+        var existingItems = response.menuItems;
+
+        for (let cartItems of this.cart.orderLineItems) {
+          let v: boolean = false;
+          for (let items of existingItems) {
+            if (items.menuItemId == cartItems.menuItem.menuItemId) {
+              v = true;
+              break;
+            }
+          }
+          if (!v) {
+            invalidItems = invalidItems + cartItems.menuItem.menuItemName + ", ";
+          }
         }
+        if (invalidItems == "") {
 
+          this.cartService.saveCart().subscribe(
+            response => {
+              if (!hideToast) {
+                this.toast("Saved Cart in System!");
+              }
+            }, error => {
+              console.log("Error received: " + error);
+            }
+          );
 
+        } else {
+          this.toast("These items are no longer valid, please remove them:\n" + invalidItems.substring(0, invalidItems.length - 2));
+        }
       }, error => {
-        console.log("Error received: " + error);
+        this.toast("Failed to verify cart items.\n" + error);
       }
     );
+
+
   }
 
   clearCart() {
@@ -185,26 +212,55 @@ export class TabCartPage implements OnInit {
 
   confirmationYes() {
 
-    this.cartService.saveCart().subscribe(
+    this.menuItemService.retrieveAllMenuItem().subscribe(
       response => {
 
-        this.customerOrderService.submitCustomerOrder().subscribe(
-          response => {
-            this.cart.totalAmount = 0;
-            this.cart.orderLineItems = [];
-            this.sessionService.setShoppingCart(this.cart);
-            this.toast("Order submitted successfully!");
+        let invalidItems: string = "";
+        var existingItems = response.menuItems;
 
-            this.router.navigate(["/tabs/tab-order"]);
-          }, error => {
-            this.toast("Failed to submit order.\n" + error);
+        for (let cartItems of this.cart.orderLineItems) {
+          let v: boolean = false;
+          for (let items of existingItems) {
+            if (items.menuItemId == cartItems.menuItem.menuItemId) {
+              v = true;
+              break;
+            }
           }
-        );
+          if (!v) {
+            invalidItems = invalidItems + cartItems.menuItem.menuItemName + ", ";
+          }
+        }
+
+        if (invalidItems == "") {
+          this.cartService.saveCart().subscribe(
+            response => {
+
+              this.customerOrderService.submitCustomerOrder().subscribe(
+                response => {
+                  this.cart.totalAmount = 0;
+                  this.cart.orderLineItems = [];
+                  this.sessionService.setShoppingCart(this.cart);
+                  this.toast("Order submitted successfully!");
+                  this.router.navigate(["/tabs/tab-order"]);
+                }, error => {
+                  this.toast("Failed to submit order.\n" + error);
+                }
+              );
+
+            }, error => {
+              console.log("Error received: " + error);
+            }
+          );
+
+        } else {
+          this.toast("These items are no longer valid, please remove them:\n" + invalidItems.substring(0, invalidItems.length - 2));
+        }
 
       }, error => {
-        console.log("Error received: " + error);
+        this.toast("Failed to verify cart items.\n" + error);
       }
     );
+
 
   }
 
