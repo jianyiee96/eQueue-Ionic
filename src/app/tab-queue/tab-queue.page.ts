@@ -65,7 +65,7 @@ export class TabQueuePage implements OnInit {
     this.diningTable.seatingCapacity = 0;
     this.diningTable.diningTableId = 0;
 
-    this.paxCount = 0;
+    this.paxCount = 1;
     this.code = "";
     this.queueStartTime = new Date();
     this.queueAllocatedDateTime = new Date();
@@ -78,7 +78,7 @@ export class TabQueuePage implements OnInit {
 
   processSituation() {
 
-    this.paxCount = 0;
+    this.paxCount = 1;
     this.code = "";
     this.currentCustomer = this.sessionService.getCurrentCustomer();
 
@@ -157,7 +157,7 @@ export class TabQueuePage implements OnInit {
 
   joinQueue() {
 
-    if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 8) {
+    if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 12) {
       console.log("Invalid pax count");
       this.toast("Invalid Pax Count");
       return;
