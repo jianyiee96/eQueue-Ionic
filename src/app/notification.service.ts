@@ -37,8 +37,22 @@ export class NotificationService {
       );
   }
 
+  readAllNotification(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/readAllNotification?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   deleteNotification(notificationId: number): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/deleteNotification?notificationId=" + notificationId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  deleteAllNotification(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/deleteAllNotification?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
       (
         catchError(this.handleError)
       );

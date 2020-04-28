@@ -21,11 +21,13 @@
 
 			<ion-list>
 
-				<div class="custom-header">Notification
+				<header class="custom-header">Notification
 
 					<ion-badge class="badge" color="medium">{{notifications.length}}</ion-badge>
 
-				</div>
+					<ion-icon class="header-icon" name="checkmark-done-sharp" (click)="readAll()"></ion-icon>
+					<ion-icon class="header-icon" name="trash" (click)="deleteAll()"></ion-icon>
+				</header>
 
 				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
  
