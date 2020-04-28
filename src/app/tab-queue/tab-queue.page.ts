@@ -10,6 +10,7 @@ import { Customer } from '../customer';
 import { Queue } from '../queue'
 import { DiningTable } from '../dining-table'
 import { Store } from '../store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab-queue',
@@ -34,7 +35,7 @@ export class TabQueuePage implements OnInit {
   expiryDateTime: Date;
   queueWaitingTime: number;
   queuePosition: number;
-  
+
   constructor(
     public sessionService: SessionService,
     public queueService: QueueService,
@@ -52,7 +53,7 @@ export class TabQueuePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    
+
     this.store = this.sessionService.getStore();
     this.queue = new Queue();
     this.queue.numberOfPax = 0;
@@ -63,7 +64,7 @@ export class TabQueuePage implements OnInit {
     this.diningTable = new DiningTable();
     this.diningTable.seatingCapacity = 0;
     this.diningTable.diningTableId = 0;
-    
+
     this.paxCount = 0;
     this.code = "";
     this.queueStartTime = new Date();
@@ -76,6 +77,9 @@ export class TabQueuePage implements OnInit {
   }
 
   processSituation() {
+
+    this.paxCount = 0;
+    this.code = "";
     this.currentCustomer = this.sessionService.getCurrentCustomer();
 
     this.queueService.getMyQueue().subscribe(
@@ -111,7 +115,7 @@ export class TabQueuePage implements OnInit {
               let allocatedDateString = this.parseDate(this.queueAllocatedDateTime);
               this.expiryDateTime = new Date(allocatedDateString);
               this.expiryDateTime.setMinutes(this.expiryDateTime.getMinutes() + this.store.allocationGraceWaitingMinutes);
-              
+
             }
             else if (this.diningTable != null && this.queue == null) {
               this.displayOption = 4;
@@ -197,7 +201,7 @@ export class TabQueuePage implements OnInit {
   }
 
   checkInQr() {
-    
+
     this.toast("Function in unavailable atm.");
   }
 

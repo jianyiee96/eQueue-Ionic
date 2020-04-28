@@ -66,7 +66,7 @@ export class TabOrderPage implements OnInit {
 
       c.itemCount = this.itemCount[counter++];
 
-      if (!c.isCompleted) {
+      if (!c.isCompleted || c.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
         this.customerActiveOrders.unshift(c);
       } else {
         this.customerPastOrders.unshift(c);

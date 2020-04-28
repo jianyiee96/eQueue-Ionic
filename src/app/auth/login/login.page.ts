@@ -32,27 +32,6 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-
-
-    this.storeService.retrieveStoreInformation().subscribe(
-      response => {
-
-        let store: Store = response.store;
-
-        if (store != null) {
-          this.sessionService.setStore(store);
-        }
-        else {
-          console.log("Unable to retrieve store [null]");
-        }
-      },
-      error => {
-        console.log("Unable to retrieve store [" + error + "]");
-      }
-    );
-
-
-
   }
 
   clear() {

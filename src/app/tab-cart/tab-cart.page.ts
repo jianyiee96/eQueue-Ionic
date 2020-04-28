@@ -163,7 +163,7 @@ export class TabCartPage implements OnInit {
 
             this.router.navigate(["/tabs/tab-order"]);
           }, error => {
-            this.toast("Failed to submit order.");
+            this.toast("Failed to submit order.\n" + error);
           }
         );
 
@@ -177,7 +177,7 @@ export class TabCartPage implements OnInit {
   async toast(toastMessage: string) {
     const toast = await this.toastController.create({
       message: toastMessage,
-      duration: 1000,
+      duration: 3000,
       position: 'middle',
     });
     toast.present();

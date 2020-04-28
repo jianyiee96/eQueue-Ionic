@@ -7,9 +7,6 @@
 <ion-content *ngIf="order != null">
 
 
-  <ion-button fill="clear" expand="full" (click)="back()">
-    <ion-icon slot="start" name="arrow-back"></ion-icon>Return to Order Overview
-  </ion-button>
 
   <ion-card>
 
@@ -60,4 +57,13 @@
     </ion-card-content>
 
   </ion-card>
+
+  
 </ion-content>
+<ion-footer>
+
+  <ion-button fill="clear" expand="full" (click)="back()">
+    <ion-icon slot="start" name="arrow-back"></ion-icon>Return to Order Overview
+  </ion-button>
+
+</ion-footer>
