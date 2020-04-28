@@ -106,11 +106,25 @@ export class TabCartPage implements OnInit {
   saveCart(hideToast: boolean) {
     this.cartService.saveCart().subscribe(
       response => {
-        this.toast("Saved Cart in System!");
+
+        if (!hideToast) {
+          this.toast("Saved Cart in System!");
+        }
+
+
       }, error => {
         console.log("Error received: " + error);
       }
     );
+  }
+
+  clearCart() {
+
+    this.cart.orderLineItems = [];
+    this.cart.totalAmount = 0;
+    this.sessionService.setShoppingCart(this.cart);
+    this.saveCart(true);
+    this.toast("Shopping Cart Cleared!");
   }
 
   async orderConfirmation() {
@@ -124,6 +138,26 @@ export class TabCartPage implements OnInit {
           text: 'Yes',
           handler: () => {
             this.confirmationYes();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async clearConfirmation() {
+
+    const alert = await this.alertController.create({
+
+      header: "Clear Cart",
+      message: "Are you sure you want to clear your cart?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.clearCart();
           }
         }, {
           text: 'No'
@@ -177,7 +211,7 @@ export class TabCartPage implements OnInit {
   async toast(toastMessage: string) {
     const toast = await this.toastController.create({
       message: toastMessage,
-      duration: 3000,
+      duration: 2000,
       position: 'middle',
     });
     toast.present();
