@@ -26,7 +26,7 @@ export class CartService {
   saveCart(): Observable<any> {
 
     let cart: Cart = this.sessionService.getShoppingCart();
-
+    
     let saveShoppingCartReq = {
       "customerId": this.sessionService.getCurrentCustomer().customerId,
       "shoppingCart": cart

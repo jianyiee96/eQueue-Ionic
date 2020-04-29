@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
 import { Store } from '../store';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +19,33 @@ export class HomePage implements OnInit {
 
   constructor(private router: Router,
     public sessionService: SessionService,
+    private storeService: StoreService,
     private customerService: CustomerService) { }
 
   ngOnInit() {
-    this.store = this.sessionService.getStore();
+    
+  }
+
+  ionViewWillEnter() {
+
+    this.storeService.retrieveStoreInformation().subscribe(
+      response => {
+
+        let store: Store = response.store;
+
+        if (store != null) {
+          this.sessionService.setStore(store);
+          this.store = store;
+        }
+        else {
+          console.log("Unable to retrieve store [null]");
+        }
+      },
+      error => {
+        console.log("Unable to retrieve store [" + error + "]");
+      }
+    );
+
   }
 
   customerLogout(): void {

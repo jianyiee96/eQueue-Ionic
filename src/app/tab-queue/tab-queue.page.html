@@ -21,13 +21,17 @@
       <ion-text color="primary">
         <h2>You have not join a queue, neither do you have an allocated table.</h2>
         <br>
-        <h2>Click on the button below to Join a queue</h2>
+        <h2>Simple specify no. of pax and click on the button below to join the queue</h2>
       </ion-text>
     </ion-card-content>
 
 
-      <ion-input placeholder="Number of pax (1-8)" type="number" [(ngModel)]="paxCount"></ion-input>
-    
+    <ion-item>
+      <ion-range [(ngModel)]="paxCount" color="secondary" pin="true" ticks="true" snaps="true" min="1" max="12">
+        <ion-label slot="start">1</ion-label>
+        <ion-label slot="end">12</ion-label>
+      </ion-range>
+    </ion-item>
 
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
@@ -53,9 +57,11 @@
         <h2> Position: {{queuePosition}}</h2>
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
-      
-      
+
+
     </ion-card-content>
+
+    <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
 
 
@@ -76,7 +82,7 @@
         <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
       </ion-text>
       <ion-text color="danger">
-        
+
 
         <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
       </ion-text>
@@ -85,7 +91,7 @@
 
     <ion-item-divider>
       <label>
-        Method 1:  
+        Method 1:
       </label>
     </ion-item-divider>
 
@@ -101,8 +107,8 @@
         Method 2:
       </label>
     </ion-item-divider>
-    
-    
+
+
 
     <ion-button expand="full" (click)="checkInQr()">
       <ion-icon slot="start" name="camera"></ion-icon>
@@ -110,8 +116,9 @@
     </ion-button>
 
 
+    <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
-  
+
 
 
 

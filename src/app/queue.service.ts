@@ -38,6 +38,14 @@ export class QueueService {
 
   }
 
+  leaveQueue(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/leaveQueue?customerId=" + this.sessionService.getCurrentCustomer().customerId).pipe
+      (
+        catchError(this.handleError)
+      );
+
+  }
+
 
 
   private handleError(error: HttpErrorResponse) {

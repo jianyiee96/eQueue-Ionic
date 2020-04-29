@@ -4,7 +4,6 @@ import { OrderLineItem } from './order-line-item';
 export class CustomerOrder {
 
     orderId: number;
-    isAllServed: boolean;
     isCompleted: boolean;
     orderDate: Date;
     status: OrderStatusEnum;
@@ -13,15 +12,14 @@ export class CustomerOrder {
 
     orderLineItems: OrderLineItem[] = new Array();
 
-    constructor(orderId: number, isAllServed: boolean, isCompleted: boolean, orderDate: Date, status: OrderStatusEnum, totalAmount: number){
+    constructor(orderId: number, isCompleted: boolean, orderDate: Date, status: OrderStatusEnum, totalAmount: number) {
 
         this.orderId = orderId;
-        this.isAllServed = isAllServed;
         this.isCompleted = isCompleted;
         this.orderDate = orderDate;
         this.status = status;
         this.totalAmount = totalAmount;
-        
+
     }
 
 }
