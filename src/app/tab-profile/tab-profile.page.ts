@@ -18,9 +18,9 @@ export class TabProfilePage implements OnInit {
   currentCustomer: Customer;
 
   constructor(
+    private router: Router,
     private sessionService: SessionService,
     private customerService: CustomerService,
-    private router: Router,
     public alertController: AlertController,
     public toastController: ToastController,
   ) {

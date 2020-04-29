@@ -10,24 +10,26 @@
     <ion-grid>
       <ion-row justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          
+
           <div padding>
 
             <div *ngIf="loginError == true" style="color: red;">
               {{errorMessage}}
             </div>
-            
+
 
             <ion-item>
-              <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" required></ion-input>
+              <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" required>
+              </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password"  required></ion-input>
+              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" required>
+              </ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button (click)="clear()" expand="block">Clear</ion-button>
             <ion-button type="submit" [disabled]="customerLoginForm.invalid" expand="block">Login</ion-button>
+            <ion-button (click)="clear()" expand="block">Clear</ion-button>
           </div>
         </ion-col>
       </ion-row>
