@@ -168,19 +168,15 @@ export class PaymentTransactionPage implements OnInit {
   getCreditCard(): void {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
+        console.log("Confirm payment using credit card")
 
         this.hasCreditCard = true;
         this.creditCard = response.creditCard;
-
-        if (this.creditCard != null) {
-          console.log("Confirm payment using credit card")
-        } else {
-          this.hasCreditCard = false;
-          console.log('You have not saved any credit card for payment...')
-        }
       },
       error => {
-        console.log("You have not saved any credit card for payment...")
+        console.log(error)
+        
+        this.hasCreditCard = false;
       }
     );
   }

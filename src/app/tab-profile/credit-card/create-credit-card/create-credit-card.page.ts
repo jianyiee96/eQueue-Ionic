@@ -50,17 +50,13 @@ export class CreateCreditCardPage implements OnInit {
   getCreditCard() {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
-        if (response.creditCard != null) {
-          this.haveCreditCard = true;
-          this.back()
-        } else {
-          console.log("Customer does not have credit card associated with his account!")
-          this.haveCreditCard = false;
-        }
+        this.haveCreditCard = true;
+        this.back()
       },
       error => {
         this.haveCreditCard = false;
-        // console.log("Errore received: " + error);
+
+        console.log("Customer does not have credit card associated with his account!")
       }
     )
   }
