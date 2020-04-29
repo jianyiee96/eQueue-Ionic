@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { SessionService } from '../session.service';
 import { CustomerOrder } from '../customer-order';
 import { CustomerOrderService } from '../customer-order.service';
@@ -45,7 +45,6 @@ export class TabOrderPage implements OnInit {
   }
 
   processPage() {
-
     this.customerOrderService.retrieveCustomerOrders().subscribe(
       response => {
         this.customerOrders = response.customerOrders;
@@ -57,7 +56,6 @@ export class TabOrderPage implements OnInit {
         console.log(error);
       }
     );
-
   }
 
   populateListByOrderStatus() {
@@ -86,20 +84,16 @@ export class TabOrderPage implements OnInit {
         this.customerPastOrders.unshift(c);
       }
     }
-
-    console.log(this.customerActiveOrders);
-    console.log(this.customerPreparingOrders);
-    console.log(this.customerServedOrders);
   }
 
   getCurrency(amount: number): string {
     return this.currencyPipe.transform(amount);
   }
 
-  displayPaymentTransaction(customerActiveOrders: CustomerOrder[]): void {
+  displayPaymentTransaction(customerServedOrders: CustomerOrder[]): void {
     let navigationExtras: NavigationExtras = {
       state: {
-        customerActiveOrders: customerActiveOrders
+        customerServedOrders: customerServedOrders
       }
     };
     this.router.navigate(["payment-transaction"], navigationExtras);

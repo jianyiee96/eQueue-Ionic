@@ -53,6 +53,7 @@ const routes: Routes = [
     loadChildren: () => import('./payment-transaction/payment-transaction.module').then(m => m.PaymentTransactionPageModule),
     canActivate: [AuthenticationGuard]
   }
+
 ];
 
 

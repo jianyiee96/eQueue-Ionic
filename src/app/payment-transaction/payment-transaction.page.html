@@ -11,7 +11,7 @@
       <ion-card-title id="order-header-title">Payment Confirmation</ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="order-ion-card-content" *ngFor="let order of customerActiveOrders; let i = index;">
+    <ion-card-content class="order-ion-card-content" *ngFor="let order of customerServedOrders; let i = index;">
       <ion-card-title class="order-title">
         <p id="order-title-paragraph" style="padding-top: 3px;">Order ID - {{order.orderId}}</p>
         <p id="order-title-paragraph" style="padding-bottom: 3px;">Order Date - {{parseDate(order.orderDate) | date:'dd-MMM-yyyy HH:mm'}}</p>
@@ -80,7 +80,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button (click)="back()" expand="block" fill="clear" size="default" color="dark" strong="true">
+  <ion-button (click)="confirmAlert()" expand="block" fill="clear" size="default" color="dark" strong="true">
     <ion-icon name="checkmark-outline"></ion-icon>Confirm
   </ion-button>
 
