@@ -50,6 +50,14 @@ export class CreateCreditCardPage implements OnInit {
   getCreditCard() {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
+
+        if (response.creditCard == null) {
+          this.haveCreditCard = false;
+
+          return;
+        }
+
+
         this.haveCreditCard = true;
         this.back()
       },
