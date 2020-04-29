@@ -16,8 +16,17 @@ export class TabOrderPage implements OnInit {
   refreshTimeout: number;
 
   customerOrders: CustomerOrder[] = [];
+
   customerActiveOrders: CustomerOrder[] = [];
+
+  // Orders that are active, but being prepared
+  customerPreparingOrders: CustomerOrder[] = [];
+
+  // Orders that are active, but served
+  customerServedOrders: CustomerOrder[] = [];
+
   customerPastOrders: CustomerOrder[] = [];
+
   itemCount: number[] = [];
 
   constructor(public sessionService: SessionService,
@@ -31,7 +40,7 @@ export class TabOrderPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.processPage();
   }
 
@@ -54,6 +63,9 @@ export class TabOrderPage implements OnInit {
   populateListByOrderStatus() {
 
     this.customerActiveOrders = [];
+    this.customerPreparingOrders = [];
+    this.customerServedOrders = [];
+
     this.customerPastOrders = [];
 
     let counter: number = 0;
@@ -61,18 +73,23 @@ export class TabOrderPage implements OnInit {
     for (let c of this.customerOrders) {
       c.itemCount = this.itemCount[counter++];
 
-      // if (!c.isCompleted) {
-      //   this.customerActiveOrders.unshift(c);
-      // } else {
-      //   this.customerPastOrders.unshift(c);
-      // }
-
       if (c.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
         this.customerActiveOrders.unshift(c);
+
+        if (!c.isCompleted) {
+          this.customerPreparingOrders.unshift(c);
+        } else {
+          this.customerServedOrders.unshift(c);
+        }
+
       } else {
         this.customerPastOrders.unshift(c);
       }
     }
+
+    console.log(this.customerActiveOrders);
+    console.log(this.customerPreparingOrders);
+    console.log(this.customerServedOrders);
   }
 
   getCurrency(amount: number): string {
