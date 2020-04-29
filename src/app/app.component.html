@@ -3,11 +3,11 @@
 
   <ion-toolbar *ngIf="sessionService.getIsLogin()">
     <ion-buttons slot="primary">
-      
+
       <ion-button (click)="navigateHome()">
         <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
-      
+
       <ion-button *ngIf="!unreadNotification" (click)="navigateNotification()">
         <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
       </ion-button>
@@ -20,14 +20,18 @@
       <ion-button (click)="navigateTab()">
         <ion-icon slot="icon-only" name="layers-outline"></ion-icon>
       </ion-button>
-    
+
+      <ion-button (click)="callStaff()">
+        <ion-icon slot="icon-only" name="notifications-circle-outline"></ion-icon>
+      </ion-button>
+
     </ion-buttons>
 
     <ion-title>eQueue</ion-title>
 
-   </ion-toolbar>
+  </ion-toolbar>
 
-   
+
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
