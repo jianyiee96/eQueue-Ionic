@@ -1,7 +1,7 @@
 export enum MenuItemAvailabilityEnum {
 
-    AVAILABLE,
-    SELLING_FAST,
-    UNAVAILABLE
+    AVAILABLE = "AVAILABLE",
+    SELLING_FAST = "SELLING_FAST",
+    UNAVAILABLE = "UNAVAILABLE"
 
 }

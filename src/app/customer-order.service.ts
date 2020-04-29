@@ -73,7 +73,8 @@ export class CustomerOrderService {
       errorMessage = "An unknown error has occurred: " + error.error.message;
     }
     else {
-      errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+      //errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+      errorMessage = `${error.error.message}`;
     }
 
     console.error(errorMessage);

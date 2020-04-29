@@ -47,9 +47,12 @@ const routes: Routes = [
     path: 'order',
     loadChildren: () => import('./order/order.module').then(m => m.OrderPageModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'payment-transaction',
+    loadChildren: () => import('./payment-transaction/payment-transaction.module').then(m => m.PaymentTransactionPageModule),
+    canActivate: [AuthenticationGuard]
   }
-
-
 
 ];
 

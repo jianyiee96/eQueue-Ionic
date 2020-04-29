@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { SessionService } from './session.service';
-import { Cart } from './cart';
+import { PaymentTransaction } from './payment-transaction';
+import { CustomerOrder } from './customer-order';
 
+import { SessionService } from './session.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,28 +16,25 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class PaymentTransactionService {
 
   baseUrl: string;
 
-  constructor(private httpClient: HttpClient,
-    private sessionService: SessionService) {
-    this.baseUrl = this.sessionService.getRootPath() + 'ShoppingCart';
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {
+    this.baseUrl = this.sessionService.getRootPath() + 'PaymentTransaction';
   }
 
-  saveCart(): Observable<any> {
+  createNewPaymentTransaction(newPaymentTransaction: PaymentTransaction): Observable<any> {
+    let createNewPaymentTransactionReq = {
+      "newPaymentTransaction": newPaymentTransaction,
+    }
 
-    let cart: Cart = this.sessionService.getShoppingCart();
-    
-    let saveShoppingCartReq = {
-      "customerId": this.sessionService.getCurrentCustomer().customerId,
-      "shoppingCart": cart
-    };
-
-    return this.httpClient.put<any>(this.baseUrl, saveShoppingCartReq, httpOptions).pipe
-      (
-        catchError(this.handleError)
-      );
+    return this.httpClient.put<any>(this.baseUrl, createNewPaymentTransactionReq, httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

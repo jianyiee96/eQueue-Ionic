@@ -26,15 +26,87 @@ export class NotificationPage implements OnInit {
     public alertController: AlertController,
     public datepipe: DatePipe) {
 
-      this.refreshTimeout = 1000;
+    this.refreshTimeout = 1000;
 
   }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.notifications = this.sessionService.getNotifications();
+  }
+
+  async readAll() {
+
+    const alert = await this.alertController.create({
+
+      header: "Read All",
+      message: "Are you sure you want to mark all of your notifications as read?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmReadAll();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  confirmReadAll() {
+
+    this.notificationService.readAllNotification().subscribe(
+      response => {
+        if (response.change) {
+
+          this.reloadList();
+
+        } else {
+        }
+      }, error => {
+      }
+    );
+
+  }
+
+  async deleteAll() {
+
+    const alert = await this.alertController.create({
+
+      header: "Delete All",
+      message: "Are you sure you want to wipe your notifications?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmDeleteAll();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  confirmDeleteAll() {
+
+    this.notificationService.deleteAllNotification().subscribe(
+      response => {
+        if (response.change) {
+
+          this.reloadList();
+
+        } else {
+        }
+      }, error => {
+      }
+    );
+
   }
 
   async read(notification: Notification) {
@@ -57,7 +129,7 @@ export class NotificationPage implements OnInit {
 
             this.closeNotification(notification);
 
-            
+
           }
         }
       ]
@@ -65,7 +137,7 @@ export class NotificationPage implements OnInit {
 
     await alert.present();
 
-    
+
   }
 
   closeNotification(notification: Notification) {

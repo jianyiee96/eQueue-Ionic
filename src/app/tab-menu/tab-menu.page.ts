@@ -10,6 +10,7 @@ import { ModalController } from '@ionic/angular';
 import { CurrencyPipe } from '@angular/common';
 
 import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
+import { MenuItemAvailabilityEnum } from '../menu-item-availability-enum.enum';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class TabMenuPage implements OnInit {
 
   ngOnInit() {
     this.resourcePath = this.sessionService.getImageResourcePath();
-
+    
   }
 
 
@@ -68,6 +69,22 @@ export class TabMenuPage implements OnInit {
     )
   }
 
+  isSellingFast(item: MenuItem): Boolean {
+    if (item.availability.valueOf() == MenuItemAvailabilityEnum.SELLING_FAST.valueOf()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isUnavailable(item: MenuItem): Boolean {
+    if (item.availability.valueOf() == MenuItemAvailabilityEnum.UNAVAILABLE.valueOf()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
 
   categorySelection(selected: MenuCategory) {
@@ -81,7 +98,16 @@ export class TabMenuPage implements OnInit {
 
           this.menuItemService.retrieveAllMenuItemByCategory(menuCategory.menuCategoryId).subscribe(
             response => {
-              menuCategory.menuItems = response.menuItems;
+              //menuCategory.menuItems = response.menuItems;
+              menuCategory.menuItems = [];
+              for (let item of response.menuItems) {
+                if (!this.isUnavailable(item)) {
+                  menuCategory.menuItems.push(item);
+                }
+
+              }
+
+
             }, error => {
               console.log("Error in retrieving menu items for: " + menuCategory.categoryName);
             }
@@ -113,5 +139,5 @@ export class TabMenuPage implements OnInit {
     return this.currencyPipe.transform(amount);
   }
 
-  
+
 }
