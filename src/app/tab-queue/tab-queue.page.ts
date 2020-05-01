@@ -215,6 +215,22 @@ export class TabQueuePage implements OnInit {
           let scanSub = this.qrScanner.scan().subscribe((text: string) => {
             console.log('Scanned something', text);
 
+            this.diningTableService.checkIn(text).subscribe(
+              response => {
+        
+                if (response.result) {
+                  this.toast("Check in success!");
+                } else {
+                  this.toast("Check in failed: Wrong code");
+                }
+                this.processSituation();
+              },
+              error => {
+                this.processSituation();
+              }
+            );
+
+
             this.qrScanner.hide(); // hide camera preview
             scanSub.unsubscribe(); // stop scanning
           });
