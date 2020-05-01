@@ -29,7 +29,14 @@ export class CustomerOrderService {
         catchError(this.handleError)
       );
   }
-  
+
+  retrieveCustomerOrdersByTransactionId(transactionId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveCustomerOrdersByPaymentTransactionId?transactionId=" + transactionId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   retrieveOrderLineItemsByOrderId(orderId: number): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveOrderLineItemsByOrderId?orderId=" + orderId).pipe
       (
@@ -45,7 +52,7 @@ export class CustomerOrderService {
   }
 
   cancelOrderLineItem(orderLineItemId: number, customerOrderId: number): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/cancelOrderLineItem?orderLineItemId="+orderLineItemId+"&customerOrderId="+customerOrderId).pipe
+    return this.httpClient.get<any>(this.baseUrl + "/cancelOrderLineItem?orderLineItemId=" + orderLineItemId + "&customerOrderId=" + customerOrderId).pipe
       (
         catchError(this.handleError)
       );
@@ -54,11 +61,11 @@ export class CustomerOrderService {
   updateOrderLineItem(orderLineItemId: number, newQuantity: number, newComment: string, customerOrderId: number): Observable<any> {
 
     let updateOrderlineItemReq = {
-			"orderLineItemId": orderLineItemId,
-			"newQuantity": newQuantity,
+      "orderLineItemId": orderLineItemId,
+      "newQuantity": newQuantity,
       "newComment": newComment,
       "customerOrderId": customerOrderId
-		};
+    };
 
     return this.httpClient.post<any>(this.baseUrl, updateOrderlineItemReq, httpOptions).pipe
       (
