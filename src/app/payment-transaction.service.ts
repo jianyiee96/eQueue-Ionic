@@ -37,6 +37,12 @@ export class PaymentTransactionService {
     );
   }
 
+  retrievePaymentTransactions(customerId: Number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "?customerId=" + customerId).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

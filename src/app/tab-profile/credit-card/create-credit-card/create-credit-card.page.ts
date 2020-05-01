@@ -55,8 +55,6 @@ export class CreateCreditCardPage implements OnInit {
       },
       error => {
         this.haveCreditCard = false;
-
-        console.log("Customer does not have credit card associated with his account!")
       }
     )
   }

@@ -15,16 +15,19 @@ import { AppComponent } from './app.component';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { ModalItemOptionPage } from './modal-item-option/modal-item-option.page';
 import { ModalOrderItemOptionPage } from './modal-order-item-option/modal-order-item-option.page';
+import { ModalViewTransactionDetailsPage } from './modal-view-transaction-details/modal-view-transaction-details.page';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModalItemOptionPage,
-    ModalOrderItemOptionPage
+    ModalOrderItemOptionPage,
+    ModalViewTransactionDetailsPage
   ],
-  entryComponents: [ 
+  entryComponents: [
     ModalItemOptionPage,
-    ModalOrderItemOptionPage
+    ModalOrderItemOptionPage,
+    ModalViewTransactionDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { ModalOrderItemOptionPage } from './modal-order-item-option/modal-order-
   ],
   exports: [
     ModalItemOptionPage,
-    ModalOrderItemOptionPage
+    ModalOrderItemOptionPage,
+    ModalViewTransactionDetailsPage
   ],
   providers: [
     CurrencyPipe,
@@ -45,7 +49,7 @@ import { ModalOrderItemOptionPage } from './modal-order-item-option/modal-order-
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
-  
+
 })
 export class AppModule { }
 

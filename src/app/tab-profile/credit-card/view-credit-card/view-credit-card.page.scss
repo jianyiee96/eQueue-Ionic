@@ -7,18 +7,20 @@ img{
     width: max-content;
 }
 
-ion-card-content{
-    height: 170px;
-    width: max-content;
-    align-self: center;
+ion-button{
+   padding-left: 15px;
+   padding-right: 15px;
+   
 }
 
 .ccDetails{
     float: right;
 }
 
-ion-button{
-   padding-left: 15px;
-   padding-right: 15px;
-   
+#addCreditCard{
+    height: 200px;
+	h1{
+      text-align: center;
+      vertical-align: middle;
+	}
 }

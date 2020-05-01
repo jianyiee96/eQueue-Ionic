@@ -85,7 +85,7 @@ export class AppComponent {
         {
           name: 'message',
           type: 'text',
-          placeholder: 'Placeholder 1'
+          placeholder: 'E.g. Bring cutlery'
         }
       ],
       buttons: [
