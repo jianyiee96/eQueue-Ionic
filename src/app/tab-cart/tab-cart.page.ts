@@ -51,7 +51,7 @@ export class TabCartPage implements OnInit {
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.cart = this.sessionService.getShoppingCart();
 
   }

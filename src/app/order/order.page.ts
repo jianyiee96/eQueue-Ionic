@@ -8,8 +8,9 @@ import { OrderLineItem } from '../order-line-item';
 import { SessionService } from '../session.service';
 import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 import { OrderStatusEnum } from '../order-status-enum.enum';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { ModalOrderItemOptionPage } from '../modal-order-item-option/modal-order-item-option.page';
+import { Cart } from '../cart';
 
 @Component({
   selector: 'app-order',
@@ -25,7 +26,9 @@ export class OrderPage implements OnInit {
   orderLineItems: OrderLineItem[] = [];
 
   constructor(public activatedRoute: ActivatedRoute,
+    public alertController: AlertController,
     public sessionService: SessionService,
+    public toastController: ToastController,
     public router: Router,
     public currencyPipe: CurrencyPipe,
     public modalController: ModalController,
@@ -84,6 +87,44 @@ export class OrderPage implements OnInit {
 
   }
 
+  async copyToCart() {
+
+    const alert = await this.alertController.create({
+
+      header: "Copy to Cart",
+      message: "Your current cart items will be overwritten, are you sure you want to proceed?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmCopyToCart();
+          }
+        }, {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  confirmCopyToCart() {
+
+    let cart = this.sessionService.getShoppingCart();
+
+    cart.totalAmount = 0;
+    cart.orderLineItems = [];
+
+    for (let item of this.orderLineItems) {
+      cart.orderLineItems.push(new OrderLineItem(null, item.menuItem, item.remarks, item.quantity, null, false));
+      cart.totalAmount += (item.quantity * item.menuItem.menuItemPrice);
+    }
+
+    this.sessionService.setShoppingCart(cart);
+    this.toast("Copied order items into cart!");
+
+  }
+
+
   async orderItemOptions(orderItem: OrderLineItem) {
     const modal = await this.modalController.create({
       component: ModalOrderItemOptionPage,
@@ -120,6 +161,15 @@ export class OrderPage implements OnInit {
       //return "Cancelled";
       return 4;
     }
+  }
+
+  async toast(toastMessage: string) {
+    const toast = await this.toastController.create({
+      message: toastMessage,
+      duration: 2000,
+      position: 'middle',
+    });
+    toast.present();
   }
 
   isCancelled() {

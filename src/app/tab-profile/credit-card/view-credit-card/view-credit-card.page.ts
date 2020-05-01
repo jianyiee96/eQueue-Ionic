@@ -37,7 +37,7 @@ export class ViewCreditCardPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.getCreditCard();
     this.currentCustomer = this.sessionService.getCurrentCustomer();
   }
@@ -45,19 +45,25 @@ export class ViewCreditCardPage implements OnInit {
   getCreditCard() {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
-        this.creditCard = response.creditCard
-        if (this.creditCard != null) {
-          this.haveCreditCard = true;
-          this.maskedCCNum = this.creditCard.creditCardNumber.toString();
-          if (Number(this.maskedCCNum[0]) < 5) {
-            this.isVisa = true;
-          } else {
-            this.isVisa = false;
-          }
-          this.maskedCCNum = this.maskedCCNum.substring(0, 4) + this.maskedCCNum.substring(6, 7) + "xxxxxx" + this.maskedCCNum.substring(15, 19);
-        } else {
+
+        this.creditCard = response.creditCard;
+
+        if (this.creditCard == null) {
+
           this.haveCreditCard = false;
+          return;
         }
+
+        this.haveCreditCard = true;
+        this.maskedCCNum = this.creditCard.creditCardNumber.toString();
+
+        if (Number(this.maskedCCNum[0]) < 5) {
+          this.isVisa = true;
+        } else {
+          this.isVisa = false;
+        }
+
+        this.maskedCCNum = this.maskedCCNum.substring(0, 4) + this.maskedCCNum.substring(6, 7) + "xxxxxx" + this.maskedCCNum.substring(15, 19);
       },
       error => {
         this.haveCreditCard = false;

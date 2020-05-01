@@ -225,6 +225,8 @@ export class TabQueuePage implements OnInit {
 
   }
 
+
+  
   doRefresh(event) {
     this.processSituation();
     setTimeout(() => {

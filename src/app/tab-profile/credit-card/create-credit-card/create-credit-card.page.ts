@@ -50,6 +50,14 @@ export class CreateCreditCardPage implements OnInit {
   getCreditCard() {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
+
+        if (response.creditCard == null) {
+          this.haveCreditCard = false;
+
+          return;
+        }
+
+
         this.haveCreditCard = true;
         this.back()
       },
@@ -98,11 +106,11 @@ export class CreateCreditCardPage implements OnInit {
   }
 
   mychange(event: string) {
-    let chIbn = event.split('-').join('');
-    if (chIbn.length > 0) {
-      chIbn = chIbn.match(new RegExp('.{1,4}', 'g')).join('-');
+    let ccNum = event.split('-').join('');
+    if (ccNum.length > 0) {
+      ccNum = ccNum.match(new RegExp('.{1,4}', 'g')).join('-');
     }
-    this.newCreditCard.creditCardNumber = chIbn;
+    this.newCreditCard.creditCardNumber = ccNum;
   }
 
   numberOnlyValidation(event: any) {
