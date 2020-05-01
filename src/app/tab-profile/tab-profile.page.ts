@@ -71,6 +71,7 @@ export class TabProfilePage implements OnInit {
   async viewTransactionModal(transactionId: number) {
     const modal = await this.modalController.create({
       component: ModalViewTransactionDetailsPage,
+      backdropDismiss: false,
       componentProps: {
         'transactionId': transactionId
       }

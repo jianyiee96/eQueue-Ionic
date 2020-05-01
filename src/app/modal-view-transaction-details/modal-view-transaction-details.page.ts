@@ -7,7 +7,7 @@ import { PaymentTransactionService } from '../payment-transaction.service';
 import { CustomerOrderService } from '../customer-order.service';
 import { SessionService } from '../session.service';
 
-import { NavParams } from '@ionic/angular';
+import { NavParams, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-view-transaction-details',
@@ -25,6 +25,7 @@ export class ModalViewTransactionDetailsPage implements OnInit {
   retrievedTransactionId: number;
 
   constructor(
+    public modalController: ModalController,
     navParams: NavParams,
     private customerOrderService: CustomerOrderService,
     private paymentTransactionService: PaymentTransactionService,
@@ -76,6 +77,12 @@ export class ModalViewTransactionDetailsPage implements OnInit {
 
   parseDate(d: Date): string {
     return d.toString().replace('[UTC]', '');
+  }
+
+  dismissModal() {
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 
 }
