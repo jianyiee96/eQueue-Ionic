@@ -13,7 +13,6 @@
 
   <ion-card *ngIf="displayOption == 1">
     <ion-card-header>
-      <ion-card-subtitle>You can join a queue :)</ion-card-subtitle>
       <ion-card-title>Join Queue</ion-card-title>
     </ion-card-header>
 
@@ -21,8 +20,9 @@
       <ion-text color="primary">
         <h2>You have not join a queue, neither do you have an allocated table.</h2>
         <br>
-        <h2>Simple specify no. of pax and click on the button below to join the queue</h2>
+        <h2>Simple specify no. of pax and click on the button below to join the queue</h2> 
       </ion-text>
+     
     </ion-card-content>
 
 
@@ -35,14 +35,13 @@
 
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
-      Join Queue Now
+      Join Queue Now ({{paxCount}} pax)
     </ion-button>
   </ion-card>
 
 
   <ion-card *ngIf="displayOption == 2">
-    <ion-card-header>
-      <ion-card-subtitle>Waiting for your turn</ion-card-subtitle>
+    <ion-card-header> 
       <ion-card-title>Soon to be your turn :)</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -67,7 +66,6 @@
 
   <ion-card *ngIf="displayOption == 3">
     <ion-card-header>
-      <ion-card-subtitle>Hurry up!</ion-card-subtitle>
       <ion-card-title>Its your turn!</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -124,7 +122,6 @@
 
   <ion-card *ngIf="displayOption == 4">
     <ion-card-header>
-      <ion-card-subtitle>Enjoy your meal</ion-card-subtitle>
       <ion-card-title>You can access the order functions now</ion-card-title>
     </ion-card-header>
     <ion-card-content>

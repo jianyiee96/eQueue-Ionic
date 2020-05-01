@@ -45,9 +45,14 @@
 
       <ion-card-content>
         <div style="float:left;">
-          <ion-chip color="tertiary">
+          <ion-chip *ngIf="paymentTransaction.paymentType != 'Cash'" color="tertiary">
             <ion-icon name="card-outline"></ion-icon>
             <ion-label>Credit Card</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="paymentTransaction.paymentType == 'Cash'" color="danger">
+            <ion-icon name="card-outline"></ion-icon>
+            <ion-label>Cash</ion-label>
           </ion-chip>
         </div>
         <div style="float:right; font-size: xx-large;">

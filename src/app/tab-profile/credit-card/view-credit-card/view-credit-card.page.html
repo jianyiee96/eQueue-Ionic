@@ -30,8 +30,8 @@
   </ion-card>
 
   <ion-card *ngIf="haveCreditCard == false" (click)="createCreditCardView()">
-    <ion-card-content id="addCreditCard">
-      <h1><br><br>No Credit Card Added<br>(+)<br><br></h1>
+    <ion-card-content id="addCreditCard" style="background-color: cadetblue;">
+      <br><br><h1>No Credit Card Added</h1><h5>Click here to add credit card</h5><h5><ion-icon name="add-circle-outline"></ion-icon></h5>
     </ion-card-content>
   </ion-card>
 

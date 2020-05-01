@@ -14,8 +14,8 @@
         Order Summary {{!order.isCompleted?"(ACTIVE)":""}} {{isCancelled()?"(CANCELLED)":""}}
       </div>
       <div class="order-page-information">
-        Order id: {{order.orderId}}<br>
-        Order Submission Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  HH:mm'}}<br>
+        Order ID: {{order.orderId}}<br>
+        Order Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  HH:mm'}}<br>
         Total Amount: {{getCurrency(order.totalAmount)}}<br>
         Payment Status: {{isPaid()}}<br>
         # of items: {{order.itemCount}}

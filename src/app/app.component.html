@@ -8,6 +8,7 @@
         <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
 
+
       <ion-button *ngIf="!unreadNotification" (click)="navigateNotification()">
         <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
       </ion-button>
@@ -17,12 +18,12 @@
       </ion-button>
 
 
-      <ion-button (click)="navigateTab()">
-        <ion-icon slot="icon-only" name="layers-outline"></ion-icon>
+      <ion-button (click)="callStaff()" *ngIf="seated">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
 
-      <ion-button (click)="callStaff()">
-        <ion-icon slot="icon-only" name="notifications-circle-outline"></ion-icon>
+      <ion-button (click)="navigateTab()">
+        <ion-icon slot="icon-only" name="layers-outline"></ion-icon>
       </ion-button>
 
     </ion-buttons>

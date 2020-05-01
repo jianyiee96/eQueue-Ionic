@@ -50,6 +50,11 @@ export class TabProfilePage implements OnInit {
         this.paymentTransactionsToShow = new Array;
         this.paymentTransactions = response.paymentTransactions;
         this.loadTransactions();
+
+this.paymentTransactions.forEach(x => {
+  console.log(x.paymentType.valueOf());
+});
+
       },
       error => {
         console.log("Error received: " + error);
