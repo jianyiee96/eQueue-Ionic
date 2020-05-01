@@ -17,7 +17,7 @@
         Order id: {{order.orderId}}<br>
         Order Submission Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  HH:mm'}}<br>
         Total Amount: {{getCurrency(order.totalAmount)}}<br>
-        Payment Status: {{order.isPaid?"Paid":"Unpaid"}}<br>
+        Payment Status: {{isPaid()}}<br>
         # of items: {{order.itemCount}}
       </div>
 

@@ -66,6 +66,16 @@ export class OrderPage implements OnInit {
     }
   }
 
+  isPaid(): String{
+    if(this.order.status.valueOf() == OrderStatusEnum.PAID.valueOf()){
+      return "Paid";
+    } else if(this.order.status.valueOf() == OrderStatusEnum.UNPAID.valueOf()) {
+      return "Unpaid";
+    } else {
+      return "Cancelled";
+    }
+  }
+
   updateOrder() {
 
     this.customerOrderService.retrieveCustomerOrders().subscribe(
