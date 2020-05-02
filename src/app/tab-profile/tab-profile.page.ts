@@ -21,6 +21,7 @@ export class TabProfilePage implements OnInit {
   currentCustomer: Customer;
 
   isShown: boolean;
+  noTransactions: boolean;
 
   paymentTransactions: PaymentTransaction[];
   paymentTransactionsToShow: PaymentTransaction[];
@@ -39,6 +40,7 @@ export class TabProfilePage implements OnInit {
 
   ngOnInit() {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
+    this.noTransactions = false;
   }
 
   ionViewWillEnter() {
@@ -50,11 +52,6 @@ export class TabProfilePage implements OnInit {
         this.paymentTransactionsToShow = new Array;
         this.paymentTransactions = response.paymentTransactions;
         this.loadTransactions();
-
-this.paymentTransactions.forEach(x => {
-  console.log(x.paymentType.valueOf());
-});
-
       },
       error => {
         console.log("Error received: " + error);
@@ -71,12 +68,16 @@ this.paymentTransactions.forEach(x => {
         break;
       }
     }
+    if (this.paymentTransactionsToShow.length == 0) {
+      this.noTransactions = true;
+    }
   }
 
   async viewTransactionModal(transactionId: number) {
     const modal = await this.modalController.create({
       component: ModalViewTransactionDetailsPage,
       backdropDismiss: false,
+      cssClass: "modal-fullscreen",
       componentProps: {
         'transactionId': transactionId
       }

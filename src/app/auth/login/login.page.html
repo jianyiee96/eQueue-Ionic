@@ -13,36 +13,6 @@
 
           <div padding>
 
-
-
-
-            Image:
-            <ion-textarea value="{{sessionService.getImageResourcePath()}}food-default.png"></ion-textarea>
-            
-            Login:
-            <ion-textarea value="{{sessionService.getRootPath()}}Customer/customerLogin?email=hew1521@hotmail.com&password=password"></ion-textarea>
-
-
-            <ion-thumbnail slot="start" >
-              <img src="{{sessionService.getImageResourcePath()}}food-default.png">
-              
-            </ion-thumbnail>
-            <ion-label>Photo from webserver</ion-label>
-
-
-
-            <ion-thumbnail slot="start" >
-              <img src="https://puu.sh/FF5vH.png">
-              
-            </ion-thumbnail>
-
-            <ion-label>Photo from online(internet)</ion-label>
-
-            <div *ngIf="loginError == true" style="color: red;">
-              {{errorMessage}}
-            </div>
-
-
             <ion-item>
               <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" required>
               </ion-input>
@@ -52,17 +22,14 @@
               </ion-input>
             </ion-item>
           </div>
+          <br>
           <div padding>
             <ion-button type="submit" [disabled]="customerLoginForm.invalid" expand="block">Login</ion-button>
             <ion-button (click)="clear()" expand="block">Clear</ion-button>
+            <br>
+            <ion-button (click)="redirectToRegisterPage()" expand="block">Register</ion-button>
           </div>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <div text-center>
-          If you don't have an account, please <a routerLink='/register'>
-            register</a> first!
-        </div>
       </ion-row>
     </ion-grid>
   </form>

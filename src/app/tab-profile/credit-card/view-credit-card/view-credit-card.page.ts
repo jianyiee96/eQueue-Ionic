@@ -67,7 +67,6 @@ export class ViewCreditCardPage implements OnInit {
       },
       error => {
         this.haveCreditCard = false;
-        // console.log("Error received: " + error);
       }
     )
   }

@@ -159,7 +159,7 @@ export class PaymentTransactionPage implements OnInit {
       response => {
         this.toast("Payment has been successfully processed!");
 
-        this.router.navigate(['/tabs/tab-menu'])
+        this.router.navigate(['/tabs/tab-order'])
       }, error => {
         console.log("******************* PaymentTransactionPage: ", error);
       }
@@ -176,7 +176,7 @@ export class PaymentTransactionPage implements OnInit {
       },
       error => {
         console.log(error)
-        
+
         this.hasCreditCard = false;
       }
     );

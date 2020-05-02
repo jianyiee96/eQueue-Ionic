@@ -33,10 +33,19 @@
     My Transactions
   </ion-card-header>
 
+  <ion-card *ngIf="noTransactions">
+    <ion-card-content>
+
+      <ion-label style="text-align: center;">
+        <h1>No transactions found</h1>
+      </ion-label>
+
+    </ion-card-content>
+  </ion-card>
   <ion-list>
 
     <ion-card *ngFor="let paymentTransaction of paymentTransactionsToShow"
-      (click)="viewTransactionModal(paymentTransaction.paymentTransactionId)">
+      (click)="viewTransactionModal(paymentTransaction.paymentTransactionId)" style="background-color: blanchedalmond;">
 
       <ion-card-header>
         <ion-card-subtitle>&nbsp;&nbsp;{{parseDate(paymentTransaction.transactionDate) | date: 'd MMM'}}
@@ -45,18 +54,18 @@
 
       <ion-card-content>
         <div style="float:left;">
-          <ion-chip *ngIf="paymentTransaction.paymentType != 'Cash'" color="tertiary">
+          <ion-chip *ngIf="paymentTransaction.paymentType != 'Cash'" color="secondary">
             <ion-icon name="card-outline"></ion-icon>
             <ion-label>Credit Card</ion-label>
           </ion-chip>
 
-          <ion-chip *ngIf="paymentTransaction.paymentType == 'Cash'" color="danger">
-            <ion-icon name="card-outline"></ion-icon>
+          <ion-chip *ngIf="paymentTransaction.paymentType == 'Cash'" color="success">
+            <ion-icon name="cash-outline"></ion-icon>
             <ion-label>Cash</ion-label>
           </ion-chip>
         </div>
         <div style="float:right; font-size: xx-large;">
-          ${{paymentTransaction.transactionValue}}
+          $ {{paymentTransaction.transactionValue | number:'1.2-2'}}
         </div>
       </ion-card-content>
     </ion-card>
