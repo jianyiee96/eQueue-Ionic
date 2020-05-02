@@ -13,6 +13,31 @@
 
           <div padding>
 
+
+
+
+            Image:
+            <ion-textarea value="{{sessionService.getImageResourcePath()}}food-default.png"></ion-textarea>
+            
+            Login:
+            <ion-textarea value="{{sessionService.getRootPath()}}Customer/customerLogin?email=hew1521@hotmail.com&password=password"></ion-textarea>
+
+
+            <ion-thumbnail slot="start" >
+              <img src="{{sessionService.getImageResourcePath()}}food-default.png">
+              
+            </ion-thumbnail>
+            <ion-label>Photo from webserver</ion-label>
+
+
+
+            <ion-thumbnail slot="start" >
+              <img src="https://puu.sh/FF5vH.png">
+              
+            </ion-thumbnail>
+
+            <ion-label>Photo from online(internet)</ion-label>
+
             <div *ngIf="loginError == true" style="color: red;">
               {{errorMessage}}
             </div>
