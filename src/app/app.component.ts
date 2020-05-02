@@ -63,25 +63,26 @@ export class AppComponent {
 
   updateSeated() {
 
-    this.diningTableService.getMyTable().subscribe(
-      response => {
-        let currTable: DiningTable = response.diningTable;
-        if (currTable != null) {
-          if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
-          
-            this.seated = true;
+    if (this.sessionService.getCurrentCustomer() != null) {
+      this.diningTableService.getMyTable().subscribe(
+        response => {
+          let currTable: DiningTable = response.diningTable;
+          if (currTable != null) {
+            if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
 
+              this.seated = true;
+
+            } else {
+              this.seated = false;
+            }
           } else {
             this.seated = false;
           }
-        } else {
+
+        }, error => {
           this.seated = false;
-        }
-
-      }, error => {
-        this.seated = false;
-      });
-
+        });
+    }
 
   }
 

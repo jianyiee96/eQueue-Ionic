@@ -6,6 +6,7 @@ import { CreditCardService } from '../../../credit-card.service';
 import { Router } from '@angular/router';
 import { SessionService } from '../../../session.service';
 import { Customer } from '../../../customer';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-credit-card',
@@ -27,6 +28,7 @@ export class CreateCreditCardPage implements OnInit {
   message: string;
 
   constructor(
+    public toastController: ToastController,
     private creditCardService: CreditCardService,
     private sessionService: SessionService,
     private router: Router
@@ -98,8 +100,8 @@ export class CreateCreditCardPage implements OnInit {
           this.resultError = true;
           this.resultSuccess = false;
           this.message = "An error has occurred while creating the new credit card: " + error;
-
-          console.log('********** CreateCreditCardPage.ts: ' + error);
+          this.presentFailedToast("Invalid Credit Card Credentials");
+          // console.log('********** CreateCreditCardPage.ts: ' + error);
         }
       )
     }
@@ -121,6 +123,16 @@ export class CreateCreditCardPage implements OnInit {
       // invalid character, prevent input
       event.preventDefault();
     }
+  }
+
+  async presentFailedToast(messageToDisplay: string) {
+    const toast = await this.toastController.create({
+      message: messageToDisplay,
+      duration: 2500,
+      color: "danger",
+      position: "top"
+    });
+    toast.present();
   }
 
   back() {
