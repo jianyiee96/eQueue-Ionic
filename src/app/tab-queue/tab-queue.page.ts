@@ -55,7 +55,7 @@ export class TabQueuePage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.store = this.sessionService.getStore();
     this.queue = new Queue();
@@ -264,6 +264,8 @@ export class TabQueuePage implements OnInit {
 
   }
 
+
+  
   doRefresh(event) {
     this.processSituation();
     setTimeout(() => {

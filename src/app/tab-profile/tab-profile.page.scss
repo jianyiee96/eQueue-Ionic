@@ -17,12 +17,8 @@ ion-fab-button[data-desc]::after {
 
 ion-card-header{
    font-weight: bold;
-   font-size: xx-large;
-   font-style: italic;
-}
-
-ion-avatar{
-    margin: auto;
+   font-size: x-large;
+   color: #737373;
 }
 
 ion-icon{
@@ -38,3 +34,4 @@ ion-icon{
 #customerMail{
     text-align: center;
 }
+

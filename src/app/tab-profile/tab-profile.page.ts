@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { AlertController, ToastController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
 
 import { Customer } from '../customer';
+import { PaymentTransaction } from '../payment-transaction';
+
 import { CustomerService } from '../customer.service'
 import { SessionService } from '../session.service';
-import { min } from 'rxjs/operators';
+import { PaymentTransactionService } from '../payment-transaction.service';
 
+import { ModalViewTransactionDetailsPage } from '../modal-view-transaction-details/modal-view-transaction-details.page';
 
 @Component({
   selector: 'app-tab-profile',
@@ -17,27 +20,94 @@ export class TabProfilePage implements OnInit {
 
   currentCustomer: Customer;
 
+  isShown: boolean;
+  noTransactions: boolean;
+
+  paymentTransactions: PaymentTransaction[];
+  paymentTransactionsToShow: PaymentTransaction[];
+
   constructor(
     private router: Router,
-    private sessionService: SessionService,
-    private customerService: CustomerService,
+    public ngZone: NgZone,
     public alertController: AlertController,
     public toastController: ToastController,
+    public modalController: ModalController,
+    private sessionService: SessionService,
+    private customerService: CustomerService,
+    private paymentTransactionService: PaymentTransactionService
   ) {
-  }
-
-  ionViewDidEnter() {
-    this.ngOnInit();
   }
 
   ngOnInit() {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
+    this.noTransactions = false;
+  }
+
+  ionViewWillEnter() {
+    this.ngOnInit();
+    this.isShown = true;
+
+    this.paymentTransactionService.retrievePaymentTransactions(this.currentCustomer.customerId).subscribe(
+      response => {
+        this.paymentTransactionsToShow = new Array;
+        this.paymentTransactions = response.paymentTransactions;
+        this.loadTransactions();
+      },
+      error => {
+        console.log("Error received: " + error);
+      }
+    )
+  }
+
+  loadTransactions() {
+    var index = this.paymentTransactionsToShow.length;
+    for (var i = index; i < index + 5; i++) {
+      if (this.paymentTransactions[i] != null) {
+        this.paymentTransactionsToShow.push(this.paymentTransactions[i]);
+      } else {
+        break;
+      }
+    }
+    if (this.paymentTransactionsToShow.length == 0) {
+      this.noTransactions = true;
+    }
+  }
+
+  async viewTransactionModal(transactionId: number) {
+    const modal = await this.modalController.create({
+      component: ModalViewTransactionDetailsPage,
+      backdropDismiss: false,
+      cssClass: "modal-fullscreen",
+      componentProps: {
+        'transactionId': transactionId
+      }
+    });
+    return await modal.present();
+  }
+
+  loadMoreTransactions(event) {
+    setTimeout(() => {
+      this.loadTransactions();
+      event.target.complete();
+    }, 1000)
+  }
+
+  scrollHandler(event) {
+    // console.log(`ScrollEvent: ${event}`)
+    this.ngZone.run(() => {
+      this.isShown = false;
+    })
+  }
+
+  scrollStop(event) {
+    this.ngZone.run(() => {
+      this.isShown = true;
+    })
   }
 
   async presentChangePasswordPrompt() {
     const alert = await this.alertController.create({
       header: 'Change Password',
-      message: '',
       inputs: [
         {
           name: 'currentPassword',
@@ -63,37 +133,24 @@ export class TabProfilePage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
-          // handler: () => {
-          //   console.log('Confirm Ok');
-          //   alert.onDidDismiss().then((alertData) => {
-          //     console.log(alertData.data.values.oldPassword)
-          //     console.log(alertData.data.values.newPassword)
-          //     this.changePassword(alertData.data.values.oldPassword, alertData.data.values.newPassword)
-
-          //   })
-          // }
           handler: data => {
-            console.log(typeof (data.confirmNewPassword));
             if (data.newPassword != data.confirmNewPassword) {
-              alert.message = "The two given passwords do not match";
+              this.presentFailedToast("The two given passwords do not match");
+              // alert.message = "The two given passwords do not match";
               return false;
             } else if (data.confirmNewPassword.length < 8) {
-              alert.message = "New password must be at least 8 characters";
+              this.presentFailedToast("New password must be at least 8 characters");
+              // alert.message = "New password must be at least 8 characters";
+              return false;
+            } else if (data.currentPassword == data.newPassword) {
+              this.presentFailedToast("New password cannot be same as current password");
               return false;
             } else {
               this.changePassword(data.currentPassword, data.newPassword)
             }
-
-            // if (data.newPassword == data.confirmNewPassword) {
-            //   this.changePassword(data.currentPassword, data.newPassword)
-            // } else {
-            //   alert.message = "The two given passwords do not match";
-            //   return false;
-            // }
           }
         }
       ],
@@ -143,6 +200,10 @@ export class TabProfilePage implements OnInit {
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentCustomer(null);
     this.router.navigate(["/login"]);
+  }
+
+  parseDate(d: Date) {
+    return d.toString().replace('[UTC]', '');
   }
 
 }

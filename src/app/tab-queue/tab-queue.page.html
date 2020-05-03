@@ -12,17 +12,21 @@
   </ion-refresher>
 
   <ion-card *ngIf="displayOption == 1">
-    <ion-card-header>
-      <ion-card-subtitle>You can join a queue :)</ion-card-subtitle>
-      <ion-card-title>Join Queue</ion-card-title>
-    </ion-card-header>
+
 
     <ion-card-content>
-      <ion-text color="primary">
-        <h2>You have not join a queue, neither do you have an allocated table.</h2>
+
+      <header class="custom-header">Join Queue</header>
+      <ion-text color="primary" class="text">
+        <h2>You are currently not in the queue and neither do you have an allocated table.</h2>
         <br>
-        <h2>Simple specify no. of pax and click on the button below to join the queue</h2>
+        <h2>Simply specify no. of pax and click on the button below to join the eQueue.</h2>
+        <br>
+        <h2>We are pleased to serve you as soon as possible.</h2>
+        <br>
+
       </ion-text>
+
     </ion-card-content>
 
 
@@ -35,26 +39,26 @@
 
     <ion-button expand="full" (click)="joinQueue()">
       <ion-icon slot="start" name="exit"></ion-icon>
-      Join Queue Now
+      Join Queue Now ({{paxCount}} pax)
     </ion-button>
   </ion-card>
 
 
   <ion-card *ngIf="displayOption == 2">
-    <ion-card-header>
-      <ion-card-subtitle>Waiting for your turn</ion-card-subtitle>
-      <ion-card-title>Soon to be your turn :)</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      <ion-text color="primary">
-        <h2>You have joined a queue, be patient and wait for your turn.</h2>
+      <header class="custom-header">Queueing</header>
+      <ion-text color="primary" class="text">
+        <h2>You have joined the queue, please be patient and wait for your turn.</h2>
+        <br>
+        <h2>We will notify you when a table has been allocated to you.</h2>
+        <br>
       </ion-text>
 
-      <ion-text *ngIf="queue != null" color="secondary">
+      <ion-text *ngIf="queue != null">
         <h2>Here are your queue details: </h2>
         <h2> Pax: {{queue.numberOfPax}}</h2>
-        <h2> Join time: {{parseDate(queueStartTime) | date:'HH:mm:ss'}}</h2>
-        <h2> Position: {{queuePosition}}</h2>
+        <h2> Join time: {{parseDate(queueStartTime) | date:'h:mm a'}}</h2>
+        <h2> Position in queue: {{queuePosition}}</h2>
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
 
@@ -66,32 +70,33 @@
 
 
   <ion-card *ngIf="displayOption == 3">
-    <ion-card-header>
-      <ion-card-subtitle>Hurry up!</ion-card-subtitle>
-      <ion-card-title>Its your turn!</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
 
-      <ion-text color="primary">
+    <ion-card-content>
+      <header class="custom-header">Its your turn!</header>
+      <ion-text color="primary" class="text">
         <h2>We have a table for you! Hurry up before it expires.</h2>
         <br>
+
+      </ion-text>
+
+      <ion-text>
         <h2>Here are your table details: </h2>
         <h2> Table number: {{diningTable.diningTableId}}</h2>
-        <h2> Table capacity: {{diningTable.seatingCapacity}}</h2>
-        <h2> Allocated time: {{parseDate(queueAllocatedDateTime) | date:'HH:mm' }}</h2>
-        <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}}</h2>
+        <h2> Table capacity: {{diningTable.seatingCapacity}} pax</h2>
+        <h2> Allocated time: {{parseDate(queueAllocatedDateTime) | date:'h:mm a'}}</h2>
+        <h2> Allocation expiry time: {{store.allocationGraceWaitingMinutes}} minutes</h2>
       </ion-text>
       <ion-text color="danger">
 
 
-        <h2>Your allocation will expire on: {{expiryDateTime | date:'HH:mm:ss'}} </h2>
+        <h2>Your allocation will expire on: {{expiryDateTime | date:'h:mm a'}} </h2>
       </ion-text>
     </ion-card-content>
 
 
     <ion-item-divider>
       <label>
-        Method 1:
+        Check-in Method 1:
       </label>
     </ion-item-divider>
 
@@ -104,7 +109,7 @@
 
     <ion-item-divider>
       <label>
-        Method 2:
+        Check-in Method 2:
       </label>
     </ion-item-divider>
 
@@ -123,15 +128,16 @@
 
 
   <ion-card *ngIf="displayOption == 4">
-    <ion-card-header>
-      <ion-card-subtitle>Enjoy your meal</ion-card-subtitle>
-      <ion-card-title>You can access the order functions now</ion-card-title>
-    </ion-card-header>
+   
     <ion-card-content>
-      <ion-text color="primary">
-        <h2>Remember to submit your orders through eQueue.</h2>
-
-        <h2>You will be able to join queue once again after your current dining experience. </h2>
+      <header class="custom-header">Checked-in!</header>
+      <ion-text color="primary" class="text">   
+        
+        <h2>You have successfully checked-in to your table.</h2>
+        <br>
+        <h2>Order submission and alert functions have been enabled for you.</h2>
+        <br>
+        <h2>Have a pleasant dining experience!</h2>
       </ion-text>
     </ion-card-content>
   </ion-card>

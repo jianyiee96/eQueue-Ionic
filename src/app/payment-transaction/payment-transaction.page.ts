@@ -100,7 +100,8 @@ export class PaymentTransactionPage implements OnInit {
         header: "Confirm Payment",
         message:
           "<p>Total Amount: $ " + this.totalAmount.toFixed(2) + "</p>" +
-          "<p>Payment using credit card (" + maskedCCNum + ")?</p>",
+          "<p>Payment using credit card</p>" +
+          "<P>" + maskedCCNum + " ?</p>",
         buttons: [
           {
             text: 'Confirm',
@@ -158,7 +159,7 @@ export class PaymentTransactionPage implements OnInit {
       response => {
         this.toast("Payment has been successfully processed!");
 
-        this.router.navigate(['/tabs/tab-menu'])
+        this.router.navigate(['/tabs/tab-order'])
       }, error => {
         console.log("******************* PaymentTransactionPage: ", error);
       }
@@ -175,7 +176,7 @@ export class PaymentTransactionPage implements OnInit {
       },
       error => {
         console.log(error)
-        
+
         this.hasCreditCard = false;
       }
     );

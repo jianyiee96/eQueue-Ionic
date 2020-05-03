@@ -10,20 +10,12 @@
 <ion-content>
 
   <ion-card-header>
-    <ion-card-title>Create Credit Card</ion-card-title>
+    <ion-card-title style="color: grey">Create Credit Card</ion-card-title>
   </ion-card-header>
 
   <ion-card>
 
     <ion-card-content>
-
-      <!-- <div *ngIf="resultSuccess == true" style="color: blue;">
-        {{message}}
-      </div>
-
-      <div *ngIf="resultError == true" style="color: red;">
-        {{message}}
-      </div> -->
 
       <form #createCreditCardForm="ngForm" (ngSubmit)="create(createCreditCardForm)">
 
@@ -58,7 +50,7 @@
             <ion-button (click)="clear()">
               Clear
             </ion-button>
-            <ion-button type="submit" ion-button block>
+            <ion-button [disabled]="createCreditCardForm.invalid" type="submit" ion-button block>
               Create
             </ion-button>
           </ion-item>

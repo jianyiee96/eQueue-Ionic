@@ -31,6 +31,8 @@ export class AppComponent {
   unreadNotification: boolean;
   seatedTableId: number;
 
+  seated: boolean;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -54,7 +56,33 @@ export class AppComponent {
 
     interval(this.pollInterval).subscribe(x => {
       this.updateNotifications();
+      this.updateSeated();
     });
+
+  }
+
+  updateSeated() {
+
+    if (this.sessionService.getCurrentCustomer() != null) {
+      this.diningTableService.getMyTable().subscribe(
+        response => {
+          let currTable: DiningTable = response.diningTable;
+          if (currTable != null) {
+            if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
+
+              this.seated = true;
+
+            } else {
+              this.seated = false;
+            }
+          } else {
+            this.seated = false;
+          }
+
+        }, error => {
+          this.seated = false;
+        });
+    }
 
   }
 
@@ -80,12 +108,12 @@ export class AppComponent {
 
   async presentCallStaffAlert() {
     const alert = await this.alertController.create({
-      header: 'Request Server!',
+      header: 'Request For Assistance!',
       inputs: [
         {
           name: 'message',
           type: 'text',
-          placeholder: 'Placeholder 1'
+          placeholder: 'E.g. Need more cutlery'
         }
       ],
       buttons: [

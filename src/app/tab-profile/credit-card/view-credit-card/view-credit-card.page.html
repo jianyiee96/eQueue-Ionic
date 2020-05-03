@@ -10,10 +10,8 @@
 <ion-content [fullscreen]="true">
 
   <ion-card-header>
-    <ion-card-title>Credit Card</ion-card-title>
+    <ion-card-title style="color: gray">Credit Card</ion-card-title>
   </ion-card-header>
-
-
 
   <ion-card *ngIf="haveCreditCard == true">
     <img *ngIf="isVisa == true" src="../../assets/images/visa.jpg" />
@@ -32,8 +30,8 @@
   </ion-card>
 
   <ion-card *ngIf="haveCreditCard == false" (click)="createCreditCardView()">
-    <ion-card-content>
-      No Credit Card Added
+    <ion-card-content id="addCreditCard" style="background-color: cadetblue;">
+      <br><br><h1>No Credit Card Added</h1><h5>Click here to add credit card</h5><h5><ion-icon name="add-circle-outline"></ion-icon></h5>
     </ion-card-content>
   </ion-card>
 

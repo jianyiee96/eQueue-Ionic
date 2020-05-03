@@ -30,7 +30,7 @@
 
           <div class="ion-text-right">
             <button style="background-color: white;" (click)="displayPaymentTransaction(customerServedOrders)">
-              <ion-icon style="font-size: 32px;" name="wallet-outline"></ion-icon>
+              <ion-icon style="font-size: 28px;" name="wallet-outline"></ion-icon>
             </button>
           </div>
         </ion-list-header>
@@ -38,7 +38,7 @@
         <ion-item expand="full" *ngFor="let order of customerServedOrders" lines="full">
           <ion-label>
             <h2><b>Order ID: {{order.orderId}}</b></h2>
-            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <h3>Order Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - hh:mm a'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}<br></p>
           </ion-label>
@@ -58,7 +58,7 @@
 
           <ion-label>
             <h2><b>Order ID: {{order.orderId}}</b></h2>
-            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - hh:mm a'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}<br></p>
           </ion-label>
@@ -72,7 +72,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="(customerPastOrders.length != 0)">
+  <ion-card>
     <ion-card-content>
 
       <header class="custom-header">
@@ -82,11 +82,16 @@
 
       <ion-list>
 
+        <h1 *ngIf="(customerPastOrders[0] == null)">
+          <br>
+          No Past Orders.
+        </h1>
+
         <ion-item expand="full" *ngFor="let order of customerPastOrders" lines="full">
 
           <ion-label>
             <h2><b>Order Id: {{order.orderId}}</b></h2>
-            <h3>Submitted on: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
+            <h3>Order Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy - hh:mm a'}}</h3>
             <h3>Number of Items: {{order.itemCount}}</h3>
             <p>Total amount: {{getCurrency(order.totalAmount)}}<br>Payment: {{order.status}}</p>
           </ion-label>
@@ -99,5 +104,8 @@
 
     </ion-card-content>
   </ion-card>
+
+
+
 
 </ion-content>

@@ -54,14 +54,14 @@ export class RegisterPage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.message = "New customer " + newCustomerId + " created successfully";
-          this.presentPassedToast("Account ID[" + newCustomerId + "] created!");
+          this.presentPassedToast("Account created successfully");
           this.router.navigate(['/login']);
         },
         error => {
-          this.resultError = true;
-          this.resultSuccess = false;
-          this.message = "An error has occurred while creating the new customer: " + error;
-          this.presentFailedToast(error);
+          // this.resultError = true;
+          // this.resultSuccess = false;
+          // this.message = "An error has occurred while creating the new customer: " + error;
+          this.presentFailedToast(error.substring(37));
         }
       )
     } else if (this.newCustomer.password != this.newCustomer.confirmPassword) {
@@ -85,7 +85,7 @@ export class RegisterPage implements OnInit {
   async presentPassedToast(messageToDisplay: string) {
     const toast = await this.toastController.create({
       message: messageToDisplay,
-      duration: 2000,
+      duration: 1500,
       color: "success",
       position: "top"
     });

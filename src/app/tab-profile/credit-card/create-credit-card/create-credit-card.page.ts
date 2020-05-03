@@ -6,6 +6,7 @@ import { CreditCardService } from '../../../credit-card.service';
 import { Router } from '@angular/router';
 import { SessionService } from '../../../session.service';
 import { Customer } from '../../../customer';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-credit-card',
@@ -27,12 +28,13 @@ export class CreateCreditCardPage implements OnInit {
   message: string;
 
   constructor(
+    public toastController: ToastController,
     private creditCardService: CreditCardService,
     private sessionService: SessionService,
     private router: Router
   ) {
     this.submitted = false;
-    this.ionViewDidEnter();
+    this.ionViewWillEnter();
   }
 
   ngOnInit() {
@@ -40,7 +42,7 @@ export class CreateCreditCardPage implements OnInit {
     this.getCreditCard();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.ngOnInit();
     this.newCreditCard = new CreditCard();
     this.resultSuccess = false;
@@ -50,13 +52,19 @@ export class CreateCreditCardPage implements OnInit {
   getCreditCard() {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
+
+        if (response.creditCard == null) {
+          this.haveCreditCard = false;
+
+          return;
+        }
+
+
         this.haveCreditCard = true;
         this.back()
       },
       error => {
         this.haveCreditCard = false;
-
-        console.log("Customer does not have credit card associated with his account!")
       }
     )
   }
@@ -92,19 +100,19 @@ export class CreateCreditCardPage implements OnInit {
           this.resultError = true;
           this.resultSuccess = false;
           this.message = "An error has occurred while creating the new credit card: " + error;
-
-          console.log('********** CreateCreditCardPage.ts: ' + error);
+          this.presentFailedToast("Invalid Credit Card Credentials");
+          // console.log('********** CreateCreditCardPage.ts: ' + error);
         }
       )
     }
   }
 
   mychange(event: string) {
-    let chIbn = event.split('-').join('');
-    if (chIbn.length > 0) {
-      chIbn = chIbn.match(new RegExp('.{1,4}', 'g')).join('-');
+    let ccNum = event.split('-').join('');
+    if (ccNum.length > 0) {
+      ccNum = ccNum.match(new RegExp('.{1,4}', 'g')).join('-');
     }
-    this.newCreditCard.creditCardNumber = chIbn;
+    this.newCreditCard.creditCardNumber = ccNum;
   }
 
   numberOnlyValidation(event: any) {
@@ -115,6 +123,16 @@ export class CreateCreditCardPage implements OnInit {
       // invalid character, prevent input
       event.preventDefault();
     }
+  }
+
+  async presentFailedToast(messageToDisplay: string) {
+    const toast = await this.toastController.create({
+      message: messageToDisplay,
+      duration: 2500,
+      color: "danger",
+      position: "top"
+    });
+    toast.present();
   }
 
   back() {
