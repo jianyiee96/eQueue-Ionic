@@ -23,6 +23,13 @@ export class MenuItemService {
     this.baseUrl = this.sessionService.getRootPath() + 'Menu';
   }
 
+  retrievePopularMenuItem(max: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrievePopularMenuItem?maxItem="+max).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   retrieveAllMenuItem(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllMenuItem").pipe
       (

@@ -1,29 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
 import { Store } from '../store';
 import { StoreService } from '../store.service';
+import { MenuItem } from '../menu-item';
+import { MenuItemService } from '../menu-item.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
+
+  resourcePath: String;
 
   store: Store;
+
+  popular: MenuItem[] = [];
+
+  loadedItemsCount: number = 4;
+  maxLoadedItems: number = 20;
 
   constructor(private router: Router,
     public sessionService: SessionService,
     private storeService: StoreService,
-    private customerService: CustomerService) { }
+    private menuItemService: MenuItemService,
+    private customerService: CustomerService) {
 
-  ngOnInit() {
-    
+      this.resourcePath = sessionService.getImageResourcePath();
+
   }
 
   ionViewWillEnter() {
@@ -31,6 +40,7 @@ export class HomePage implements OnInit {
     this.storeService.retrieveStoreInformation().subscribe(
       response => {
 
+        this.retrievePopularAvailableMenuItem();
         let store: Store = response.store;
 
         if (store != null) {
@@ -46,6 +56,39 @@ export class HomePage implements OnInit {
       }
     );
 
+  }
+
+  retrievePopularAvailableMenuItem() {
+
+    this.menuItemService.retrievePopularMenuItem(this.loadedItemsCount).subscribe(
+      response => {
+        this.popular = response.menuItems;
+
+      }, error => {
+        this.popular = [];
+
+      });
+
+  }
+
+  loadMore(event) {
+    this.loadedItemsCount += 4;
+
+    setTimeout(() => {
+      this.menuItemService.retrievePopularMenuItem(this.loadedItemsCount).subscribe(
+        response => {
+          this.popular = response.menuItems;
+  
+        }, error => {
+          this.popular = [];
+  
+        });
+      event.target.complete();
+    }, 1000)
+  }
+
+  redirectMenu(): void {
+    this.router.navigate(["/tabs/tab-menu"]);
   }
 
   customerLogout(): void {

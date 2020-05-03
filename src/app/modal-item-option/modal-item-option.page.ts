@@ -32,7 +32,7 @@ export class ModalItemOptionPage {
     this.resourcePath = this.sessionService.getImageResourcePath();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.cart = this.sessionService.getShoppingCart();
 

@@ -43,6 +43,7 @@
         <ion-thumbnail slot="start" >
           <img src="{{resourcePath+item.imagePath}}">
         </ion-thumbnail>
+        
         <ion-label>
           <h2><b>{{item.menuItemName}}</b>   <ion-icon *ngIf="isSellingFast(item)" name="flame" class="ion-label-clock"></ion-icon> </h2>
           <h2>{{getCurrency(item.menuItemPrice)}}</h2>

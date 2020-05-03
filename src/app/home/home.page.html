@@ -8,18 +8,14 @@
 
 
 <ion-content>
-	<ion-card-header>
-		<ion-card-title>Welcome to eQueue - Home Page</ion-card-title>
-	</ion-card-header>
 
 	<ion-card *ngIf="store != null">
-		<ion-card-header>
-			<ion-card-subtitle>Welcome to our restaurant</ion-card-subtitle>
+		<ion-card-header class="text">
 			<ion-card-title>{{store.storeName}}</ion-card-title>
 		</ion-card-header>
 		<ion-card-content>
 			<ion-text>
-				
+
 				<h2><b>Message of the day:</b></h2>
 			</ion-text>
 			<ion-text>
@@ -27,7 +23,7 @@
 			</ion-text>
 			<br>
 			<ion-text>
-				<h2><b>Store details: </b></h2>
+				<h2><b>Store details </b></h2>
 			</ion-text>
 			<ion-text>
 
@@ -42,10 +38,38 @@
 		</ion-card-content>
 	</ion-card>
 
-	<ion-button expand="full" (click)="customerLogout()">
-		<ion-icon slot="start" name="exit"></ion-icon>
-		Logout
-	</ion-button>
+
+	<ion-card-header *ngIf="popular[0] != null">
+		Popular Items
+	</ion-card-header>
+
+
+	<ion-list *ngIf="popular[0] != null" class="text">
+
+		<ion-card *ngFor="let item of popular" (click)="redirectMenu()">
+			<ion-item>
+
+				<ion-thumbnail slot="start">
+					<img src="{{resourcePath+item.imagePath}}">
+				</ion-thumbnail>
+
+				<ion-card-content>
+					<b>{{item.menuItemName}}</b> <br>
+					{{item.menuItemDescription}}
+				</ion-card-content>
+
+			</ion-item>
+
+		</ion-card>
+
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="maxLoadedItems > loadedItemsCount" (ionInfinite)="loadMore($event)">
+		<ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more items...">
+		</ion-infinite-scroll-content>
+	  </ion-infinite-scroll>
+
+
 
 
 </ion-content>

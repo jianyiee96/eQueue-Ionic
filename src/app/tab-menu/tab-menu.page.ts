@@ -44,7 +44,7 @@ export class TabMenuPage implements OnInit {
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.processMenu();
 

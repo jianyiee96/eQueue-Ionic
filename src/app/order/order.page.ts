@@ -48,7 +48,7 @@ export class OrderPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.processPage();
   }
 
