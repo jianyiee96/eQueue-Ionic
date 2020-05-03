@@ -29,15 +29,22 @@
 					<ion-icon class="header-icon" name="trash" (click)="deleteAll()"></ion-icon>
 				</header>
 
+				<h1 *ngIf="(notifications[0] == null)">
+					<br>
+					No Notifications.
+				  </h1>
+
 				<ion-item expand="full" *ngFor="let notification of notifications" lines="full">
- 
-					<ion-label *ngIf="!notification.isRead" color="success">
-						<h2>{{notification.title}}</h2>
+					
+
+					
+					<ion-label *ngIf="!notification.isRead" class="unread">
+						<h2>{{notification.title}}  <ion-icon name="reader-outline" class="new"></ion-icon></h2>
 						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
 						<p>{{notification.message}}</p>
 					</ion-label>
 
-					<ion-label *ngIf="notification.isRead" color="primary">
+					<ion-label *ngIf="notification.isRead" class="read">
 						<h2>{{notification.title}}</h2>
 						<h3>{{parseDate(notification.notificationDate) | date:'dd/MM/yyyy - HH:mm'}}</h3>
 						<p>{{notification.message}}</p>

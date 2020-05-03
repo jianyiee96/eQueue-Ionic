@@ -71,6 +71,15 @@ export class ModalItemOptionPage {
     }
   }
 
+  displayPrice() : String {
+
+    if(this.currentQuantity == 0){
+      return "";
+    }
+
+    return " - Total: "+(this.getCurrency(this.currentQuantity * this.currentItem.menuItemPrice))+"";
+  }
+
   saveAndDismiss() {
 
     //new item into cart
