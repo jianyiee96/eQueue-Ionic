@@ -209,15 +209,13 @@ export class TabQueuePage implements OnInit {
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
           // camera permission was granted
-
-
           // start scanning
           let scanSub = this.qrScanner.scan().subscribe((text: string) => {
             console.log('Scanned something', text);
 
             this.diningTableService.checkIn(text).subscribe(
               response => {
-        
+
                 if (response.result) {
                   this.toast("Check in success!");
                 } else {
@@ -230,10 +228,10 @@ export class TabQueuePage implements OnInit {
               }
             );
 
-
-            this.qrScanner.hide(); // hide camera preview
-            scanSub.unsubscribe(); // stop scanning
           });
+
+          this.qrScanner.hide(); // hide camera preview
+          scanSub.unsubscribe(); // stop scanning
 
         } else if (status.denied) {
           // camera permission was permanently denied
