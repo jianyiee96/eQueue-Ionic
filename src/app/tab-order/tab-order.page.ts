@@ -5,6 +5,7 @@ import { CustomerOrderService } from '../customer-order.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { OrderStatusEnum } from '../order-status-enum.enum';
+import { TransferState } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tab-order',
@@ -26,8 +27,10 @@ export class TabOrderPage implements OnInit {
   customerServedOrders: CustomerOrder[] = [];
 
   customerPastOrders: CustomerOrder[] = [];
+  customerPastOrdersDisplay: CustomerOrder[] = [];
 
   itemCount: number[] = [];
+
 
   constructor(public sessionService: SessionService,
     public currencyPipe: CurrencyPipe,
@@ -108,6 +111,7 @@ export class TabOrderPage implements OnInit {
     };
     this.router.navigate(["order"], navigationExtras);
   }
+
 
   doRefresh(event) {
     this.processPage();

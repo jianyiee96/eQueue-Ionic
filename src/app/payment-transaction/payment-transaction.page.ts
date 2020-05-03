@@ -12,6 +12,7 @@ import { CustomerOrderService } from '../customer-order.service';
 import { CreditCardService } from '../credit-card.service';
 import { SessionService } from '../session.service';
 import { PaymentTransactionService } from '../payment-transaction.service';
+import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 
 @Component({
   selector: 'app-payment-transaction',
@@ -58,6 +59,9 @@ export class PaymentTransactionPage implements OnInit {
       this.totalAmount = 0;
 
       this.customerServedOrders = this.router.getCurrentNavigation().extras.state.customerServedOrders;
+
+      
+
       this.customerServedOrders.forEach((order) => {
         this.totalAmount += order.totalAmount;
         this.retrieveOrderLineItemsByOrder(order, this.setOrderLineItems);
@@ -74,7 +78,16 @@ export class PaymentTransactionPage implements OnInit {
   retrieveOrderLineItemsByOrder(order: CustomerOrder, setOrderLineItems): any {
     this.customerOrderService.retrieveOrderLineItemsByOrderId(order.orderId).subscribe(
       response => {
-        return setOrderLineItems(order, response.orderLineItems);
+
+        let activeItems: OrderLineItem[] = [];
+
+        response.orderLineItems.forEach(o => {
+          if(o.status.valueOf() != OrderLineItemStatusEnum.CANCELLED.valueOf()){
+            activeItems.push(o);
+          }
+        });
+
+        return setOrderLineItems(order, activeItems);
       },
       error => {
         console.log("Error has occurred while retrieving OrderLineItems: ", error);

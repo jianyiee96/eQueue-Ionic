@@ -127,6 +127,8 @@ export class AppComponent {
             alert.onDidDismiss().then((alertData) => {
               this.alertService.createAlert(new Alert(this.seatedTableId, alertData.data.values.message)).subscribe(
                 response => {
+
+                  this.toast("Successfully sent alert!");
                 },
                 error => {
                 }
