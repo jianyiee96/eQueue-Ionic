@@ -12,6 +12,8 @@ import { DiningTable } from '../dining-table'
 import { Store } from '../store';
 import { Observable } from 'rxjs';
 
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+
 @Component({
   selector: 'app-tab-queue',
   templateUrl: './tab-queue.page.html',
@@ -41,7 +43,8 @@ export class TabQueuePage implements OnInit {
     public queueService: QueueService,
     public diningTableService: DiningTableService,
     public storeService: StoreService,
-    public toastController: ToastController) {
+    public toastController: ToastController,
+    private qrScanner: QRScanner) {
 
     this.displayOption = 0;
     this.refreshTimeout = 1000;
@@ -202,7 +205,43 @@ export class TabQueuePage implements OnInit {
 
   checkInQr() {
 
-    this.toast("Function in unavailable atm.");
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          // camera permission was granted
+          // start scanning
+          let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            console.log('Scanned something', text);
+
+            this.diningTableService.checkIn(text).subscribe(
+              response => {
+
+                if (response.result) {
+                  this.toast("Check in success!");
+                } else {
+                  this.toast("Check in failed: Wrong code");
+                }
+                this.processSituation();
+              },
+              error => {
+                this.processSituation();
+              }
+            );
+
+          });
+
+          this.qrScanner.hide(); // hide camera preview
+          scanSub.unsubscribe(); // stop scanning
+
+        } else if (status.denied) {
+          // camera permission was permanently denied
+          // you must use QRScanner.openSettings() method to guide the user to the settings page
+          // then they can grant the permission from there
+        } else {
+          // permission was denied, but not permanently. You can ask for permission again at a later time.
+        }
+      })
+      .catch((e: any) => console.log('Error is', e));
   }
 
   leaveQueue() {
