@@ -45,16 +45,16 @@
   <ion-list>
 
     <ion-card *ngFor="let paymentTransaction of paymentTransactionsToShow"
-      (click)="viewTransactionModal(paymentTransaction.paymentTransactionId)" style="background-color: blanchedalmond;">
+      (click)="viewTransactionModal(paymentTransaction.paymentTransactionId)" style="background-color: rgb(252, 243, 231);">
 
       <ion-card-header>
-        <ion-card-subtitle>&nbsp;&nbsp;{{parseDate(paymentTransaction.transactionDate) | date: 'd MMM'}}
+        <ion-card-subtitle>&nbsp;&nbsp;{{parseDate(paymentTransaction.transactionDate) | date: 'd MMM yyyy'}}
         </ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
         <div style="float:left;">
-          <ion-chip *ngIf="paymentTransaction.paymentType != 'Cash'" color="secondary">
+          <ion-chip *ngIf="paymentTransaction.paymentType != 'Cash'" color="danger">
             <ion-icon name="card-outline"></ion-icon>
             <ion-label>Credit Card</ion-label>
           </ion-chip>

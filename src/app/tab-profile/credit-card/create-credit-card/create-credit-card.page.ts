@@ -34,7 +34,7 @@ export class CreateCreditCardPage implements OnInit {
     private router: Router
   ) {
     this.submitted = false;
-    this.ionViewDidEnter();
+    this.ionViewWillEnter();
   }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class CreateCreditCardPage implements OnInit {
     this.getCreditCard();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.ngOnInit();
     this.newCreditCard = new CreditCard();
     this.resultSuccess = false;

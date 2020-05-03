@@ -11,11 +11,11 @@
     <ion-card-content>
 
       <div class="order-page-header">
-        Order Summary {{!order.isCompleted?"(ACTIVE)":""}} {{isCancelled()?"(CANCELLED)":""}}
+        Order Summary
       </div>
       <div class="order-page-information">
         Order ID: {{order.orderId}}<br>
-        Order Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  HH:mm'}}<br>
+        Order Date: {{parseDate(order.orderDate) | date:'dd/MM/yyyy  hh:mm a'}}<br>
         Total Amount: {{getCurrency(order.totalAmount)}}<br>
         Payment Status: {{isPaid()}}<br>
         # of items: {{order.itemCount}}
