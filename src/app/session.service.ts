@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-
 import { Customer } from './customer';
 import { Store } from './store';
 import { Notification } from './notification';
@@ -101,7 +100,5 @@ export class SessionService {
   getShoppingCart(): Cart {
     return JSON.parse(sessionStorage.cart);
   }
-
-
 
 }

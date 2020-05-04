@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { Location } from '@angular/common';
-
 import { Customer } from '../../../customer';
 import { CreditCard } from '../../../credit-card';
-import { CustomerService } from '../../../customer.service'
 import { SessionService } from '../../../session.service';
 import { CreditCardService } from '../../../credit-card.service'
 import { Router } from '@angular/router';
@@ -15,22 +12,20 @@ import { Router } from '@angular/router';
   templateUrl: './view-credit-card.page.html',
   styleUrls: ['./view-credit-card.page.scss'],
 })
+
 export class ViewCreditCardPage implements OnInit {
 
   currentCustomer: Customer;
   creditCard: CreditCard;
   haveCreditCard: boolean;
   maskedCCNum: string;
-
   isVisa: boolean;
 
   constructor(
     private router: Router,
     private sessionService: SessionService,
-    private customerService: CustomerService,
     private creditCardService: CreditCardService,
-    private alertController: AlertController,
-    private location: Location
+    private alertController: AlertController
   ) {
   }
 
@@ -49,7 +44,6 @@ export class ViewCreditCardPage implements OnInit {
         this.creditCard = response.creditCard;
 
         if (this.creditCard == null) {
-
           this.haveCreditCard = false;
           return;
         }
@@ -85,7 +79,6 @@ export class ViewCreditCardPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-
           }
         }, {
           text: 'Yes',
@@ -96,10 +89,9 @@ export class ViewCreditCardPage implements OnInit {
                 this.haveCreditCard = false;
                 this.getCreditCard();
               }, error => {
-                console.log("Error received: " + error);
+                console.log("Failed to delete credit card: " + error);
               }
-            )
-              ;
+            );
           }
         }
       ],

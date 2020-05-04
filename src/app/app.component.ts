@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { Platform, AlertController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { SessionService } from './session.service';
 import { NotificationService } from './notification.service';
 import { DiningTableService } from './dining-table.service';
 import { interval, Subscription } from 'rxjs';
-
 import { Notification } from './notification';
-import { OrderLineItem } from './order-line-item';
 import { DiningTable } from './dining-table';
 import { TableStatusEnum } from './table-status-enum.enum';
 import { AlertService } from './alert.service';
@@ -69,9 +64,7 @@ export class AppComponent {
           let currTable: DiningTable = response.diningTable;
           if (currTable != null) {
             if (currTable.tableStatus.valueOf() == TableStatusEnum.FROZEN_OCCUPIED.valueOf() || currTable.tableStatus.valueOf() == TableStatusEnum.UNFROZEN_OCCUPIED.valueOf()) {
-
               this.seated = true;
-
             } else {
               this.seated = false;
             }
@@ -127,10 +120,9 @@ export class AppComponent {
             alert.onDidDismiss().then((alertData) => {
               this.alertService.createAlert(new Alert(this.seatedTableId, alertData.data.values.message)).subscribe(
                 response => {
-
                   this.toast("Successfully sent alert!");
-                },
-                error => {
+                }, error => {
+                  this.toast("Failed to send alert!");
                 }
               )
             })
@@ -186,7 +178,6 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-
 
   navigateHome() {
     this.router.navigate(["home"]);

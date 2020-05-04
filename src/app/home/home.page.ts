@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
 import { Store } from '../store';
@@ -17,19 +15,15 @@ import { MenuItemService } from '../menu-item.service';
 export class HomePage {
 
   resourcePath: String;
-
   store: Store;
-
   popular: MenuItem[] = [];
-
   loadedItemsCount: number = 4;
   maxLoadedItems: number = 20;
 
   constructor(private router: Router,
     public sessionService: SessionService,
     private storeService: StoreService,
-    private menuItemService: MenuItemService,
-    private customerService: CustomerService) {
+    private menuItemService: MenuItemService) {
 
       this.resourcePath = sessionService.getImageResourcePath();
 
@@ -48,11 +42,11 @@ export class HomePage {
           this.store = store;
         }
         else {
-          console.log("Unable to retrieve store [null]");
+          console.log("Unable to retrieve store: null");
         }
       },
       error => {
-        console.log("Unable to retrieve store [" + error + "]");
+        console.log("Unable to retrieve store: " + error);
       }
     );
 
@@ -78,7 +72,6 @@ export class HomePage {
       this.menuItemService.retrievePopularMenuItem(this.loadedItemsCount).subscribe(
         response => {
           this.popular = response.menuItems;
-  
         }, error => {
           this.popular = [];
   

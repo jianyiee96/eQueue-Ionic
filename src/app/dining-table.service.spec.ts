@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { DiningTableService } from './dining-table.service';
 
 describe('DiningTableService', () => {

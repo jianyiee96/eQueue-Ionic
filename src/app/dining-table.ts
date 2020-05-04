@@ -13,4 +13,5 @@ export class DiningTable {
         this.tableStatus = tableStatus;
 
     }
+    
 }

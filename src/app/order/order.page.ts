@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, } from '@angular/router';
-
 import { Location, CurrencyPipe } from '@angular/common';
 import { CustomerOrder } from '../customer-order';
 import { CustomerOrderService } from '../customer-order.service';
@@ -10,19 +9,17 @@ import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 import { OrderStatusEnum } from '../order-status-enum.enum';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { ModalOrderItemOptionPage } from '../modal-order-item-option/modal-order-item-option.page';
-import { Cart } from '../cart';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.page.html',
   styleUrls: ['./order.page.scss'],
 })
+
 export class OrderPage implements OnInit {
 
   resourcePath: string;
-
   order: CustomerOrder;
-
   orderLineItems: OrderLineItem[] = [];
 
   constructor(public activatedRoute: ActivatedRoute,
@@ -90,10 +87,9 @@ export class OrderPage implements OnInit {
           }
         })
       }, error => {
-        console.log("Unable to update: " + error);
+        console.log("Failed to retrieve customer orders: " + error);
       }
     );
-
 
   }
 
@@ -159,16 +155,12 @@ export class OrderPage implements OnInit {
 
   displayStatus(display: OrderLineItemStatusEnum): number {
     if (display == OrderLineItemStatusEnum.ORDERED) {
-      //return "Order submitted";
       return 1;
     } else if (display == OrderLineItemStatusEnum.PREPARING) {
-      //return "Preparing";
       return 2;
     } else if (display == OrderLineItemStatusEnum.SERVED) {
-      //return "Served";
       return 3;
     } else if (display == OrderLineItemStatusEnum.CANCELLED) {
-      //return "Cancelled";
       return 4;
     }
   }

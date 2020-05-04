@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { SessionService } from './session.service';
 import { Alert } from './alert';
 
@@ -27,8 +26,6 @@ export class AlertService {
     let createAlertReq = {
       "alert": newAlert
     };
-    console.log("called at the service");
-    console.log(createAlertReq)
 
     return this.httpClient.put<any>(this.baseUrl, createAlertReq, httpOptions).pipe
       (

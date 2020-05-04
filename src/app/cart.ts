@@ -12,6 +12,4 @@ export class Cart {
         this.orderLineItems = orderLineItems;
     }
 
-
-
 }

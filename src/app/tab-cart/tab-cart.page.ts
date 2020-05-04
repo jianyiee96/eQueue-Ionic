@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { MenuItem } from '../menu-item';
 import { MenuItemService } from '../menu-item.service';
-
-
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
-
 import { CurrencyPipe } from '@angular/common';
-
 import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
 import { Cart } from '../cart';
 import { CartService } from '../cart.service';
@@ -15,7 +11,6 @@ import { DiningTableService } from '../dining-table.service';
 import { DiningTable } from '../dining-table';
 import { TableStatusEnum } from '../table-status-enum.enum';
 import { CustomerOrderService } from '../customer-order.service';
-import { error } from 'protractor';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,10 +18,10 @@ import { Router } from '@angular/router';
   templateUrl: './tab-cart.page.html',
   styleUrls: ['./tab-cart.page.scss'],
 })
+
 export class TabCartPage implements OnInit {
 
   cart: Cart;
-
   resourcePath: string;
 
   constructor(public sessionService: SessionService,
@@ -38,22 +33,17 @@ export class TabCartPage implements OnInit {
     public toastController: ToastController,
     public alertController: AlertController,
     public router: Router,
-    private currencyPipe: CurrencyPipe) {
-
+    public currencyPipe: CurrencyPipe) {
 
   }
 
-
   ngOnInit() {
-
     this.cart = this.sessionService.getShoppingCart();
     this.resourcePath = this.sessionService.getImageResourcePath();
   }
 
-
   ionViewWillEnter() {
     this.cart = this.sessionService.getShoppingCart();
-
   }
 
   async itemOptions(item: MenuItem) {

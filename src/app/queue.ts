@@ -13,7 +13,5 @@ export class Queue {
         this.allocatedDateTime = allocatedDateTime;
 
     }
-
-
-
+    
 }

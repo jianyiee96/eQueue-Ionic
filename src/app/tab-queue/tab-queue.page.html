@@ -13,7 +13,6 @@
 
   <ion-card *ngIf="displayOption == 1">
 
-
     <ion-card-content>
 
       <header class="custom-header">Join Queue</header>
@@ -24,11 +23,9 @@
         <br>
         <h2>We are pleased to serve you as soon as possible.</h2>
         <br>
-
       </ion-text>
 
     </ion-card-content>
-
 
     <ion-item>
       <ion-range [(ngModel)]="paxCount" color="secondary" pin="true" ticks="true" snaps="true" min="1" max="12">
@@ -42,7 +39,6 @@
       Join Queue Now ({{paxCount}} pax)
     </ion-button>
   </ion-card>
-
 
   <ion-card *ngIf="displayOption == 2">
     <ion-card-content>
@@ -62,12 +58,10 @@
         <h2> Estimated waiting time (minutes): {{queueWaitingTime}}</h2>
       </ion-text>
 
-
     </ion-card-content>
 
     <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
-
 
   <ion-card *ngIf="displayOption == 3">
 
@@ -88,11 +82,9 @@
       </ion-text>
       <ion-text color="danger">
 
-
         <h2>Your allocation will expire on: {{expiryDateTime | date:'h:mm a'}} </h2>
       </ion-text>
     </ion-card-content>
-
 
     <ion-item-divider>
       <label>
@@ -113,26 +105,20 @@
       </label>
     </ion-item-divider>
 
-
-
     <ion-button expand="full" (click)="checkInQr()">
       <ion-icon slot="start" name="camera"></ion-icon>
       Scan QR-Code
     </ion-button>
 
-
     <ion-button color="danger" expand="block" (click)="leaveQueue()">Leave Queue</ion-button>
   </ion-card>
 
-
-
-
   <ion-card *ngIf="displayOption == 4">
-   
+
     <ion-card-content>
       <header class="custom-header">Checked-in!</header>
-      <ion-text color="primary" class="text">   
-        
+      <ion-text color="primary" class="text">
+
         <h2>You have successfully checked-in to your table.</h2>
         <br>
         <h2>Order submission and alert functions have been enabled for you.</h2>

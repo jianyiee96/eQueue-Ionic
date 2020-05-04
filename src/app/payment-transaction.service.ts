@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { PaymentTransaction } from './payment-transaction';
-import { CustomerOrder } from './customer-order';
-
 import { SessionService } from './session.service';
 
 const httpOptions = {

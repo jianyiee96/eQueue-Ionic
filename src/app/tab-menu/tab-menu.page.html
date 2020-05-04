@@ -6,27 +6,15 @@
 
 <ion-content [fullscreen]="true">
 
-
-
-
-
   <ion-card>
 
     <ion-segment scrollable="true" value="heart">
-
       <ion-segment-button *ngFor="let topCategory of topCategories" (click)="categorySelection(topCategory)">
-
         <ion-label>{{topCategory.categoryName}}</ion-label>
-
       </ion-segment-button>
-
     </ion-segment>
 
-
-
-
     <ion-list *ngFor="let category of subCategories">
-
 
       <ion-item-divider color="secondary">
         <ion-label>
@@ -45,9 +33,8 @@
         </ion-thumbnail>
         
         <ion-label>
-          <h2><b>{{item.menuItemName}}</b>   <ion-icon *ngIf="isSellingFast(item)" name="flame" class="ion-label-clock"></ion-icon> </h2>
+          <h2><b>{{item.menuItemName}}</b><ion-icon *ngIf="isSellingFast(item)" name="flame" class="ion-label-clock"></ion-icon></h2>
           <h2>{{getCurrency(item.menuItemPrice)}}</h2>
-          <!-- <p>{{item.menuItemCode}}</p> -->
           <p>
             <ion-icon name="timer-outline" class="ion-label-clock"></ion-icon>{{item.waitingTimeMinutes}}&nbsp;minutes
           </p>
@@ -56,12 +43,8 @@
         <ion-icon slot="end" name="chevron-forward-circle-outline" (click)="itemOptions(item)"></ion-icon>
       </ion-item>
 
-
     </ion-list>
 
   </ion-card>
-
-
-
 
 </ion-content>

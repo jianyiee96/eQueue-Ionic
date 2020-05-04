@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { CreditCard } from '../../../credit-card';
 import { CreditCardService } from '../../../credit-card.service';
 import { Router } from '@angular/router';
@@ -38,12 +37,11 @@ export class CreateCreditCardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.currentCustomer = this.sessionService.getCurrentCustomer();
-    this.getCreditCard();
   }
 
   ionViewWillEnter() {
-    this.ngOnInit();
+    this.currentCustomer = this.sessionService.getCurrentCustomer();
+    this.getCreditCard();
     this.newCreditCard = new CreditCard();
     this.resultSuccess = false;
     this.resultError = false;
@@ -55,10 +53,8 @@ export class CreateCreditCardPage implements OnInit {
 
         if (response.creditCard == null) {
           this.haveCreditCard = false;
-
           return;
         }
-
 
         this.haveCreditCard = true;
         this.back()
@@ -90,10 +86,8 @@ export class CreateCreditCardPage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.message = "New credit card " + newCreditCardId + " created successfully";
-
           this.newCreditCard = new CreditCard();
           this.submitted = false;
-          // createCreditCardForm.reset();
           this.router.navigate(['/view-credit-card']);
         },
         error => {
@@ -101,7 +95,6 @@ export class CreateCreditCardPage implements OnInit {
           this.resultSuccess = false;
           this.message = "An error has occurred while creating the new credit card: " + error;
           this.presentFailedToast("Invalid Credit Card Credentials");
-          // console.log('********** CreateCreditCardPage.ts: ' + error);
         }
       )
     }
@@ -120,7 +113,6 @@ export class CreateCreditCardPage implements OnInit {
     let inputChar = String.fromCharCode(event.charCode);
 
     if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
       event.preventDefault();
     }
   }

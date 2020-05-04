@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { TabCartPage } from './tab-cart.page';
 
 const routes: Routes = [

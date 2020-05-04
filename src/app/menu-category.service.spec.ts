@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { MenuCategoryService } from './menu-category.service';
 
 describe('MenuCategoryService', () => {

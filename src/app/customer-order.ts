@@ -9,10 +9,9 @@ export class CustomerOrder {
     status: OrderStatusEnum;
     totalAmount: number;
     itemCount: number = 0;
-
     orderLineItems: OrderLineItem[] = new Array();
 
-    constructor(orderId: number, isCompleted: boolean, orderDate: Date, status: OrderStatusEnum, totalAmount: number) {
+    constructor(orderId?: number, isCompleted?: boolean, orderDate?: Date, status?: OrderStatusEnum, totalAmount?: number) {
 
         this.orderId = orderId;
         this.isCompleted = isCompleted;

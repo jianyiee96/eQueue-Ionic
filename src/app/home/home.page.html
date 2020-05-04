@@ -5,8 +5,6 @@
 
 </ion-header>
 
-
-
 <ion-content>
 
 	<ion-card *ngIf="store != null">
@@ -26,11 +24,8 @@
 				<h2><b>Store details </b></h2>
 			</ion-text>
 			<ion-text>
-
 				<h2><b>Email:</b> {{store.storeEmail}}</h2>
-
 				<h2><b>Contact:</b> {{store.storeContact}} </h2>
-
 				<h2><b>Address:</b> {{store.storeAddress}}</h2>
 			</ion-text>
 
@@ -42,7 +37,6 @@
 	<ion-card-header *ngIf="popular[0] != null">
 		Popular Items
 	</ion-card-header>
-
 
 	<ion-list *ngIf="popular[0] != null" class="text">
 
@@ -68,8 +62,5 @@
 		<ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more items...">
 		</ion-infinite-scroll-content>
 	</ion-infinite-scroll>
-
-
-
 
 </ion-content>
