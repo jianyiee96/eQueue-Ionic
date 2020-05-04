@@ -21,4 +21,5 @@ export class Store {
         this.allocationGraceWaitingMinutes = allocationGraceWaitingMinutes;
         this.estimatedQueueUnitWaitingMinutes = estimatedQueueUnitWaitingMinutes;
     }
+    
 }

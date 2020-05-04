@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { ModalViewTransactionDetailsPage } from './modal-view-transaction-details.page';
 
 const routes: Routes = [

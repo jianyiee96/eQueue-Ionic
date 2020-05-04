@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-
 import { SessionService } from '../session.service';
 import { QueueService } from '../queue.service';
 import { DiningTableService } from '../dining-table.service';
 import { StoreService } from '../store.service';
-
 import { Customer } from '../customer';
 import { Queue } from '../queue'
 import { DiningTable } from '../dining-table'
 import { Store } from '../store';
-import { Observable } from 'rxjs';
-
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
@@ -23,13 +19,10 @@ export class TabQueuePage implements OnInit {
 
   store: Store;
   currentCustomer: Customer;
-
   queue: Queue;
   diningTable: DiningTable;
-
   displayOption: number;
   refreshTimeout: number;
-
   paxCount: number;
   code: string;
   queueStartTime: Date;
@@ -44,7 +37,7 @@ export class TabQueuePage implements OnInit {
     public diningTableService: DiningTableService,
     public storeService: StoreService,
     public toastController: ToastController,
-    private qrScanner: QRScanner) {
+    public qrScanner: QRScanner) {
 
     this.displayOption = 0;
     this.refreshTimeout = 1000;
@@ -63,11 +56,9 @@ export class TabQueuePage implements OnInit {
     this.queue.startDateTime = new Date();
     this.queue.allocatedDateTime = new Date();
     this.queue.queueId = 0;
-
     this.diningTable = new DiningTable();
     this.diningTable.seatingCapacity = 0;
     this.diningTable.diningTableId = 0;
-
     this.paxCount = 1;
     this.code = "";
     this.queueStartTime = new Date();
@@ -103,7 +94,6 @@ export class TabQueuePage implements OnInit {
           response => {
             this.diningTable = response.diningTable;
 
-
             if (this.diningTable == null && this.queue == null) {
               this.displayOption = 1;
             }
@@ -126,14 +116,14 @@ export class TabQueuePage implements OnInit {
 
           },
           error => {
-            console.log('********** tab-queue:ionViewDidEnter error: ' + error);
+            console.log('Unable to retrieve table' + error);
           }
         );
 
 
       },
       error => {
-        console.log('********** tab-queue:ionViewDidEnter error: ' + error);
+        console.log('Unable to retrieve queue' + error);
       }
     );
 
@@ -146,22 +136,19 @@ export class TabQueuePage implements OnInit {
           this.sessionService.setStore(store);
         }
         else {
-          console.log("Unable to retrieve store [null]");
+          console.log("Unable to retrieve store: null");
         }
       },
       error => {
-        console.log("Unable to retrieve store [" + error + "]");
+        console.log("Unable to retrieve store: " + error);
       }
     );
-
-
 
   }
 
   joinQueue() {
 
     if (this.paxCount == null || this.paxCount < 1 || this.paxCount > 12) {
-      console.log("Invalid pax count");
       this.toast("Invalid Pax Count");
       return;
     }
@@ -177,13 +164,12 @@ export class TabQueuePage implements OnInit {
       }
     );
 
-
   }
 
   checkIn() {
 
     if (this.code == null || this.code == "") {
-      this.toast("Empty Code");
+      this.toast("Please enter table code.");
     }
 
     this.diningTableService.checkIn(this.code).subscribe(
@@ -208,10 +194,7 @@ export class TabQueuePage implements OnInit {
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
-          // camera permission was granted
-          // start scanning
           let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-            console.log('Scanned something', text);
 
             this.diningTableService.checkIn(text).subscribe(
               response => {
@@ -230,18 +213,16 @@ export class TabQueuePage implements OnInit {
 
           });
 
-          this.qrScanner.hide(); // hide camera preview
-          scanSub.unsubscribe(); // stop scanning
+          this.qrScanner.hide();
+          scanSub.unsubscribe();
 
         } else if (status.denied) {
-          // camera permission was permanently denied
-          // you must use QRScanner.openSettings() method to guide the user to the settings page
-          // then they can grant the permission from there
+          this.toast("Please enable camera permission.");
         } else {
-          // permission was denied, but not permanently. You can ask for permission again at a later time.
+          this.toast("Please enable camera permission.");
         }
       })
-      .catch((e: any) => console.log('Error is', e));
+      .catch((error: any) => console.log('Error: ', error));
   }
 
   leaveQueue() {
@@ -264,8 +245,6 @@ export class TabQueuePage implements OnInit {
 
   }
 
-
-  
   doRefresh(event) {
     this.processSituation();
     setTimeout(() => {

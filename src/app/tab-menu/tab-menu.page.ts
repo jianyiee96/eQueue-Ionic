@@ -4,11 +4,8 @@ import { MenuItem } from '../menu-item';
 import { MenuCategory } from '../menu-category';
 import { MenuCategoryService } from '../menu-category.service';
 import { MenuItemService } from '../menu-item.service';
-
 import { ModalController } from '@ionic/angular';
-
 import { CurrencyPipe } from '@angular/common';
-
 import { ModalItemOptionPage } from '../modal-item-option/modal-item-option.page';
 import { MenuItemAvailabilityEnum } from '../menu-item-availability-enum.enum';
 
@@ -18,14 +15,13 @@ import { MenuItemAvailabilityEnum } from '../menu-item-availability-enum.enum';
   templateUrl: './tab-menu.page.html',
   styleUrls: ['./tab-menu.page.scss'],
 })
+
 export class TabMenuPage implements OnInit {
 
   topCategories: MenuCategory[];
   selectedTopCategory: MenuCategory;
   subCategories: MenuCategory[];
-
   initialEntry: boolean;
-
   resourcePath: string;
 
   constructor(public sessionService: SessionService,
@@ -40,14 +36,11 @@ export class TabMenuPage implements OnInit {
 
   ngOnInit() {
     this.resourcePath = this.sessionService.getImageResourcePath();
-    
   }
 
 
   ionViewWillEnter() {
-
     this.processMenu();
-
   }
 
   processMenu() {
@@ -62,9 +55,8 @@ export class TabMenuPage implements OnInit {
             this.categorySelection(this.topCategories[0]);
           }
         }
-
       }, error => {
-        console.log("Error in retrieving top categories.");
+        console.log("Error in retrieving top categories: " + error);
       }
     )
   }
@@ -85,8 +77,6 @@ export class TabMenuPage implements OnInit {
     }
   }
 
-
-
   categorySelection(selected: MenuCategory) {
 
     this.selectedTopCategory = selected;
@@ -98,16 +88,12 @@ export class TabMenuPage implements OnInit {
 
           this.menuItemService.retrieveAllMenuItemByCategory(menuCategory.menuCategoryId).subscribe(
             response => {
-              //menuCategory.menuItems = response.menuItems;
               menuCategory.menuItems = [];
               for (let item of response.menuItems) {
                 if (!this.isUnavailable(item)) {
                   menuCategory.menuItems.push(item);
                 }
-
               }
-
-
             }, error => {
               console.log("Error in retrieving menu items for: " + menuCategory.categoryName);
             }
@@ -118,8 +104,6 @@ export class TabMenuPage implements OnInit {
         console.log("Error in retrieving categories.");
       }
     )
-
-
   }
 
   async itemOptions(item: MenuItem) {
@@ -134,10 +118,8 @@ export class TabMenuPage implements OnInit {
     return await modal.present();
   }
 
-
   getCurrency(amount: number): string {
     return this.currencyPipe.transform(amount);
   }
-
 
 }

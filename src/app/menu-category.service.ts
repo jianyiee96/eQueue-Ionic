@@ -9,7 +9,6 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +35,6 @@ export class MenuCategoryService {
         catchError(this.handleError)
       );
   }
-
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";

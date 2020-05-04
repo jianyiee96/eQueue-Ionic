@@ -1,14 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController, NavParams, ToastController, AlertController } from '@ionic/angular';
-import { MenuItem } from '../menu-item';
 import { SessionService } from '../session.service';
-
 import { CurrencyPipe } from '@angular/common';
-import { Cart } from '../cart';
 import { OrderLineItem } from '../order-line-item';
 import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 import { CustomerOrderService } from '../customer-order.service';
-import { CustomerOrder } from '../customer-order';
 
 @Component({
   selector: 'app-modal-order-item-option',
@@ -20,14 +16,12 @@ export class ModalOrderItemOptionPage {
   resourcePath: string;
   currentOrderItem: OrderLineItem;
   parentOrderId: number;
-
   currentComments: string;
   currentQuantity: number;
-
   editable: boolean;
 
   constructor(public modalController: ModalController,
-    navParams: NavParams,
+    public navParams: NavParams,
     public sessionService: SessionService,
     public currencyPipe: CurrencyPipe,
     public alertController: AlertController,
@@ -37,8 +31,6 @@ export class ModalOrderItemOptionPage {
     this.currentOrderItem = navParams.get('orderItem');
     this.parentOrderId = navParams.get('parentOrderId');
     let orderCompletion = navParams.get('orderCompletion');
-
-    //console.log(this.currentOrderItem);
 
     if (orderCompletion) {
       this.editable = false;
@@ -104,10 +96,7 @@ export class ModalOrderItemOptionPage {
         ]
       });
       await alert.present();
-
     }
-
-
   }
 
 
@@ -136,16 +125,12 @@ export class ModalOrderItemOptionPage {
 
   displayStatus(display: OrderLineItemStatusEnum): number {
     if (display == OrderLineItemStatusEnum.ORDERED) {
-      //return "Order submitted";
       return 1;
     } else if (display == OrderLineItemStatusEnum.PREPARING) {
-      //return "Preparing";
       return 2;
     } else if (display == OrderLineItemStatusEnum.SERVED) {
-      //return "Served";
       return 3;
     } else if (display == OrderLineItemStatusEnum.CANCELLED) {
-      //return "Cancelled";
       return 4;
     }
   }

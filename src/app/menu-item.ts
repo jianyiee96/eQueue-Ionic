@@ -22,5 +22,4 @@ export class MenuItem {
         this.menuItemDescription = menuItemDescription;
     }
 
-
 }

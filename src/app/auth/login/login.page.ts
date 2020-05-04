@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-
 import { SessionService } from '../../session.service';
 import { CustomerService } from '../../customer.service';
 import { StoreService } from '../../store.service';
-import { Store } from '../../store';
 import { Customer } from '../../customer';
-import { Cart } from '../../cart';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -15,6 +12,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage implements OnInit {
 
   submitted: boolean;
@@ -27,8 +25,7 @@ export class LoginPage implements OnInit {
     public toastController: ToastController,
     private router: Router,
     public sessionService: SessionService,
-    private customerService: CustomerService,
-    private storeService: StoreService) {
+    private customerService: CustomerService) {
 
     this.submitted = false;
 
@@ -60,8 +57,6 @@ export class LoginPage implements OnInit {
         response => {
           let customer: Customer = response.customer;
 
-
-
           if (customer != null) {
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
@@ -75,8 +70,6 @@ export class LoginPage implements OnInit {
           }
         },
         error => {
-          // this.loginError = true;
-          // this.errorMessage = error
           this.presentFailedToast("Email does not exist or invalid password")
         }
       );

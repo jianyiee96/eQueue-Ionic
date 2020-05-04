@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
-
 import { CustomerService } from '../../customer.service';
 import { Customer } from 'src/app/customer';
 import { ToastController } from '@ionic/angular';
-import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -23,19 +21,15 @@ export class RegisterPage implements OnInit {
   message: string;
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
     private location: Location,
     private customerService: CustomerService,
     public toastController: ToastController) {
 
     this.newCustomer = new Customer();
-
     this.submitted = false;
     this.resultSuccess = false;
     this.resultError = false;
   }
-
-
 
   ngOnInit() {
   }
@@ -58,9 +52,6 @@ export class RegisterPage implements OnInit {
           this.router.navigate(['/login']);
         },
         error => {
-          // this.resultError = true;
-          // this.resultSuccess = false;
-          // this.message = "An error has occurred while creating the new customer: " + error;
           this.presentFailedToast(error.substring(37));
         }
       )

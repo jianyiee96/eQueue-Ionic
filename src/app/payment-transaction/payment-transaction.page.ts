@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-
 import { CustomerOrder } from '../customer-order';
 import { OrderLineItem } from '../order-line-item';
 import { CreditCard } from '../credit-card';
 import { PaymentTransaction } from '../payment-transaction';
-
 import { CustomerOrderService } from '../customer-order.service';
 import { CreditCardService } from '../credit-card.service';
 import { SessionService } from '../session.service';
@@ -19,32 +17,28 @@ import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
   templateUrl: './payment-transaction.page.html',
   styleUrls: ['./payment-transaction.page.scss'],
 })
+
 export class PaymentTransactionPage implements OnInit {
 
   customerServedOrders: CustomerOrder[];
-
   refreshTimeout: number;
-
   totalAmount: number;
   hasCreditCard: boolean;
   creditCard: CreditCard;
-
   newPaymentTransaction: PaymentTransaction;
 
   constructor(
-    private router: Router,
-    private location: Location,
-    private alertController: AlertController,
-    private customerOrderService: CustomerOrderService,
-    private creditCardService: CreditCardService,
-    private paymentTransactionService: PaymentTransactionService,
-    private toastController: ToastController,
-    private sessionService: SessionService
+    public router: Router,
+    public location: Location,
+    public alertController: AlertController,
+    public customerOrderService: CustomerOrderService,
+    public creditCardService: CreditCardService,
+    public paymentTransactionService: PaymentTransactionService,
+    public toastController: ToastController,
+    public sessionService: SessionService
   ) {
     this.refreshTimeout = 1000;
-
     this.totalAmount = 0;
-
     this.hasCreditCard = false;
     this.creditCard = new CreditCard();
     this.newPaymentTransaction = new PaymentTransaction();
@@ -59,8 +53,6 @@ export class PaymentTransactionPage implements OnInit {
       this.totalAmount = 0;
 
       this.customerServedOrders = this.router.getCurrentNavigation().extras.state.customerServedOrders;
-
-      
 
       this.customerServedOrders.forEach((order) => {
         this.totalAmount += order.totalAmount;
@@ -172,9 +164,9 @@ export class PaymentTransactionPage implements OnInit {
       response => {
         this.toast("Payment has been successfully processed!");
 
-        this.router.navigate(['/tabs/tab-order'])
+        this.router.navigate(['/tabs/tab-order']);
       }, error => {
-        console.log("******************* PaymentTransactionPage: ", error);
+        console.log("Failed to create transaction: " + error);
       }
     )
   }
@@ -182,14 +174,11 @@ export class PaymentTransactionPage implements OnInit {
   getCreditCard(): void {
     this.creditCardService.retrieveCreditCard(this.sessionService.getEmail()).subscribe(
       response => {
-        console.log("Confirm payment using credit card")
-
         this.hasCreditCard = true;
         this.creditCard = response.creditCard;
       },
       error => {
-        console.log(error)
-
+        console.log("Error in retrieving credit card: " + error);
         this.hasCreditCard = false;
       }
     );

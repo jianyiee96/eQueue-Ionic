@@ -1,12 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { MenuItem } from '../menu-item';
 import { SessionService } from '../session.service';
-
 import { CurrencyPipe } from '@angular/common';
 import { Cart } from '../cart';
 import { OrderLineItem } from '../order-line-item';
-import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 
 @Component({
   selector: 'app-modal-item-option',
@@ -17,12 +15,9 @@ import { OrderLineItemStatusEnum } from '../order-line-item-status-enum.enum';
 export class ModalItemOptionPage {
 
   resourcePath: string;
-
   currentItem: MenuItem;
-
   currentComments: string;
   currentQuantity: number;
-
   exist: boolean;
   cart: Cart;
 
@@ -35,7 +30,6 @@ export class ModalItemOptionPage {
   ionViewWillEnter() {
 
     this.cart = this.sessionService.getShoppingCart();
-
     this.exist = false;
 
     for (let orderItems of this.cart.orderLineItems) {
@@ -82,7 +76,6 @@ export class ModalItemOptionPage {
 
   saveAndDismiss() {
 
-    //new item into cart
     if (!this.exist && this.currentQuantity > 0) {
       this.cart.orderLineItems.push(new OrderLineItem(null, this.currentItem, this.currentComments, this.currentQuantity, null, false));
       this.cart.totalAmount += (this.currentQuantity * this.currentItem.menuItemPrice);
@@ -90,7 +83,6 @@ export class ModalItemOptionPage {
       this.toast("Added Item Into Cart!");
     }
 
-    //adjusting item value in cart
     if (this.exist && this.currentQuantity > 0) {
       for (let orderItems of this.cart.orderLineItems) {
         if (orderItems.menuItem.menuItemId == this.currentItem.menuItemId) {
@@ -105,7 +97,6 @@ export class ModalItemOptionPage {
 
     }
 
-    //removing item from cart
     if (this.exist && this.currentQuantity == 0) {
 
       if (this.cart.orderLineItems.length == 1) {

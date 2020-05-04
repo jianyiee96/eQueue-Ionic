@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { TabOrderPage } from './tab-order.page';
 
 const routes: Routes = [

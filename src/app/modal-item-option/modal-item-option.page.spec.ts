@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { ModalItemOptionPage } from './modal-item-option.page';
 
 describe('ModalItemOptionPage', () => {

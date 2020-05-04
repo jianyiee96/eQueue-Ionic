@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { ModalViewTransactionDetailsPage } from './modal-view-transaction-details.page';
 
 describe('ModalViewTransactionDetailsPage', () => {

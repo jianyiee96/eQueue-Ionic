@@ -1,14 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AlertController, ToastController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
-
 import { Customer } from '../customer';
 import { PaymentTransaction } from '../payment-transaction';
-
 import { CustomerService } from '../customer.service'
 import { SessionService } from '../session.service';
 import { PaymentTransactionService } from '../payment-transaction.service';
-
 import { ModalViewTransactionDetailsPage } from '../modal-view-transaction-details/modal-view-transaction-details.page';
 
 @Component({
@@ -16,35 +13,36 @@ import { ModalViewTransactionDetailsPage } from '../modal-view-transaction-detai
   templateUrl: './tab-profile.page.html',
   styleUrls: ['./tab-profile.page.scss'],
 })
+
 export class TabProfilePage implements OnInit {
 
   currentCustomer: Customer;
-
   isShown: boolean;
   noTransactions: boolean;
-
   paymentTransactions: PaymentTransaction[];
   paymentTransactionsToShow: PaymentTransaction[];
 
   constructor(
-    private router: Router,
+    public router: Router,
     public ngZone: NgZone,
     public alertController: AlertController,
     public toastController: ToastController,
     public modalController: ModalController,
-    private sessionService: SessionService,
-    private customerService: CustomerService,
-    private paymentTransactionService: PaymentTransactionService
+    public sessionService: SessionService,
+    public customerService: CustomerService,
+    public paymentTransactionService: PaymentTransactionService
   ) {
   }
 
   ngOnInit() {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
     this.noTransactions = false;
+    this.isShown = true;
   }
 
   ionViewWillEnter() {
-    this.ngOnInit();
+    this.currentCustomer = this.sessionService.getCurrentCustomer();
+    this.noTransactions = false;
     this.isShown = true;
 
     this.paymentTransactionService.retrievePaymentTransactions(this.currentCustomer.customerId).subscribe(
@@ -54,7 +52,7 @@ export class TabProfilePage implements OnInit {
         this.loadTransactions();
       },
       error => {
-        console.log("Error received: " + error);
+        console.log("Unable to retrieve payment transactions: " + error);
       }
     )
   }
@@ -93,7 +91,6 @@ export class TabProfilePage implements OnInit {
   }
 
   scrollHandler(event) {
-    // console.log(`ScrollEvent: ${event}`)
     this.ngZone.run(() => {
       this.isShown = false;
     })
@@ -139,11 +136,9 @@ export class TabProfilePage implements OnInit {
           handler: data => {
             if (data.newPassword != data.confirmNewPassword) {
               this.presentFailedToast("The two given passwords do not match");
-              // alert.message = "The two given passwords do not match";
               return false;
             } else if (data.confirmNewPassword.length < 8) {
               this.presentFailedToast("New password must be at least 8 characters");
-              // alert.message = "New password must be at least 8 characters";
               return false;
             } else if (data.currentPassword == data.newPassword) {
               this.presentFailedToast("New password cannot be same as current password");
@@ -163,10 +158,8 @@ export class TabProfilePage implements OnInit {
   changePassword(oldPassword: String, newPassword: String) {
     this.customerService.changePassword(oldPassword, newPassword).subscribe(
       response => {
-        console.log("Response received");
         this.presentPassedToast("Password changed successfully");
       }, error => {
-        console.log("Error received: " + error);
         this.presentFailedToast("Incorrect current password");
       }
     );
