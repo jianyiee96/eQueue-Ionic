@@ -38,7 +38,6 @@ export class ModalViewTransactionDetailsPage implements OnInit {
 
   ionViewWillEnter() {
     this.processPaymentTransactionPage();
-    console.log(this.customerOrders); // HOW COME UNDEFINED?
   }
 
   processPaymentTransactionPage() {
@@ -52,7 +51,7 @@ export class ModalViewTransactionDetailsPage implements OnInit {
         this.customerOrders.sort((o1, o2) => o1.orderId - o2.orderId);
       },
       error => {
-        console.log("Error: " + error);
+        console.log("Error has occirrsed while retrieving customer orders: " + error);
       }
     )
   }
